@@ -9,24 +9,6 @@
 ---
 ---
 
-### Releases v1.0.0
-
-1. Initial coding to add support to STM32F/L/H/G/WB/MP1 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
-2. Add examples using STM32 boards.
-
-#### Currently Supported Boards
-
-#### 1. ESP32 and ESP8266
-
-#### 2. STM32F/L/H/G/WB/MP1 with built-in LAN8742A Ethernet.
-
-1. Nucleo-144 (F429ZI, F746ZG, F756ZG, F767ZI)
-2. Discovery STM32F746G-DISCOVERY
-3. Any STM32 boards with enough flash/memory and already configured to run LAN8742A Ethernet.
-
----
----
-
 ## Why do we need this Async [AsyncHTTPRequest_Generic library](https://github.com/khoih-prog/AsyncHTTPRequest_Generic)
 
 ### AsyncHTTPRequest_Generic for ESP32, ESP8266 using built-in WiFi and STM32 boards using built-in LAN8742A Ethernet
@@ -65,6 +47,24 @@ For short transactions, buffer space should not be an issue. In fact, it can be 
 Request and response headers are handled in the typical fashion.
 
 Chunked responses are recognized and handled transparently.
+
+---
+---
+
+### Releases v1.0.0
+
+1. Initial coding to add support to STM32F/L/H/G/WB/MP1 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
+2. Add examples using STM32 boards.
+
+#### Currently Supported Boards
+
+#### 1. ESP32 and ESP8266
+
+#### 2. STM32F/L/H/G/WB/MP1 with built-in LAN8742A Ethernet.
+
+1. Nucleo-144 (F429ZI, F746ZG, F756ZG, F767ZI)
+2. Discovery STM32F746G-DISCOVERY
+3. Any STM32 boards with enough flash/memory and already configured to run LAN8742A Ethernet.
 
 ---
 ---
@@ -670,6 +670,7 @@ If you want to contribute to this project:
 ## Copyright
 
 Copyright (C) <2018>  <Bob Lemaire, IoTaWatt, Inc.>
+
 Copyright 2020- Khoi Hoang
 
 
