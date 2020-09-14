@@ -11,12 +11,6 @@
 
 ## Why do we need this Async [AsyncHTTPRequest_Generic library](https://github.com/khoih-prog/AsyncHTTPRequest_Generic)
 
-### AsyncHTTPRequest_Generic for ESP32, ESP8266 using built-in WiFi and STM32 boards using built-in LAN8742A Ethernet
-
-This library is based on, modified from:
-
-1. [Bob Lemaire's asyncHTTPrequest Library](https://github.com/boblemaire/asyncHTTPrequest)
-
 #### Features
 
 1. Asynchronous HTTP Request library for ESP8266, ESP32 using built-in WiFi, and STM32 boards using built-in LAN8742A Ethernet. 
@@ -67,6 +61,12 @@ Chunked responses are recognized and handled transparently.
 3. Any STM32 boards with enough flash/memory and already configured to run LAN8742A Ethernet.
 
 ---
+
+#### AsyncHTTPRequest_Generic for ESP32, ESP8266 using built-in WiFi and STM32 boards using built-in LAN8742A Ethernet
+
+This library is based on, modified from:
+
+1. [Bob Lemaire's asyncHTTPrequest Library](https://github.com/boblemaire/asyncHTTPrequest)
 ---
 
 ## Prerequisite
