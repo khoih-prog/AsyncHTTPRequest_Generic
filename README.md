@@ -47,7 +47,7 @@ Chunked responses are recognized and handled transparently.
 
 ### Releases v1.0.0
 
-1. Initial coding to add support to STM32F/L/H/G/WB/MP1 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
+1. Initial coding to add support to **STM32F/L/H/G/WB/MP1** using built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc).
 2. Add examples using STM32 boards.
 
 #### Currently Supported Boards
@@ -588,7 +588,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ---
 
-#### 4. [AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A
+#### 5. [AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A
 
 
 ```
@@ -690,7 +690,7 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 
 ### Releases v1.0.0
 
-1. Initial coding to add support to STM32F/L/H/G/WB/MP1 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
+1. Initial coding to add support to **STM32F/L/H/G/WB/MP1** using built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc).
 2. Add examples using STM32 boards.
 
 ---
