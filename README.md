@@ -216,6 +216,11 @@ Also see examples:
  1. [AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP)
  2. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager)
  3. [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
+ 4. [AsyncCustomHeader_STM32](examples/AsyncCustomHeader_STM32)
+ 5. [AsyncDweetGet_STM32](examples/AsyncDweetGet_STM32)
+ 6. [AsyncDweetPost_STM32](examples/AsyncDweetPost_STM32)
+ 7. [AsyncSimpleGET_STM32](examples/AsyncSimpleGET_STM32)
+ 8. [AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32)
 
 ---
 
@@ -579,6 +584,60 @@ utc_offset: -04:00
 week_number: 37
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
+```
+
+---
+
+#### 4. [AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A
+
+
+```
+Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
+AsyncHTTPRequest @ IP : 192.168.2.72
+
+**************************************
+
+           `:;;;,`                      .:;;:.           
+        .;;;;;;;;;;;`                :;;;;;;;;;;:     TM 
+      `;;;;;;;;;;;;;;;`            :;;;;;;;;;;;;;;;
+     :;;;;;;;;;;;;;;;;;;         `;;;;;;;;;;;;;;;;;;
+    ;;;;;;;;;;;;;;;;;;;;;       .;;;;;;;;;;;;;;;;;;;;
+   ;;;;;;;;:`   `;;;;;;;;;     ,;;;;;;;;.`   .;;;;;;;;
+  .;;;;;;,         :;;;;;;;   .;;;;;;;          ;;;;;;;
+  ;;;;;;             ;;;;;;;  ;;;;;;,            ;;;;;;. 
+ ,;;;;;               ;;;;;;.;;;;;;`              ;;;;;; 
+ ;;;;;.                ;;;;;;;;;;;`      ```       ;;;;;`
+ ;;;;;                  ;;;;;;;;;,       ;;;       .;;;;;
+`;;;;:                  `;;;;;;;;        ;;;        ;;;;;
+,;;;;`    `,,,,,,,,      ;;;;;;;      .,,;;;,,,     ;;;;;
+:;;;;`    .;;;;;;;;       ;;;;;,      :;;;;;;;;     ;;;;;
+:;;;;`    .;;;;;;;;      `;;;;;;      :;;;;;;;;     ;;;;;
+.;;;;.                   ;;;;;;;.        ;;;        ;;;;;
+ ;;;;;                  ;;;;;;;;;        ;;;        ;;;;;
+ ;;;;;                 .;;;;;;;;;;       ;;;       ;;;;;,
+ ;;;;;;               `;;;;;;;;;;;;                ;;;;; 
+ `;;;;;,             .;;;;;; ;;;;;;;              ;;;;;; 
+  ;;;;;;:           :;;;;;;.  ;;;;;;;            ;;;;;;
+   ;;;;;;;`       .;;;;;;;,    ;;;;;;;;        ;;;;;;;:
+    ;;;;;;;;;:,:;;;;;;;;;:      ;;;;;;;;;;:,;;;;;;;;;;
+    `;;;;;;;;;;;;;;;;;;;.        ;;;;;;;;;;;;;;;;;;;;
+      ;;;;;;;;;;;;;;;;;           :;;;;;;;;;;;;;;;;:
+       ,;;;;;;;;;;;;;,              ;;;;;;;;;;;;;;
+         .;;;;;;;;;`                  ,;;;;;;;;:         
+                                                         
+                                                         
+                                                         
+                                                         
+    ;;;   ;;;;;`  ;;;;:  .;;  ;; ,;;;;;, ;;. `;,  ;;;;
+    ;;;   ;;:;;;  ;;;;;; .;;  ;; ,;;;;;: ;;; `;, ;;;:;;
+   ,;:;   ;;  ;;  ;;  ;; .;;  ;;   ,;,   ;;;,`;, ;;  ;;
+   ;; ;:  ;;  ;;  ;;  ;; .;;  ;;   ,;,   ;;;;`;, ;;  ;;. 
+   ;: ;;  ;;;;;:  ;;  ;; .;;  ;;   ,;,   ;;`;;;, ;;  ;;` 
+  ,;;;;;  ;;`;;   ;;  ;; .;;  ;;   ,;,   ;; ;;;, ;;  ;;
+  ;;  ,;, ;; .;;  ;;;;;:  ;;;;;: ,;;;;;: ;;  ;;, ;;;;;;
+  ;;   ;; ;;  ;;` ;;;;.   `;;;:  ,;;;;;, ;;  ;;,  ;;;;
+
+
 ```
 
 ---
