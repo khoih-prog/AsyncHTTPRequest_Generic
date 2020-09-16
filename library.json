@@ -6,13 +6,13 @@
   "authors": [
     {
       "name": "Bob Lemaire",
-      "url":   "https://github.com/boblemaire",
-    }
+      "url":   "https://github.com/boblemaire"
+    },
     {
       "name":  "Khoi Hoang",
       "url":   "https://github.com/khoih-prog",
       "email": "khoih.prog@gmail.com",
-      "maintainer": true,
+      "maintainer": true
     }  
   ],
   "repository":
