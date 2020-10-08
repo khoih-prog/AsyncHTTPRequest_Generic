@@ -23,12 +23,8 @@
   ------- -----------  ---------- -----------
   1.0.0    K Hoang     14/09/2020 Initial coding to add support to STM32 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
  *****************************************************************************************************************************/
- 
-#pragma once
 
-#ifndef AsyncHTTPRequest_Impl_Generic_h
-#define AsyncHTTPRequest_Impl_Generic_h
-
+#include "AsyncHTTPRequest_Generic.h"
 
 //**************************************************************************************************************
 AsyncHTTPRequest::AsyncHTTPRequest(): _readyState(readyStateUnsent), _HTTPcode(0), _chunked(false), _debug(DEBUG_IOTA_HTTP_SET)
@@ -1187,5 +1183,3 @@ char* AsyncHTTPRequest::_charstar(const __FlashStringHelper * str)
 }
 
 #endif
-
-#endif    // AsyncHTTPRequest_Impl_Generic_h

@@ -148,6 +148,4 @@ class xbuf: public Print
 
 };
 
-#include "utility/xbuf_Impl.h"
-
 #endif    // xbuf_h

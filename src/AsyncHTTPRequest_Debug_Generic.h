@@ -24,8 +24,7 @@
   1.0.0    K Hoang     14/09/2020 Initial coding to add support to STM32 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
  *****************************************************************************************************************************/
  
-#ifndef AsyncHTTPRequest_Debug_STM32_H
-#define AsyncHTTPRequest_Debug_STM32_H
+#pragma once
 
 #ifdef ASYNC_HTTP_DEBUG_PORT
   #define A_DBG_PORT      ASYNC_HTTP_DEBUG_PORT
@@ -67,5 +66,3 @@
 #define AHTTP_LOGDEBUG1(x,y)      if(_ASYNC_HTTP_LOGLEVEL_>3) { A_DBG_PORT.print("[AHTTP] "); A_DBG_PORT.print(x); A_DBG_PORT.print(" "); A_DBG_PORT.println(y); }
 #define AHTTP_LOGDEBUG2(x,y,z)    if(_ASYNC_HTTP_LOGLEVEL_>3) { A_DBG_PORT.print("[AHTTP] "); A_DBG_PORT.print(x); A_DBG_PORT.print(" "); A_DBG_PORT.print(y); A_DBG_PORT.print(" "); A_DBG_PORT.println(z); }
 #define AHTTP_LOGDEBUG3(x,y,z,w)  if(_ASYNC_HTTP_LOGLEVEL_>3) { A_DBG_PORT.print("[AHTTP] "); A_DBG_PORT.print(x); A_DBG_PORT.print(" "); A_DBG_PORT.print(y); A_DBG_PORT.print(" "); A_DBG_PORT.print(z); A_DBG_PORT.print(" "); A_DBG_PORT.println(w); }
-
-#endif    // AsyncHTTPRequest_Debug_STM32_H

@@ -27,7 +27,7 @@
 #ifndef xbuf_Impl_h
 #define xbuf_Impl_h
 
-//#include "utility/xbuf.h"
+#include "utility/xbuf.h"
 
 xbuf::xbuf(const uint16_t segSize) : _head(nullptr), _tail(nullptr), _used(0), _free(0), _offset(0) 
 {

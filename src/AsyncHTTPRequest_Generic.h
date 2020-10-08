@@ -24,8 +24,7 @@
   1.0.0    K Hoang     14/09/2020 Initial coding to add support to STM32 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
  *****************************************************************************************************************************/
  
-#ifndef AsyncHTTPRequest_Generic_h
-#define AsyncHTTPRequest_Generic_h
+#pragma once
 
 #define AsyncHTTPRequest_Generic_version   "1.0.0"
 
@@ -263,7 +262,3 @@ class AsyncHTTPRequest
     void        _onPoll(AsyncClient*);
     bool        _collectHeaders();
 };
-
-#include "AsyncHTTPRequest_Impl_Generic.h"
-
-#endif    // AsyncHTTPRequest_Generic_h
