@@ -45,6 +45,11 @@ Chunked responses are recognized and handled transparently.
 ---
 ---
 
+### Releases v1.0.1
+
+1. Restore cpp code besides Impl.h code to use in case of `multiple definition` linker error. Thanks to [Daniel Brunner](https://github.com/0xFEEDC0DE64) to report and make PR in [**Fixed linker errors when included in multiple .cpp files**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/1). See [**HOWTO Fix `Multiple Definitions` Linker Error**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic#HOWTO-Fix-Multiple-Definitions-Linker-Error)
+
+
 ### Releases v1.0.0
 
 1. Initial coding to add support to **STM32F/L/H/G/WB/MP1** using built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc).
@@ -208,6 +213,19 @@ theses files must be copied into the corresponding directory:
 
 - `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/variants/NUCLEO_F767ZI/variant.h`
 - `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/variants/NUCLEO_L053R8/variant.h`
+
+---
+---
+
+### HOWTO Fix `Multiple Definitions` Linker Error
+
+The current library implementation, using xyz-Impl.h instead of standard xyz.cpp, possibly creates certain `Multiple Definitions` Linker error in certain use cases. Although it's simple to just modify several lines of code, either in the library or in the application, the library is adding a separate source directory, named src_cpp, besides the standard src directory.
+
+To use the old standard cpp way, just 
+
+1. **Rename the h-only src directory into src_h.**
+2. **Then rename the cpp src_cpp directory into src.**
+3. Close then reopen the application code in Arduino IDE, etc. to recompile from scratch.
 
 ---
 ---
@@ -442,7 +460,7 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
 abbreviation: EDT
-client_ip: 216.154.52.212
+client_ip: aaa.bbb.ccc.ddd
 datetime: 2020-09-13T18:22:59.555816-04:00
 day_of_week: 0
 day_of_year: 257
@@ -459,7 +477,7 @@ week_number: 37
 
 **************************************
 abbreviation: EDT
-client_ip: 216.154.52.212
+client_ip: aaa.bbb.ccc.ddd
 datetime: 2020-09-13T18:27:57.586325-04:00
 day_of_week: 0
 day_of_year: 257
@@ -489,7 +507,7 @@ After waiting 3.43 secs more in setup(), connection result is connected. Local I
 H
 **************************************
 abbreviation: EDT
-client_ip: 216.154.52.212
+client_ip: aaa.bbb.ccc.ddd
 datetime: 2020-09-13T19:35:37.951609-04:00
 day_of_week: 0
 day_of_year: 257
@@ -521,7 +539,7 @@ After waiting 2.35 secs more in setup(), connection result is connected. Local I
 H
 **************************************
 abbreviation: EDT
-client_ip: 216.154.52.212
+client_ip: aaa.bbb.ccc.ddd
 datetime: 2020-09-13T19:37:02.118166-04:00
 day_of_week: 0
 day_of_year: 257
@@ -539,7 +557,7 @@ week_number: 37
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 **************************************
 abbreviation: EDT
-client_ip: 216.154.52.212
+client_ip: aaa.bbb.ccc.ddd
 datetime: 2020-09-13T19:42:01.507586-04:00
 day_of_week: 0
 day_of_year: 257
@@ -570,7 +588,7 @@ HTTP WebServer is @ IP : 192.168.2.81
 
 **************************************
 abbreviation: EDT
-client_ip: 216.154.52.212
+client_ip: aaa.bbb.ccc.ddd
 datetime: 2020-09-13T19:56:28.295033-04:00
 day_of_week: 0
 day_of_year: 257
@@ -690,6 +708,10 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 ---
 ---
 
+### Releases v1.0.1
+
+1. Restore cpp code besides Impl.h code to use in case of `multiple definition` linker error. Thanks to [Daniel Brunner](https://github.com/0xFEEDC0DE64) to report and make PR in [**Fixed linker errors when included in multiple .cpp files**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/1). See [**HOWTO Fix `Multiple Definitions` Linker Error**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic#HOWTO-Fix-Multiple-Definitions-Linker-Error)
+
 ### Releases v1.0.0
 
 1. Initial coding to add support to **STM32F/L/H/G/WB/MP1** using built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc).
@@ -702,13 +724,14 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 
 This library is based on, modified, bug-fixed and improved from:
 
-1. [Bob Lemaire's asyncHTTPrequest Library](https://github.com/boblemaire/asyncHTTPrequest)
+1. [Bob Lemaire's **asyncHTTPrequest Library**](https://github.com/boblemaire/asyncHTTPrequest) to use the better **asynchronous** features of these following Async TCP Libraries : ( [`ESPAsyncTCP`](https://github.com/me-no-dev/ESPAsyncTCP), [`AsyncTCP`](https://github.com/me-no-dev/AsyncTCP), and [`STM32AsyncTCP`](https://github.com/philbowles/STM32AsyncTCP) ).
 
-to use the better **asynchronous** features of these following Async TCP Libraries : ( [`ESPAsyncTCP`](https://github.com/me-no-dev/ESPAsyncTCP), [`AsyncTCP`](https://github.com/me-no-dev/AsyncTCP), and [`STM32AsyncTCP`](https://github.com/philbowles/STM32AsyncTCP) ).
+2. Thanks to [Daniel Brunner](https://github.com/0xFEEDC0DE64) to report and make PR in [Fixed linker errors when included in multiple .cpp files](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/1) leading to v1.0.1. See [**HOWTO Fix `Multiple Definitions` Linker Error**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic#HOWTO-Fix-Multiple-Definitions-Linker-Error)
 
 <table>
   <tr>
     <td align="center"><a href="https://github.com/boblemaire"><img src="https://github.com/boblemaire.png" width="100px;" alt="boblemaire"/><br /><sub><b>⭐️ Bob Lemaire</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/0xFEEDC0DE64"><img src="https://github.com/0xFEEDC0DE64.png" width="100px;" alt="0xFEEDC0DE64"/><br /><sub><b>Daniel Brunner</b></sub></a><br /></td>
   </tr> 
 </table>
 

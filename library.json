@@ -1,6 +1,6 @@
 {
   "name":"AsyncHTTPRequest_Generic",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description":"Simple Async HTTP Request library, supporting GET and POST, on top of AsyncTCP libraries, such as AsyncTCP, ESPAsyncTCP, AsyncTCP_STM32, etc.. for ESP32, ESP8266 and currently STM32 with built-in LAN8742A Ethernet.",
   "keywords":"async,tcp,http,ESP8266,ESP32,ESPAsyncTCP,AsyncTCP,stm32,ethernet,wifi,lan8742a",
   "authors": [

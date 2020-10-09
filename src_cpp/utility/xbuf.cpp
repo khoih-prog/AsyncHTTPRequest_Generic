@@ -1,5 +1,5 @@
 /****************************************************************************************************************************
-  xbuf_Impl.h - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
+  src_cpp/utility/xbuf_Impl.h - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
   
   For ESP8266, ESP32 and STM32 with built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
   
@@ -25,7 +25,7 @@
   1.0.1    K Hoang     09/10/2020 Restore cpp code besides Impl.h code.
  *****************************************************************************************************************************/
 
-#pragma once
+#include "utility/xbuf.h"
 
 xbuf::xbuf(const uint16_t segSize) : _head(nullptr), _tail(nullptr), _used(0), _free(0), _offset(0) 
 {

@@ -43,6 +43,7 @@
         It could be extended but didn't seem to be a practical consideration.    
    
 ********************************************************************************************/
+
 #pragma once
 
 #include <Arduino.h>
@@ -143,8 +144,5 @@ class xbuf: public Print
 
     void        addSeg();
     void        remSeg();
-
 };
-
-#include "utility/xbuf_Impl.h"
 
