@@ -1,5 +1,5 @@
 /****************************************************************************************************************************
-  src_cpp/AsyncHTTPRequest_Generic.h - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
+  AsyncHTTPRequest_Generic.h - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
   
   For ESP8266, ESP32 and STM32 with built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
   
@@ -17,17 +17,18 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.0.1
+  Version: 1.0.2
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0    K Hoang     14/09/2020 Initial coding to add support to STM32 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
   1.0.1    K Hoang     09/10/2020 Restore cpp code besides Impl.h code.
+  1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
  *****************************************************************************************************************************/
 
 #pragma once
 
-#define AsyncHTTPRequest_Generic_version   "1.0.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION   "1.0.2"
 
 #include <Arduino.h>
 
@@ -43,15 +44,29 @@
   #define DEBUG_IOTA_HTTP_SET     false
 #endif
 
+
+// KH add
+#define SAFE_DELETE(object)         if (object) { delete object;}
+#define SAFE_DELETE_ARRAY(object)   if (object) { delete[] object;}
+
 #if ESP32
 
   #include <AsyncTCP.h>
+  
+  // KH mod
+  #define MUTEX_LOCK_NR           if (xSemaphoreTakeRecursive(threadLock,portMAX_DELAY) != pdTRUE) { return;}
+  #define MUTEX_LOCK(returnVal)   if (xSemaphoreTakeRecursive(threadLock,portMAX_DELAY) != pdTRUE) { return returnVal;}
+  
   #define _lock       xSemaphoreTakeRecursive(threadLock,portMAX_DELAY)
   #define _unlock     xSemaphoreGiveRecursive(threadLock)
   
 #elif ESP8266
 
   #include <ESPAsyncTCP.h>
+  
+  #define MUTEX_LOCK_NR
+  #define MUTEX_LOCK(returnVal)
+  
   #define _lock
   #define _unlock
   
@@ -60,6 +75,9 @@
        defined(STM32WB) || defined(STM32MP1) )
        
   #include "STM32AsyncTCP.h"
+  
+  #define MUTEX_LOCK_NR
+  #define MUTEX_LOCK(returnVal)
   #define _lock
   #define _unlock
   
@@ -108,9 +126,12 @@ class AsyncHTTPRequest
       
       ~header() 
       {
-        delete[] name;
-        delete[] value;
-        delete next;
+        SAFE_DELETE_ARRAY(name)
+        SAFE_DELETE_ARRAY(value)
+        SAFE_DELETE(next)
+        //delete[] name;
+        //delete[] value;
+        //delete next;
       }
     };
 
@@ -131,13 +152,13 @@ class AsyncHTTPRequest
       
       ~URL() 
       {
-        delete[] scheme;
-        delete[] user;
-        delete[] pwd;
-        delete[] host;
-        delete[] path;
-        delete[] query;
-        delete[] fragment;
+        SAFE_DELETE_ARRAY(scheme)
+        SAFE_DELETE_ARRAY(user)
+        SAFE_DELETE_ARRAY(pwd)
+        SAFE_DELETE_ARRAY(host)
+        SAFE_DELETE_ARRAY(path)
+        SAFE_DELETE_ARRAY(query)
+        SAFE_DELETE_ARRAY(fragment)
       }
     };
 
@@ -263,3 +284,4 @@ class AsyncHTTPRequest
     void        _onPoll(AsyncClient*);
     bool        _collectHeaders();
 };
+

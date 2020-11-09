@@ -17,12 +17,13 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.0.1
+  Version: 1.0.2
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0    K Hoang     14/09/2020 Initial coding to add support to STM32 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
   1.0.1    K Hoang     09/10/2020 Restore cpp code besides Impl.h code.
+  1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
  *****************************************************************************************************************************/
 //************************************************************************************************************
 //
@@ -49,8 +50,8 @@
 
 #include "defines.h"
 
-// 600s = 10 minutes to not flooding
-#define HTTP_REQUEST_INTERVAL_MS     600000
+// 600s = 10 minutes to not flooding, 10s in testing
+#define HTTP_REQUEST_INTERVAL_MS     10000  //600000
 
 #include <AsyncHTTPRequest_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 

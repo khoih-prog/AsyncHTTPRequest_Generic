@@ -45,6 +45,10 @@ Chunked responses are recognized and handled transparently.
 ---
 ---
 
+### Releases v1.0.2
+
+1. Make Mutex Lock and delete more reliable and error-proof to prevent random crash.
+
 ### Releases v1.0.1
 
 1. Restore cpp code besides Impl.h code to use in case of `multiple definition` linker error. Thanks to [Daniel Brunner](https://github.com/0xFEEDC0DE64) to report and make PR in [**Fixed linker errors when included in multiple .cpp files**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/1). See [**HOWTO Fix `Multiple Definitions` Linker Error**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic#HOWTO-Fix-Multiple-Definitions-Linker-Error)
@@ -293,12 +297,12 @@ Please take a look at other examples, as well.
 ```cpp
 #include "defines.h"
 
-// 600s = 10 minutes to not flooding
-#define HTTP_REQUEST_INTERVAL_MS     600000
+// 600s = 10 minutes to not flooding, 10s in testing
+#define HTTP_REQUEST_INTERVAL_MS     10000    // 600000
 
-#include <AsyncHTTPRequest_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#include <AsyncHTTPRequest_Generic.h>         // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 
-#include <Ticker.h>                   // https://github.com/sstaub/Ticker
+#include <Ticker.h>                           // https://github.com/sstaub/Ticker
 
 AsyncHTTPRequest request;
 
@@ -747,6 +751,10 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 
 ---
 ---
+
+### Releases v1.0.2
+
+1. Make Mutex Lock and delete more reliable and error-proof to prevent random crash.
 
 ### Releases v1.0.1
 

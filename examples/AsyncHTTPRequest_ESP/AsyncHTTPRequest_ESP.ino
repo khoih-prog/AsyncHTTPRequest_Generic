@@ -17,12 +17,13 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.0.1
+  Version: 1.0.2
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0    K Hoang     14/09/2020 Initial coding to add support to STM32 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
   1.0.1    K Hoang     09/10/2020 Restore cpp code besides Impl.h code.
+  1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
  *****************************************************************************************************************************/
 //************************************************************************************************************
 //
@@ -56,7 +57,7 @@
 #define _ASYNC_HTTP_LOGLEVEL_     1    
 
 // 300s = 5 minutes to not flooding
-#define HTTP_REQUEST_INTERVAL     300
+#define HTTP_REQUEST_INTERVAL     30  //300
 
 // 10s
 #define HEARTBEAT_INTERVAL        10
@@ -77,6 +78,7 @@ const char* password    = "your_pass";
 
 AsyncHTTPRequest request;
 Ticker ticker;
+Ticker ticker1;
 
 void heartBeatPrint(void)
 {
@@ -106,6 +108,10 @@ void sendRequest()
     request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
     request.send();
   }
+  else
+  {
+    Serial.println("Can't send request");
+  }
 }
 
 void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState) 
@@ -130,13 +136,6 @@ void setup()
 
   WiFi.mode(WIFI_STA);
 
-  if (WiFi.status() == WL_NO_SHIELD)
-  {
-    Serial.println(F("WiFi shield not present"));
-    // don't continue
-    while (true);
-  } 
-
   WiFi.begin(ssid, password);
   
   Serial.println("Connecting to WiFi SSID: " + String(ssid));
@@ -155,7 +154,7 @@ void setup()
   request.onReadyStateChange(requestCB);
   ticker.attach(HTTP_REQUEST_INTERVAL, sendRequest);
 
-  ticker.attach(HEARTBEAT_INTERVAL, heartBeatPrint);
+  ticker1.attach(HEARTBEAT_INTERVAL, heartBeatPrint);
   
   // Send first request now
   sendRequest();  
