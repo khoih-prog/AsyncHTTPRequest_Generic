@@ -22,31 +22,40 @@
   },
   "license": "MIT",
   "frameworks": "arduino",
-  "platforms": ["*"],
   "dependencies": [
     {
+      "owner": "me-no-dev",
       "name": "AsyncTCP",
-      "platforms": "espressif32"
+      "version": "*",
+      "platforms": ["espressif32"]
     },
     {
+      "owner": "me-no-dev",
       "name": "ESP AsyncTCP",
+      "version": "*",
       "platforms": "espressif8266"
     },
     {
+      "owner": "khoih-prog",
       "name": "ESPAsync_WiFiManager",
       "platforms": ["espressif8266", "espressif32"]
     },
     {
+      "owner": "stm32duino",
       "name": "STM32duino LwIP",
+      "version": "^2.1.2",
       "platforms": "ststm32"
     },
     {
-      "name": "STM32duino STM32Ethernet",
+      "owner": "stm32duino",
+      "name": "STM32Ethernet",
+      "version": "^1.2.0",
       "platforms": "ststm32"
     },
     {
-      "name": "STM32 AsyncTCP",
-      "platforms": "ststm32"
+      "name": "external-repo",
+      "version": "https://github.com/philbowles/STM32AsyncTCP"
     }
-  ]
+  ],
+  "platforms": ["espressif8266", "espressif32", "ststm32"]
 }
