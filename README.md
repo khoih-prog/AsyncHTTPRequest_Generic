@@ -80,7 +80,7 @@ This library is based on, modified from:
 ---
 ---
 
-## Prerequisite
+## Prerequisites
 
  1. [`Arduino IDE 1.8.13+` for Arduino](https://www.arduino.cc/en/Main/Software)
  2. [`ESP8266 Core 2.7.4+`](https://github.com/esp8266/Arduino) for ESP8266-based boards.
@@ -162,9 +162,24 @@ This file must be copied into the directory:
 
 - `~/.arduino15/packages/arduino/hardware/sam/x.yy.zz/platform.txt`
 
- 4. ***To be able to compile without error and automatically detect and display BOARD_NAME on Arduino SAMD (Nano-33-IoT, etc) boards***, you have to copy the whole [Arduino SAMD cores 1.8.9](Packages_Patches/arduino/hardware/samd/1.8.9) directory into Arduino SAMD directory (~/.arduino15/packages/arduino/hardware/samd/1.8.9).
+ 4. ***To be able to compile without error and automatically detect and display BOARD_NAME on Arduino SAMD (Nano-33-IoT, etc) boards***, you have to copy the whole [Arduino SAMD cores 1.8.10](Packages_Patches/arduino/hardware/samd/1.8.10) directory into Arduino SAMD directory (~/.arduino15/packages/arduino/hardware/samd/1.8.10).
  
+#### For core version v1.8.10+
+
+Supposing the Arduino SAMD version is 1.8.10. Now only one file must be copied into the directory:
+
+- `~/.arduino15/packages/arduino/hardware/samd/1.8.10/platform.txt`
+
+Whenever a new version is installed, remember to copy this files into the new version directory. For example, new version is x.yy.zz
+
+This file must be copied into the directory:
+
+- `~/.arduino15/packages/arduino/hardware/samd/x.yy.zz/platform.txt`
+ 
+#### For core version v1.8.9-
+
 Supposing the Arduino SAMD version is 1.8.9. These files must be copied into the directory:
+
 - `~/.arduino15/packages/arduino/hardware/samd/1.8.9/platform.txt`
 - ***`~/.arduino15/packages/arduino/hardware/samd/1.8.9/cores/arduino/Arduino.h`***
 
