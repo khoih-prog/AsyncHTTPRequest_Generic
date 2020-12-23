@@ -17,13 +17,14 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.0.2
+  Version: 1.1.0
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0    K Hoang     14/09/2020 Initial coding to add support to STM32 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
   1.0.1    K Hoang     09/10/2020 Restore cpp code besides Impl.h code.
   1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
+  1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
  *****************************************************************************************************************************/
  
 #pragma once
@@ -110,6 +111,7 @@ bool  AsyncHTTPRequest::open(const char* method, const char* URL)
   _contentRead  = 0;
   _readyState   = readyStateUnsent;
 
+
   if (strcmp(method, "GET") == 0)
   {
     _HTTPmethod = HTTPmethodGET;
@@ -118,8 +120,27 @@ bool  AsyncHTTPRequest::open(const char* method, const char* URL)
   {
     _HTTPmethod = HTTPmethodPOST;
   }
+  // New in v1.1.0
+  else if (strcmp(method, "PUT") == 0)
+  {
+    _HTTPmethod = HTTPmethodPUT;
+  }
+  else if (strcmp(method, "PATCH") == 0)
+  {
+    _HTTPmethod = HTTPmethodPATCH;
+  }
+  else if (strcmp(method, "DELETE") == 0)
+  {
+    _HTTPmethod = HTTPmethodDELETE;
+  }
+  else if (strcmp(method, "HEAD") == 0)
+  {
+    _HTTPmethod = HTTPmethodHEAD;
+  }
+  //////
   else
     return false;
+
 
   if (!_parseURL(URL))
   {
@@ -589,13 +610,19 @@ bool   AsyncHTTPRequest::_buildRequest()
       return false;
   }
 
-  _request->write(_HTTPmethod == HTTPmethodGET ? "GET " : "POST ");
+  
+  // New in v1.1.0
+  _request->write(_HTTPmethodStringwithSpace[_HTTPmethod]);
+  //////
+    
   _request->write(_URL->path);
   _request->write(_URL->query);
   _request->write(" HTTP/1.1\r\n");
   
-  AHTTP_LOGDEBUG3(_HTTPmethod == HTTPmethodGET ? "GET " : "POST ", _URL->path, _URL->query, " HTTP/1.1\r\n" );
-
+  // New in v1.1.0
+  AHTTP_LOGDEBUG3(_HTTPmethodStringwithSpace[_HTTPmethod], _URL->path, _URL->query, " HTTP/1.1\r\n" );
+  //////
+    
   SAFE_DELETE(_URL)
 
   _URL = nullptr;

@@ -9,6 +9,62 @@
 ---
 ---
 
+## Table of Contents
+
+
+* [Why do we need the new Async AsyncHTTPRequest_Generic library](#why-do-we-need-this-async-asynchttprequest_generic-library)
+  * [Features](#features)
+  * [Supports](#supports)
+  * [Principles of operation](#principles-of-operation)
+* [Changelog](#changelog)
+  * [Releases v1.1.0](#releases-v110)
+  * [Releases v1.0.2](#releases-v102)
+  * [Releases v1.0.1](#releases-v101)
+  * [Releases v1.0.0](#releases-v100)
+* [AsyncHTTPRequest_Generic for ESP32, ESP8266 using built-in WiFi and STM32 boards using built-in LAN8742A Ethernet](#asynchttprequest_generic-for-esp32-esp8266-using-built-in-wifi-and-stm32-boards-using-built-in-lan8742a-ethernet)
+* [Prerequisites](#prerequisites)
+* [Installation](#installation)
+  * [Use Arduino Library Manager](#use-arduino-library-manager)
+  * [Manual Install](#manual-install)
+  * [VS Code & PlatformIO](#vs-code--platformio)
+* [Packages' Patches](#packages-patches)
+* [HOWTO Fix `Multiple Definitions` Linker Error](#howto-fix-multiple-definitions-linker-error)
+* [HOWTO Use analogRead() with ESP32 running WiFi and/or BlueTooth (BT/BLE)](#howto-use-analogread-with-esp32-running-wifi-andor-bluetooth-btble)
+  * [1. ESP32 has 2 ADCs, named ADC1 and ADC2](#1--esp32-has-2-adcs-named-adc1-and-adc2)
+  * [2. ESP32 ADCs functions](#2-esp32-adcs-functions)
+  * [3. ESP32 WiFi uses ADC2 for WiFi functions](#3-esp32-wifi-uses-adc2-for-wifi-functions)
+* [Examples](#examples)
+  * [AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP)
+  * [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager)
+  * [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
+  * [AsyncCustomHeader_STM32](examples/AsyncCustomHeader_STM32)
+  * [AsyncDweetGet_STM32](examples/AsyncDweetGet_STM32)
+  * [AsyncDweetPost_STM32](examples/AsyncDweetPost_STM32)
+  * [AsyncSimpleGET_STM32](examples/AsyncSimpleGET_STM32)
+  * [AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32)
+* [Example AsyncHTTPRequest_STM32](#example-asynchttprequest_stm32)
+  * [File AsyncHTTPRequest_STM32.ino](#1-file-asynchttprequest_stm32ino)
+  * [2. File defines.h](#2-file-definesh) 
+* [Debug Terminal Output Samples](#debug-termimal-output-samples)
+  * [1. AsyncHTTPRequest_STM32 running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A ](#1-asynchttprequest_stm32-running-on-stm32f7-nucleo-144-nucleo_f767zi-using-built-in-lan8742a)
+  * [2. AsyncHTTPRequest_ESP_WiFiManager running on ESP8266_NODEMCU](#2-asynchttprequest_esp_wifimanager-running-on-esp8266_nodemcu)
+  * [3. AsyncHTTPRequest_ESP_WiFiManager running on ESP32_DEV](#3-asynchttprequest_esp_wifimanager-running-on-esp32_dev)
+  * [4. AsyncHTTPRequest_ESP running on ESP8266_NODEMCU](#4-asynchttprequest_esp-running-on-esp8266_nodemcu)
+  * [5. AsyncWebClientRepeating_STM32 running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A](#5-asyncwebclientrepeating_stm32-running-on-stm32f7-nucleo-144-nucleo_f767zi-using-built-in-lan8742a)
+* [Debug](#debug)
+* [Troubleshooting](#troubleshooting)
+* [Issues](#issues)
+* [Releases](#releases)
+* [TO DO](#to-do)
+* [DONE](#done)
+* [Contributions and Thanks](#contributions-and-thanks)
+* [Contributing](#contributing)
+* [License and credits](#license-and-credits)
+* [Copyright](#copyright)
+
+---
+---
+
 ## Why do we need this Async [AsyncHTTPRequest_Generic library](https://github.com/khoih-prog/AsyncHTTPRequest_Generic)
 
 #### Features
@@ -19,9 +75,9 @@
 4. Relying on **[`STM32duino LwIP`](https://github.com/stm32duino/LwIP)/[`STM32duino STM32Ethernet`](https://github.com/stm32duino/STM32Ethernet)/[`STM32AsyncTCP`](https://github.com/philbowles/STM32AsyncTCP) for STM32 using built-in LAN8742A Ethernet.**
 5. Methods similar in format and usage to XmlHTTPrequest in Javascript.
 
-#### Supports:
+#### Supports
 
-1. **GET and POST**
+1. **GET, POST, PUT, PATCH, DELETE and HEAD**
 2. Request and response headers
 3. Chunked response
 4. Single String response for short (<~5K) responses (heap permitting).
@@ -44,6 +100,16 @@ Chunked responses are recognized and handled transparently.
 
 ---
 ---
+
+
+## Changelog
+
+### Releases v1.1.0
+
+1. Add HTTP PUT, PATCH, DELETE and HEAD methods. Check [Add support for sending PUT, PATCH, DELETE request](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/5)
+2. Add Table of Contents
+3. Add Version String
+
 
 ### Releases v1.0.2
 
@@ -509,7 +575,7 @@ IPAddress ip(192, 168, 2, 232);
 ---
 ---
 
-### Debug Terminal Oouput Samples
+### Debug Terminal Ouput Samples
 
 #### 1. [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A 
 
@@ -763,9 +829,16 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
  1. Initially add support to STM32 using built-in LAN8742A Etnernet. Tested on **STM32F7 Nucleo-144 F767ZI**.
  2. Add more examples.
  3. Add debugging features.
+ 4. Add PUT, PATCH, DELETE and HEAD besides GET and POST.
 
 ---
 ---
+
+## Releases
+
+### Releases v1.1.0
+
+1. Add HTTP PUT, PATCH, DELETE and HEAD methods. Check [Add support for sending PUT, PATCH, DELETE request](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/5)
 
 ### Releases v1.0.2
 
@@ -791,10 +864,13 @@ This library is based on, modified, bug-fixed and improved from:
 
 2. Thanks to [Daniel Brunner](https://github.com/0xFEEDC0DE64) to report and make PR in [Fixed linker errors when included in multiple .cpp files](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/1) leading to v1.0.1. See [**HOWTO Fix `Multiple Definitions` Linker Error**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic#HOWTO-Fix-Multiple-Definitions-Linker-Error)
 
+3. Thanks to [gleniat](https://github.com/gleniat) to make enhancement request in[Add support for sending PUT, PATCH, DELETE request](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/5) leading to v1.1.0.
+
 <table>
   <tr>
     <td align="center"><a href="https://github.com/boblemaire"><img src="https://github.com/boblemaire.png" width="100px;" alt="boblemaire"/><br /><sub><b>⭐️ Bob Lemaire</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/0xFEEDC0DE64"><img src="https://github.com/0xFEEDC0DE64.png" width="100px;" alt="0xFEEDC0DE64"/><br /><sub><b>Daniel Brunner</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/gleniat"><img src="https://github.com/gleniat.png" width="100px;" alt="gleniat"/><br /><sub><b>gleniat</b></sub></a><br /></td>
   </tr> 
 </table>
 

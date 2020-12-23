@@ -1,7 +1,7 @@
 {
   "name":"AsyncHTTPRequest_Generic",
-  "version": "1.0.2",
-  "description":"Simple Async HTTP Request library, supporting GET and POST, on top of AsyncTCP libraries, such as AsyncTCP, ESPAsyncTCP, AsyncTCP_STM32, etc.. for ESP32, ESP8266 and currently STM32 with built-in LAN8742A Ethernet.",
+  "version": "1.1.0",
+  "description":"Simple Async HTTP Request library, supporting GET, POST, PUT, PATCH, DELETE and HEAD, on top of AsyncTCP libraries, such as AsyncTCP, ESPAsyncTCP, AsyncTCP_STM32, etc.. for ESP32, ESP8266 and currently STM32 with built-in LAN8742A Ethernet.",
   "keywords":"async,tcp,http,ESP8266,ESP32,ESPAsyncTCP,AsyncTCP,stm32,ethernet,wifi,lan8742a",
   "authors": [
     {
@@ -22,34 +22,36 @@
   },
   "license": "MIT",
   "frameworks": "arduino",
-  "dependencies": [
+  "dependencies": 
+  [
     {
       "owner": "me-no-dev",
       "name": "AsyncTCP",
-      "version": "*",
+      "version": ">=1.1.1",
       "platforms": ["espressif32"]
     },
     {
       "owner": "me-no-dev",
       "name": "ESP AsyncTCP",
-      "version": "*",
+      "version": ">=1.2.2",
       "platforms": "espressif8266"
     },
     {
       "owner": "khoih-prog",
       "name": "ESPAsync_WiFiManager",
+      "version": ">=1.4.1",
       "platforms": ["espressif8266", "espressif32"]
     },
     {
       "owner": "stm32duino",
       "name": "STM32duino LwIP",
-      "version": "^2.1.2",
+      "version": ">=2.1.2",
       "platforms": "ststm32"
     },
     {
       "owner": "stm32duino",
       "name": "STM32Ethernet",
-      "version": "^1.2.0",
+      "version": ">=1.2.0",
       "platforms": "ststm32"
     },
     {
