@@ -17,6 +17,7 @@
   * [Supports](#supports)
   * [Principles of operation](#principles-of-operation)
 * [Changelog](#changelog)
+  * [Releases v1.1.1](#releases-v111)
   * [Releases v1.1.0](#releases-v110)
   * [Releases v1.0.2](#releases-v102)
   * [Releases v1.0.1](#releases-v101)
@@ -103,6 +104,11 @@ Chunked responses are recognized and handled transparently.
 
 
 ## Changelog
+
+### Releases v1.1.1
+
+1. Prevent crash if request and/or method not correct.
+
 
 ### Releases v1.1.0
 
@@ -835,6 +841,10 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 ---
 
 ## Releases
+
+### Releases v1.1.1
+
+1. Prevent crash if request and/or method not correct.
 
 ### Releases v1.1.0
 

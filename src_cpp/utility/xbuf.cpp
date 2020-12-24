@@ -17,13 +17,15 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.0.2
+  Version: 1.1.1
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0    K Hoang     14/09/2020 Initial coding to add support to STM32 using built-in Ethernet (Nucleo-144, DISCOVERY, etc).
   1.0.1    K Hoang     09/10/2020 Restore cpp code besides Impl.h code.
   1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
+  1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
+  1.1.1    K Hoang     24/12/2020 Prevent crash if request and/or method not correct.
  *****************************************************************************************************************************/
 
 #include "utility/xbuf.h"

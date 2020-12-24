@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.0
+  Version: 1.1.1
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -25,6 +25,7 @@
   1.0.1    K Hoang     09/10/2020 Restore cpp code besides Impl.h code.
   1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
   1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
+  1.1.1    K Hoang     24/12/2020 Prevent crash if request and/or method not correct.
  *****************************************************************************************************************************/
 
   // Dweet.io POST client. Connects to dweet.io once every ten seconds, sends a POST request and a request body.
@@ -54,6 +55,8 @@ Ticker sendHTTPRequest(sendRequest, HTTP_REQUEST_INTERVAL_MS, 0, MILLIS);
 
 void sendRequest(void)
 { 
+  static bool requestOpenResult;
+  
   if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
   {      
     String postData = "sensorValue="; 
@@ -61,8 +64,21 @@ void sendRequest(void)
 
     Serial.println("\nMaking new POST request");
   
-    request.open("POST", (POST_ServerAddress + dweetName + postData).c_str() );
-    request.send();
+    requestOpenResult = request.open("POST", (POST_ServerAddress + dweetName + postData).c_str() );
+    
+    if (requestOpenResult)
+    {
+      // Only send() if open() returns true, or crash
+      request.send();
+    }
+    else
+    {
+      Serial.println("Can't send bad request");
+    }
+  }
+  else
+  {
+    Serial.println("Can't send request");
   }
 }
 

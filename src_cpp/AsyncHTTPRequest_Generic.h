@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.0
+  Version: 1.1.1
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -25,11 +25,12 @@
   1.0.1    K Hoang     09/10/2020 Restore cpp code besides Impl.h code.
   1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
   1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
+  1.1.1    K Hoang     24/12/2020 Prevent crash if request and/or method not correct.
  *****************************************************************************************************************************/
 
 #pragma once
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION   "AsyncHTTPRequest_Generic v1.1.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION   "AsyncHTTPRequest_Generic v1.1.1"
 
 #include <Arduino.h>
 
@@ -226,6 +227,10 @@ class AsyncHTTPRequest
 
   private:
 
+    // New in v1.1.1
+    bool _requestReadyToSend;
+    //////
+    
     // New in v1.1.0
     typedef enum  { HTTPmethodGET, HTTPmethodPOST, HTTPmethodPUT, HTTPmethodPATCH, HTTPmethodDELETE, HTTPmethodHEAD, HTTPmethodMAX } HTTPmethod;
     
@@ -234,7 +239,7 @@ class AsyncHTTPRequest
     const char* _HTTPmethodStringwithSpace[HTTPmethodMAX] = {"GET ", "POST ", "PUT ", "PATCH ", "DELETE ", "HEAD "};
     //////
     
-    reqStates _readyState;
+    reqStates       _readyState;
 
     int16_t         _HTTPcode;                  // HTTP response code or (negative) exception code
     bool            _chunked;                   // Processing chunked response
@@ -291,5 +296,7 @@ class AsyncHTTPRequest
     void        _onPoll(AsyncClient*);
     bool        _collectHeaders();
 };
+
+
 
 
