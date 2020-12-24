@@ -400,11 +400,26 @@ Ticker sendHTTPRequest(sendRequest, HTTP_REQUEST_INTERVAL_MS, 0, MILLIS);
 
 void sendRequest(void)
 {
+  static bool requestOpenResult;
+  
   if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
   {
-    //request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/London.txt");
-    request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
-    request.send();
+    //requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/London.txt");
+    requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
+    
+    if (requestOpenResult)
+    {
+      // Only send() if open() returns true, or crash
+      request.send();
+    }
+    else
+    {
+      Serial.println("Can't send bad request");
+    }
+  }
+  else
+  {
+    Serial.println("Can't send request");
   }
 }
 
@@ -587,6 +602,7 @@ IPAddress ip(192, 168, 2, 232);
 
 ```
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
+AsyncHTTPRequest_Generic v1.1.1
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -631,6 +647,7 @@ week_number: 37
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
+AsyncHTTPRequest_Generic v1.1.1
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -663,6 +680,7 @@ HHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
+AsyncHTTPRequest_Generic v1.1.1
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -713,6 +731,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
+AsyncHTTPRequest_Generic v1.1.1
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
@@ -744,6 +763,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ```
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
+AsyncHTTPRequest_Generic v1.1.1
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
