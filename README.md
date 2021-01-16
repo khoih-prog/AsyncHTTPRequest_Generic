@@ -918,7 +918,7 @@ If you want to contribute to this project:
 
 ### License and credits ###
 
-- The library is licensed under [MIT](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/master/LICENSE)
+- The library is licensed under [GPLv3](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/master/LICENSE)
 
 ---
 
