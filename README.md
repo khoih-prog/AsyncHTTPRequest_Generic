@@ -17,6 +17,7 @@
   * [Supports](#supports)
   * [Principles of operation](#principles-of-operation)
 * [Changelog](#changelog)
+  * [Releases v1.1.2](#releases-v112)
   * [Releases v1.1.1](#releases-v111)
   * [Releases v1.1.0](#releases-v110)
   * [Releases v1.0.2](#releases-v102)
@@ -29,7 +30,17 @@
   * [Manual Install](#manual-install)
   * [VS Code & PlatformIO](#vs-code--platformio)
 * [Packages' Patches](#packages-patches)
+  * [1. For Adafruit nRF52840 and nRF52832 boards](#1-for-adafruit-nRF52840-and-nRF52832-boards)
+  * [2. For Teensy boards](#2-for-teensy-boards)
+  * [3. For Arduino SAM DUE boards](#3-for-arduino-sam-due-boards)
+  * [4. For Arduino SAMD boards](#4-for-arduino-samd-boards)
+      * [For core version v1.8.10+](#for-core-version-v1810)
+      * [For core version v1.8.9-](#for-core-version-v189-)
+  * [5. For Adafruit SAMD boards](#5-for-adafruit-samd-boards)
+  * [6. For Seeeduino SAMD boards](#6-for-seeeduino-samd-boards)
+  * [7. For STM32 boards](#7-for-stm32-boards) 
 * [HOWTO Fix `Multiple Definitions` Linker Error](#howto-fix-multiple-definitions-linker-error)
+* [Note for Platform IO using ESP32 LittleFS](#note-for-platform-io-using-esp32-littlefs)
 * [HOWTO Use analogRead() with ESP32 running WiFi and/or BlueTooth (BT/BLE)](#howto-use-analogread-with-esp32-running-wifi-andor-bluetooth-btble)
   * [1. ESP32 has 2 ADCs, named ADC1 and ADC2](#1--esp32-has-2-adcs-named-adc1-and-adc2)
   * [2. ESP32 ADCs functions](#2-esp32-adcs-functions)
@@ -105,6 +116,11 @@ Chunked responses are recognized and handled transparently.
 
 ## Changelog
 
+### Releases v1.1.2
+
+1. Rename _lock and _unlock to avoid conflict with [**ESP32/ESP8266 AsyncWebServer**](https://github.com/me-no-dev/ESPAsyncWebServer) library. Check [**compatibility with ESPAsyncWebServer #11**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/11)
+2. Fix compiler warnings.
+
 ### Releases v1.1.1
 
 1. Prevent crash if request and/or method not correct.
@@ -155,13 +171,13 @@ This library is based on, modified from:
 ## Prerequisites
 
  1. [`Arduino IDE 1.8.13+` for Arduino](https://www.arduino.cc/en/Main/Software)
- 2. [`ESP8266 Core 2.7.4+`](https://github.com/esp8266/Arduino) for ESP8266-based boards.
- 3. [`ESP32 Core 1.0.4+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards
- 4. [`Arduino Core for STM32 1.9.0+`](https://github.com/stm32duino/Arduino_Core_STM32) for for STM32 using built-in Ethernet LAN8742A.
+ 2. [`ESP8266 Core 2.7.4+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/)
+ 3. [`ESP32 Core 1.0.4+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [Latest stable release ![Release Version](https://img.shields.io/github/release/espressif/arduino-esp32.svg?style=plastic)
+ 4. [`Arduino Core for STM32 1.9.0+`](https://github.com/stm32duino/Arduino_Core_STM32) for for STM32 using built-in Ethernet LAN8742A. [![GitHub release](https://img.shields.io/github/release/stm32duino/Arduino_Core_STM32.svg)](https://github.com/stm32duino/Arduino_Core_STM32/releases/latest)
  5. [`ESPAsyncTCP v1.2.2+`](https://github.com/me-no-dev/ESPAsyncTCP) for ESP8266.
  6. [`AsyncTCP v1.1.1+`](https://github.com/me-no-dev/AsyncTCP) for ESP32.
- 7. [`STM32Ethernet library v1.2.0+`](https://github.com/stm32duino/STM32Ethernet) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery).
- 8. [`LwIP library v2.1.2+`](https://github.com/stm32duino/LwIP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery).
+ 7. [`STM32Ethernet library v1.2.0+`](https://github.com/stm32duino/STM32Ethernet) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/STM32Ethernet.svg)](https://github.com/stm32duino/STM32Ethernet/releases/latest)
+ 8. [`LwIP library v2.1.2+`](https://github.com/stm32duino/LwIP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/LwIP.svg)](https://github.com/stm32duino/LwIP/releases/latest)
  9. [`STM32AsyncTCP library`](https://github.com/philbowles/STM32AsyncTCP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery).
  
 ---
@@ -190,7 +206,9 @@ The best and easiest way is to use `Arduino Library Manager`. Search for `AsyncH
 
 ### Packages' Patches
 
- 1. ***To be able to compile, run and automatically detect and display BOARD_NAME on nRF52840/nRF52832 boards***, you have to copy the whole [nRF52 0.21.0](Packages_Patches/adafruit/hardware/nrf52/0.21.0) directory into Adafruit nRF52 directory (~/.arduino15/packages/adafruit/hardware/nrf52/0.21.0). 
+#### 1. For Adafruit nRF52840 and nRF52832 boards
+
+**To be able to compile, run and automatically detect and display BOARD_NAME on nRF52840/nRF52832 boards**, you have to copy the whole [nRF52 0.21.0](Packages_Patches/adafruit/hardware/nrf52/0.21.0) directory into Adafruit nRF52 directory (~/.arduino15/packages/adafruit/hardware/nrf52/0.21.0). 
 
 Supposing the Adafruit nRF52 version is 0.21.0. These files must be copied into the directory:
 - `~/.arduino15/packages/adafruit/hardware/nrf52/0.21.0/platform.txt`
@@ -199,7 +217,7 @@ Supposing the Adafruit nRF52 version is 0.21.0. These files must be copied into 
 - `~/.arduino15/packages/adafruit/hardware/nrf52/0.21.0/variants/NINA_B302_ublox/variant.cpp`
 - `~/.arduino15/packages/adafruit/hardware/nrf52/0.21.0/variants/NINA_B112_ublox/variant.h`
 - `~/.arduino15/packages/adafruit/hardware/nrf52/0.21.0/variants/NINA_B112_ublox/variant.cpp`
-- ***`~/.arduino15/packages/adafruit/hardware/nrf52/0.21.0/cores/nRF5/Udp.h`***
+- **`~/.arduino15/packages/adafruit/hardware/nrf52/0.21.0/cores/nRF5/Udp.h`**
 
 Whenever a new version is installed, remember to copy these files into the new version directory. For example, new version is x.yy.z
 These files must be copied into the directory:
@@ -210,20 +228,30 @@ These files must be copied into the directory:
 - `~/.arduino15/packages/adafruit/hardware/nrf52/x.yy.z/variants/NINA_B302_ublox/variant.cpp`
 - `~/.arduino15/packages/adafruit/hardware/nrf52/x.yy.z/variants/NINA_B112_ublox/variant.h`
 - `~/.arduino15/packages/adafruit/hardware/nrf52/x.yy.z/variants/NINA_B112_ublox/variant.cpp`
-- ***`~/.arduino15/packages/adafruit/hardware/nrf52/x.yy.z/cores/nRF5/Udp.h`***
+- **`~/.arduino15/packages/adafruit/hardware/nrf52/x.yy.z/cores/nRF5/Udp.h`**
 
- 2. ***To be able to compile and run on Teensy boards***, you have to copy the file [Teensy boards.txt](Packages_Patches/hardware/teensy/avr/boards.txt) into Teensy hardware directory (./arduino-1.8.12/hardware/teensy/avr/boards.txt). 
+#### 2. For Teensy boards
+ 
+ **To be able to compile and run on Teensy boards**, you have to copy the files in [**Packages_Patches for Teensy directory**](Packages_Patches/hardware/teensy/avr) into Teensy hardware directory (./arduino-1.8.13/hardware/teensy/avr/boards.txt). 
 
-Supposing the Arduino version is 1.8.12. This file must be copied into the directory:
+Supposing the Arduino version is 1.8.13. These files must be copied into the directory:
 
-- `./arduino-1.8.12/hardware/teensy/avr/boards.txt`
+- `./arduino-1.8.13/hardware/teensy/avr/boards.txt`
+- `./arduino-1.8.13/hardware/teensy/avr/cores/teensy/Stream.h`
+- `./arduino-1.8.13/hardware/teensy/avr/cores/teensy3/Stream.h`
+- `./arduino-1.8.13/hardware/teensy/avr/cores/teensy4/Stream.h`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
-This file must be copied into the directory:
+These files must be copied into the directory:
 
 - `./arduino-x.yy.zz/hardware/teensy/avr/boards.txt`
+- `./arduino-x.yy.zz/hardware/teensy/avr/cores/teensy/Stream.h`
+- `./arduino-x.yy.zz/hardware/teensy/avr/cores/teensy3/Stream.h`
+- `./arduino-x.yy.zz/hardware/teensy/avr/cores/teensy4/Stream.h`
 
- 3. ***To be able to compile and run on SAM DUE boards***, you have to copy the whole [SAM DUE](Packages_Patches/arduino/hardware/sam/1.6.12) directory into Arduino sam directory (~/.arduino15/packages/arduino/hardware/sam/1.6.12). 
+#### 3. For Arduino SAM DUE boards
+ 
+ **To be able to compile and run on SAM DUE boards**, you have to copy the whole [SAM DUE](Packages_Patches/arduino/hardware/sam/1.6.12) directory into Arduino sam directory (~/.arduino15/packages/arduino/hardware/sam/1.6.12). 
 
 Supposing the Arduino SAM core version is 1.6.12. This file must be copied into the directory:
 
@@ -234,13 +262,15 @@ This file must be copied into the directory:
 
 - `~/.arduino15/packages/arduino/hardware/sam/x.yy.zz/platform.txt`
 
- 4. ***To be able to compile without error and automatically detect and display BOARD_NAME on Arduino SAMD (Nano-33-IoT, etc) boards***, you have to copy the whole [Arduino SAMD cores 1.8.10](Packages_Patches/arduino/hardware/samd/1.8.10) directory into Arduino SAMD directory (~/.arduino15/packages/arduino/hardware/samd/1.8.10).
+#### 4. For Arduino SAMD boards
+ 
+ ***To be able to compile without error and automatically detect and display BOARD_NAME on Arduino SAMD (Nano-33-IoT, etc) boards***, you have to copy the whole [Arduino SAMD cores 1.8.10](Packages_Patches/arduino/hardware/samd/1.8.10) directory into Arduino SAMD directory (~/.arduino15/packages/arduino/hardware/samd/1.8.10).
  
 #### For core version v1.8.10+
 
-Supposing the Arduino SAMD version is 1.8.10. Now only one file must be copied into the directory:
+Supposing the Arduino SAMD version is 1.8.11. Now only one file must be copied into the directory:
 
-- `~/.arduino15/packages/arduino/hardware/samd/1.8.10/platform.txt`
+- `~/.arduino15/packages/arduino/hardware/samd/1.8.11/platform.txt`
 
 Whenever a new version is installed, remember to copy this files into the new version directory. For example, new version is x.yy.zz
 
@@ -271,7 +301,9 @@ These files must be copied into the directory:
 
 Whenever the above-mentioned compiler error issue is fixed with the new Arduino SAMD release, you don't need to copy the `Arduino.h` file anymore.
 
- 5. ***To be able to automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the file [Adafruit SAMD platform.txt](Packages_Patches/adafruit/hardware/samd/1.6.4) into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.6.4). 
+#### 5. For Adafruit SAMD boards
+ 
+ ***To be able to automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the file [Adafruit SAMD platform.txt](Packages_Patches/adafruit/hardware/samd/1.6.4) into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.6.4). 
 
 Supposing the Adafruit SAMD core version is 1.6.4. This file must be copied into the directory:
 
@@ -282,7 +314,9 @@ This file must be copied into the directory:
 
 - `~/.arduino15/packages/adafruit/hardware/samd/x.yy.zz/platform.txt`
 
- 6. ***To be able to automatically detect and display BOARD_NAME on Seeeduino SAMD (XIAO M0, Wio Terminal, etc) boards***, you have to copy the file [Seeeduino SAMD platform.txt](Packages_Patches/Seeeduino/hardware/samd/1.8.1) into Adafruit samd directory (~/.arduino15/packages/Seeeduino/hardware/samd/1.8.1). 
+#### 6. For Seeeduino SAMD boards
+ 
+ ***To be able to automatically detect and display BOARD_NAME on Seeeduino SAMD (XIAO M0, Wio Terminal, etc) boards***, you have to copy the file [Seeeduino SAMD platform.txt](Packages_Patches/Seeeduino/hardware/samd/1.8.1) into Adafruit samd directory (~/.arduino15/packages/Seeeduino/hardware/samd/1.8.1). 
 
 Supposing the Seeeduino SAMD core version is 1.8.1. This file must be copied into the directory:
 
@@ -293,7 +327,9 @@ This file must be copied into the directory:
 
 - `~/.arduino15/packages/Seeeduino/hardware/samd/x.yy.zz/platform.txt`
 
-7. ***To use Serial1 on some STM32 boards without Serial1 definition (Nucleo-144 NUCLEO_F767ZI, Nucleo-64 NUCLEO_L053R8, etc.) boards***, you have to copy the files [STM32 variant.h](Packages_Patches/STM32/hardware/stm32/1.9.0) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/1.9.0). You have to modify the files corresponding to your boards, this is just an illustration how to do.
+#### 7. For STM32 boards
+
+**To use Serial1 on some STM32 boards without Serial1 definition (Nucleo-144 NUCLEO_F767ZI, Nucleo-64 NUCLEO_L053R8, etc.) boards**, you have to copy the files [STM32 variant.h](Packages_Patches/STM32/hardware/stm32/1.9.0) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/1.9.0). You have to modify the files corresponding to your boards, this is just an illustration how to do.
 
 Supposing the STM32 stm32 core version is 1.9.0. These files must be copied into the directory:
 
@@ -318,6 +354,29 @@ To use the old standard cpp way, just
 1. **Rename the h-only src directory into src_h.**
 2. **Then rename the cpp src_cpp directory into src.**
 3. Close then reopen the application code in Arduino IDE, etc. to recompile from scratch.
+
+---
+---
+
+### Note for Platform IO using ESP32 LittleFS
+
+In Platform IO, to fix the error when using [`LittleFS_esp32 v1.0`](https://github.com/lorol/LITTLEFS) for ESP32-based boards with ESP32 core v1.0.4- (ESP-IDF v3.2-), uncomment the following line
+
+from
+
+```
+//#define CONFIG_LITTLEFS_FOR_IDF_3_2   /* For old IDF - like in release 1.0.4 */
+```
+
+to
+
+```
+#define CONFIG_LITTLEFS_FOR_IDF_3_2   /* For old IDF - like in release 1.0.4 */
+```
+
+It's advisable to use the latest [`LittleFS_esp32 v1.0.5+`](https://github.com/lorol/LITTLEFS) to avoid the issue.
+
+Thanks to [Roshan](https://github.com/solroshan) to report the issue in [Error esp_littlefs.c 'utime_p'](https://github.com/khoih-prog/ESPAsync_WiFiManager/issues/28) 
 
 ---
 ---
@@ -385,11 +444,11 @@ Please take a look at other examples, as well.
 #include "defines.h"
 
 // 600s = 10 minutes to not flooding, 10s in testing
-#define HTTP_REQUEST_INTERVAL_MS     10000    // 600000
+#define HTTP_REQUEST_INTERVAL_MS     10000  //600000
 
-#include <AsyncHTTPRequest_Generic.h>         // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#include <AsyncHTTPRequest_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 
-#include <Ticker.h>                           // https://github.com/sstaub/Ticker
+#include <Ticker.h>                   // https://github.com/sstaub/Ticker
 
 AsyncHTTPRequest request;
 
@@ -425,6 +484,8 @@ void sendRequest(void)
 
 void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState) 
 {
+  (void) optParm;
+  
   if (readyState == readyStateDone) 
   {
     Serial.println("\n**************************************");
@@ -441,6 +502,7 @@ void setup(void)
   while (!Serial);
   
   Serial.println("\nStart AsyncHTTPRequest_STM32 on " + String(BOARD_NAME));
+  Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
   // start the ethernet connection and the server
   // Use random mac
@@ -469,7 +531,6 @@ void loop(void)
 {
   sendHTTPRequest.update();
 }
-
 ```
 
 ---
@@ -478,17 +539,6 @@ void loop(void)
 
 
 ```cpp
-/*
-   Currently support
-   1) STM32 boards with built-in Ethernet (to use USE_BUILTIN_ETHERNET = true) such as :
-      - Nucleo-144 (F429ZI, F767ZI)
-      - Discovery (STM32F746G-DISCOVERY)
-      - STM32 boards (STM32F/L/H/G/WB/MP1) with 32K+ Flash, with Built-in Ethernet, 
-      - See How To Use Built-in Ethernet at (https://github.com/khoih-prog/EthernetWebServer_STM32/issues/1)
-   2) STM32F/L/H/G/WB/MP1 boards (with 32+K Flash) running ENC28J60 shields (to use USE_BUILTIN_ETHERNET = false)
-   3) STM32F/L/H/G/WB/MP1 boards (with 32+K Flash) running W5x00 shields
-*/
-
 #ifndef defines_h
 #define defines_h
 
@@ -602,7 +652,7 @@ IPAddress ip(192, 168, 2, 232);
 
 ```
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.1.1
+AsyncHTTPRequest_Generic v1.1.2
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -647,7 +697,7 @@ week_number: 37
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.1.1
+AsyncHTTPRequest_Generic v1.1.2
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -680,7 +730,7 @@ HHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
-AsyncHTTPRequest_Generic v1.1.1
+AsyncHTTPRequest_Generic v1.1.2
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -731,7 +781,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.1.1
+AsyncHTTPRequest_Generic v1.1.2
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
@@ -763,7 +813,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ```
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.1.1
+AsyncHTTPRequest_Generic v1.1.2
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -862,6 +912,11 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 
 ## Releases
 
+### Releases v1.1.2
+
+1. Rename _lock and _unlock to avoid conflict with [**ESP32/ESP8266 AsyncWebServer**](https://github.com/me-no-dev/ESPAsyncWebServer) library. Check [**compatibility with ESPAsyncWebServer #11**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/11)
+2. Fix compiler warnings.
+
 ### Releases v1.1.1
 
 1. Prevent crash if request and/or method not correct.
@@ -896,11 +951,14 @@ This library is based on, modified, bug-fixed and improved from:
 
 3. Thanks to [gleniat](https://github.com/gleniat) to make enhancement request in[Add support for sending PUT, PATCH, DELETE request](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/5) leading to v1.1.0.
 
+4. Thanks to [BadDwarf](https://github.com/baddwarf) to report [**compatibility with ESPAsyncWebServer #11**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/11) leading to the enhancement in v1.1.2.
+
 <table>
   <tr>
     <td align="center"><a href="https://github.com/boblemaire"><img src="https://github.com/boblemaire.png" width="100px;" alt="boblemaire"/><br /><sub><b>⭐️ Bob Lemaire</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/0xFEEDC0DE64"><img src="https://github.com/0xFEEDC0DE64.png" width="100px;" alt="0xFEEDC0DE64"/><br /><sub><b>Daniel Brunner</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/gleniat"><img src="https://github.com/gleniat.png" width="100px;" alt="gleniat"/><br /><sub><b>gleniat</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/baddwarf"><img src="https://github.com/baddwarf.png" width="100px;" alt="baddwarf"/><br /><sub><b>BadDwarf</b></sub></a><br /></td>
   </tr> 
 </table>
 

@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.1
+  Version: 1.1.2
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -26,9 +26,13 @@
   1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
   1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
   1.1.1    K Hoang     24/12/2020 Prevent crash if request and/or method not correct.
+  1.1.2    K Hoang     11/02/2021 Rename _lock and _unlock to avoid conflict with AsyncWebServer library
  *****************************************************************************************************************************/
 
 #pragma once
+
+#ifndef XBUF_IMPL_H
+#define XBUF_IMPL_H
 
 xbuf::xbuf(const uint16_t segSize) : _head(nullptr), _tail(nullptr), _used(0), _free(0), _offset(0) 
 {
@@ -291,8 +295,16 @@ String xbuf::readString(int endPos)
   
   if ( ! result.reserve(endPos + 1)) 
   {
+    // KH, to remove
+    AHTTP_LOGDEBUG1("xbuf::readString: can't reserve size = ", endPos + 1);
+    ///////
+      
     return result;
   }
+  
+  // KH, to remove
+    AHTTP_LOGDEBUG1("xbuf::readString: Reserved size = ", endPos + 1);
+    ///////
   
   if (endPos > _used) 
   {
@@ -365,6 +377,9 @@ void xbuf::addSeg()
   {
     _tail->next = (xseg*) new uint32_t[_segSize / 4 + 1];
     
+    if (_tail->next == NULL)
+      AHTTP_LOGERROR("xbuf::addSeg: error new 1");
+    
     // KH, Must check NULL here
     _tail = _tail->next;
   }
@@ -372,6 +387,9 @@ void xbuf::addSeg()
   {
     // KH, Must check NULL here
     _tail = _head = (xseg*) new uint32_t[_segSize / 4 + 1];
+    
+    if (_tail == NULL)
+      AHTTP_LOGERROR("xbuf::addSeg: error new 2");
   }
   
   // KH, Must check NULL here
@@ -398,4 +416,6 @@ void xbuf::remSeg()
   
   _offset = 0;
 }
+
+#endif    // XBUF_IMPL_H
 

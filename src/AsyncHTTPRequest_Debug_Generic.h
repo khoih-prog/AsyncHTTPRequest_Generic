@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.1
+  Version: 1.1.2
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -26,9 +26,13 @@
   1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
   1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
   1.1.1    K Hoang     24/12/2020 Prevent crash if request and/or method not correct.
+  1.1.2    K Hoang     11/02/2021 Rename _lock and _unlock to avoid conflict with AsyncWebServer library
  *****************************************************************************************************************************/
 
 #pragma once
+
+#ifndef ASYNC_HTTP_REQUEST_DEBUG_GENERIC_H
+#define ASYNC_HTTP_REQUEST_DEBUG_GENERIC_H
 
 #ifdef ASYNC_HTTP_DEBUG_PORT
   #define A_DBG_PORT      ASYNC_HTTP_DEBUG_PORT
@@ -70,4 +74,6 @@
 #define AHTTP_LOGDEBUG1(x,y)      if(_ASYNC_HTTP_LOGLEVEL_>3) { A_DBG_PORT.print("[AHTTP] "); A_DBG_PORT.print(x); A_DBG_PORT.print(" "); A_DBG_PORT.println(y); }
 #define AHTTP_LOGDEBUG2(x,y,z)    if(_ASYNC_HTTP_LOGLEVEL_>3) { A_DBG_PORT.print("[AHTTP] "); A_DBG_PORT.print(x); A_DBG_PORT.print(" "); A_DBG_PORT.print(y); A_DBG_PORT.print(" "); A_DBG_PORT.println(z); }
 #define AHTTP_LOGDEBUG3(x,y,z,w)  if(_ASYNC_HTTP_LOGLEVEL_>3) { A_DBG_PORT.print("[AHTTP] "); A_DBG_PORT.print(x); A_DBG_PORT.print(" "); A_DBG_PORT.print(y); A_DBG_PORT.print(" "); A_DBG_PORT.print(z); A_DBG_PORT.print(" "); A_DBG_PORT.println(w); }
+
+#endif    // ASYNC_HTTP_REQUEST_DEBUG_GENERIC_H
 

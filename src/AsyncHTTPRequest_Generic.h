@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.1
+  Version: 1.1.2
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -26,11 +26,15 @@
   1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
   1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
   1.1.1    K Hoang     24/12/2020 Prevent crash if request and/or method not correct.
+  1.1.2    K Hoang     11/02/2021 Rename _lock and _unlock to avoid conflict with AsyncWebServer library
  *****************************************************************************************************************************/
 
 #pragma once
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION   "AsyncHTTPRequest_Generic v1.1.1"
+#ifndef ASYNC_HTTP_REQUEST_GENERIC_H
+#define ASYNC_HTTP_REQUEST_GENERIC_H
+
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION   "AsyncHTTPRequest_Generic v1.1.2"
 
 #include <Arduino.h>
 
@@ -59,8 +63,8 @@
   #define MUTEX_LOCK_NR           if (xSemaphoreTakeRecursive(threadLock,portMAX_DELAY) != pdTRUE) { return;}
   #define MUTEX_LOCK(returnVal)   if (xSemaphoreTakeRecursive(threadLock,portMAX_DELAY) != pdTRUE) { return returnVal;}
   
-  #define _lock       xSemaphoreTakeRecursive(threadLock,portMAX_DELAY)
-  #define _unlock     xSemaphoreGiveRecursive(threadLock)
+  #define _AHTTP_lock       xSemaphoreTakeRecursive(threadLock,portMAX_DELAY)
+  #define _AHTTP_unlock     xSemaphoreGiveRecursive(threadLock)
   
 #elif ESP8266
 
@@ -69,8 +73,8 @@
   #define MUTEX_LOCK_NR
   #define MUTEX_LOCK(returnVal)
   
-  #define _lock
-  #define _unlock
+  #define _AHTTP_lock
+  #define _AHTTP_unlock
   
 #elif ( defined(STM32F0) || defined(STM32F1) || defined(STM32F2) || defined(STM32F3)  ||defined(STM32F4) || defined(STM32F7) || \
        defined(STM32L0) || defined(STM32L1) || defined(STM32L4) || defined(STM32H7)  ||defined(STM32G0) || defined(STM32G4) || \
@@ -80,8 +84,8 @@
   
   #define MUTEX_LOCK_NR
   #define MUTEX_LOCK(returnVal)
-  #define _lock
-  #define _unlock
+  #define _AHTTP_lock
+  #define _AHTTP_unlock
   
 #endif
 
@@ -220,8 +224,11 @@ class AsyncHTTPRequest
     size_t      responseLength();                                       // indicated response length or sum of chunks to date
     int         responseHTTPcode();                                     // HTTP response code or (negative) error code
     String      responseText();                                         // response (whole* or partial* as string)
+    
+    char*       responseLongText();                                     // response long (whole* or partial* as string)
+    
     size_t      responseRead(uint8_t* buffer, size_t len);              // Read response into buffer
-    uint32_t    elapsedTime();                                         // Elapsed time of in progress transaction or last completed (ms)
+    uint32_t    elapsedTime();                                          // Elapsed time of in progress transaction or last completed (ms)
     String      version();                                              // Version of AsyncHTTPRequest
     //___________________________________________________________________________________________________________________________________
 
@@ -299,4 +306,4 @@ class AsyncHTTPRequest
 
 #include "AsyncHTTPRequest_Impl_Generic.h"
 
-
+#endif    // ASYNC_HTTP_REQUEST_GENERIC_H

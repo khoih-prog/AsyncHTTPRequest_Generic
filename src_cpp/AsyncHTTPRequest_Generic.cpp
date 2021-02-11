@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.1
+  Version: 1.1.2
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -26,6 +26,7 @@
   1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
   1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
   1.1.1    K Hoang     24/12/2020 Prevent crash if request and/or method not correct.
+  1.1.2    K Hoang     11/02/2021 Rename _lock and _unlock to avoid conflict with AsyncWebServer library
  *****************************************************************************************************************************/
  
 #include "AsyncHTTPRequest_Debug_Generic.h"
@@ -218,7 +219,7 @@ bool  AsyncHTTPRequest::send()
     
   _send();
   
-  _unlock;
+  _AHTTP_unlock;
   
   return true;
 }
@@ -244,7 +245,7 @@ bool AsyncHTTPRequest::send(String body)
   
   if ( ! _buildRequest()) 
   {
-    _unlock;
+    _AHTTP_unlock;
     
     return false;
   }
@@ -252,7 +253,7 @@ bool AsyncHTTPRequest::send(String body)
   _request->write(body);
   _send();
   
-  _unlock;
+  _AHTTP_unlock;
   
   return true;
 }
@@ -278,7 +279,7 @@ bool  AsyncHTTPRequest::send(const char* body)
   
   if ( ! _buildRequest()) 
   {
-    _unlock;
+    _AHTTP_unlock;
     
     return false;
   }
@@ -286,7 +287,7 @@ bool  AsyncHTTPRequest::send(const char* body)
   _request->write(body);
   _send();
   
-  _unlock;
+  _AHTTP_unlock;
   
   return true;
 }
@@ -312,7 +313,7 @@ bool  AsyncHTTPRequest::send(const uint8_t* body, size_t len)
   
   if ( ! _buildRequest()) 
   {
-    _unlock;
+    _AHTTP_unlock;
     
     return false;
   }
@@ -320,7 +321,7 @@ bool  AsyncHTTPRequest::send(const uint8_t* body, size_t len)
   _request->write(body, len);
   _send();
   
-  _unlock;
+  _AHTTP_unlock;
   
   return true;
 }
@@ -346,7 +347,7 @@ bool AsyncHTTPRequest::send(xbuf* body, size_t len)
   
   if ( ! _buildRequest()) 
   {
-    _unlock;
+    _AHTTP_unlock;
     
     return false;
   }
@@ -354,7 +355,7 @@ bool AsyncHTTPRequest::send(xbuf* body, size_t len)
   _request->write(body, len);
   _send();
   
-  _unlock;
+  _AHTTP_unlock;
   
   return true;
 }
@@ -373,7 +374,7 @@ void AsyncHTTPRequest::abort()
     
   _client->abort();
   
-  _unlock;
+  _AHTTP_unlock;
 }
 //**************************************************************************************************************
 reqStates   AsyncHTTPRequest::readyState()
@@ -398,7 +399,7 @@ String AsyncHTTPRequest::responseText()
   {
     AHTTP_LOGDEBUG("responseText() no data");
 
-    _unlock;
+    _AHTTP_unlock;
     
     return String();
   }
@@ -413,7 +414,7 @@ String AsyncHTTPRequest::responseText()
     _HTTPcode = HTTPCODE_TOO_LESS_RAM;
     _client->abort();
     
-    _unlock;
+    _AHTTP_unlock;
     
     return String();
   }
@@ -423,7 +424,7 @@ String AsyncHTTPRequest::responseText()
 
   AHTTP_LOGDEBUG3("responseText(char)", localString.substring(0, 16).c_str(), ", avail =", avail);
 
-  _unlock;
+  _AHTTP_unlock;
   
   return localString;
 }
@@ -447,7 +448,7 @@ size_t AsyncHTTPRequest::responseRead(uint8_t* buf, size_t len)
 
   _contentRead += avail;
   
-  _unlock;
+  _AHTTP_unlock;
 
   return avail;
 }
@@ -853,7 +854,7 @@ void  AsyncHTTPRequest::_onConnect(AsyncClient* client)
   
   if (!_response)
   {
-    _unlock;
+    _AHTTP_unlock;
     
     return;
   }
@@ -879,7 +880,7 @@ void  AsyncHTTPRequest::_onConnect(AsyncClient* client)
 
   _lastActivity = millis();
   
-  _unlock;
+  _AHTTP_unlock;
 }
 
 //**************************************************************************************************************
@@ -900,7 +901,7 @@ void  AsyncHTTPRequest::_onPoll(AsyncClient* client)
     _onDataCB(_onDataCBarg, this, available());
   }
 
-  _unlock;
+  _AHTTP_unlock;
 }
 
 //**************************************************************************************************************
@@ -941,7 +942,7 @@ void  AsyncHTTPRequest::_onDisconnect(AsyncClient* client)
   _lastActivity   = 0;
   _setReadyState(readyStateDone);
   
-  _unlock;
+  _AHTTP_unlock;
 }
 
 //**************************************************************************************************************
@@ -969,7 +970,7 @@ void  AsyncHTTPRequest::_onData(void* Vbuf, size_t len)
   {
     if ( ! _collectHeaders())
     {
-      _unlock;
+      _AHTTP_unlock;
       
       return;
     }
@@ -1009,7 +1010,7 @@ void  AsyncHTTPRequest::_onData(void* Vbuf, size_t len)
     _onDataCB(_onDataCBarg, this, available());
   }
 
-  _unlock;
+  _AHTTP_unlock;
 
 }
 
@@ -1294,7 +1295,7 @@ String AsyncHTTPRequest::headers()
 
   _response += "\r\n";
   
-  _unlock;
+  _AHTTP_unlock;
 
   return _response;
 }
@@ -1354,7 +1355,7 @@ AsyncHTTPRequest::header*  AsyncHTTPRequest::_addHeader(const char* name, const 
     return nullptr;
   }
   
-  _unlock;
+  _AHTTP_unlock;
 
   return hdr->next;
 }
@@ -1374,7 +1375,7 @@ AsyncHTTPRequest::header* AsyncHTTPRequest::_getHeader(const char* name)
     hdr = hdr->next;
   }
 
-  _unlock;
+  _AHTTP_unlock;
 
   return hdr;
 }
@@ -1394,7 +1395,7 @@ AsyncHTTPRequest::header* AsyncHTTPRequest::_getHeader(int ndx)
     hdr = hdr->next;
   }
 
-  _unlock;
+  _AHTTP_unlock;
 
   return hdr;
 }

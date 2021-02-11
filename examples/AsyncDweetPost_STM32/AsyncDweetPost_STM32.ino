@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.1
+  Version: 1.1.2
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -26,6 +26,7 @@
   1.0.2    K Hoang     09/11/2020 Make Mutex Lock and delete more reliable and error-proof
   1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
   1.1.1    K Hoang     24/12/2020 Prevent crash if request and/or method not correct.
+  1.1.2    K Hoang     11/02/2021 Rename _lock and _unlock to avoid conflict with AsyncWebServer library
  *****************************************************************************************************************************/
 
   // Dweet.io POST client. Connects to dweet.io once every ten seconds, sends a POST request and a request body.
@@ -118,6 +119,8 @@ void parseResponse(String responseText)
 
 void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
 {
+  (void) optParm;
+  
   if (readyState == readyStateDone)
   {
     String responseText = request->responseText();
