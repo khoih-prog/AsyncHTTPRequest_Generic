@@ -178,7 +178,8 @@ This library is based on, modified from:
  6. [`AsyncTCP v1.1.1+`](https://github.com/me-no-dev/AsyncTCP) for ESP32.
  7. [`STM32Ethernet library v1.2.0+`](https://github.com/stm32duino/STM32Ethernet) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/STM32Ethernet.svg)](https://github.com/stm32duino/STM32Ethernet/releases/latest)
  8. [`LwIP library v2.1.2+`](https://github.com/stm32duino/LwIP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/LwIP.svg)](https://github.com/stm32duino/LwIP/releases/latest)
- 9. [`STM32AsyncTCP library`](https://github.com/philbowles/STM32AsyncTCP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery).
+ 9. [`STM32AsyncTCP library v1.0.0+`](https://github.com/philbowles/STM32AsyncTCP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery).
+10. [`ESPAsync_WiFiManager library v1.4.3+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
  
 ---
 
