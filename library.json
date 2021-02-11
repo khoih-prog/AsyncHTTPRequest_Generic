@@ -32,14 +32,14 @@
     },
     {
       "owner": "me-no-dev",
-      "name": "ESP AsyncTCP",
+      "name": "ESPAsyncTCP",
       "version": ">=1.2.2",
       "platforms": "espressif8266"
     },
     {
-      "owner": "khoih-prog",
+      "owner": "khoih.prog",
       "name": "ESPAsync_WiFiManager",
-      "version": ">=1.4.1",
+      "version": ">=1.4.3",
       "platforms": ["espressif8266", "espressif32"]
     },
     {
