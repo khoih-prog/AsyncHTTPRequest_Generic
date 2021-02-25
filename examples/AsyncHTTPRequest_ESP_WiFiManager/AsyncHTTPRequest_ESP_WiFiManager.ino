@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.2
+  Version: 1.1.3
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -27,6 +27,7 @@
   1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
   1.1.1    K Hoang     24/12/2020 Prevent crash if request and/or method not correct.
   1.1.2    K Hoang     11/02/2021 Rename _lock and _unlock to avoid conflict with AsyncWebServer library
+  1.1.3    K Hoang     25/02/2021 Fix non-persistent Connection header bug
  *****************************************************************************************************************************/
 //************************************************************************************************************
 //
@@ -61,8 +62,8 @@
 #define ASYNC_HTTP_DEBUG_PORT     Serial
 #define _ASYNC_HTTP_LOGLEVEL_     1    
 
-// 300s = 5 minutes to not flooding, 10s in testing
-#define HTTP_REQUEST_INTERVAL     10  //300
+// 300s = 5 minutes to not flooding, 60s in testing
+#define HTTP_REQUEST_INTERVAL     60  //300
 
 //Ported to ESP32
 #ifdef ESP32
@@ -74,9 +75,22 @@
   #include <WiFiMulti.h>
   WiFiMulti wifiMulti;
 
-  #define USE_SPIFFS      true
+  // LittleFS has higher priority than SPIFFS
+  #define USE_LITTLEFS    true
+  #define USE_SPIFFS      false
 
-  #if USE_SPIFFS
+  #if USE_LITTLEFS
+    // Use LittleFS
+    #include "FS.h"
+
+    // The library will be depreciated after being merged to future major Arduino esp32 core release 2.x
+    // At that time, just remove this library inclusion
+    #include <LITTLEFS.h>             // https://github.com/lorol/LITTLEFS
+    
+    FS* filesystem =      &LITTLEFS;
+    #define FileFS        LITTLEFS
+    #define FS_Name       "LittleFS"
+  #elif USE_SPIFFS
     #include <SPIFFS.h>
     FS* filesystem =      &SPIFFS;
     #define FileFS        SPIFFS

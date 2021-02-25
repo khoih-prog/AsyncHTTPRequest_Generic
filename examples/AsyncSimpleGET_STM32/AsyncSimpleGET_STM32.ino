@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.2
+  Version: 1.1.3
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -27,6 +27,7 @@
   1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
   1.1.1    K Hoang     24/12/2020 Prevent crash if request and/or method not correct.
   1.1.2    K Hoang     11/02/2021 Rename _lock and _unlock to avoid conflict with AsyncWebServer library
+  1.1.3    K Hoang     25/02/2021 Fix non-persistent Connection header bug
  *****************************************************************************************************************************/
  
 #include "defines.h"
@@ -35,8 +36,8 @@
 //char GET_ServerAddress[]    = "ipv4bot.whatismyipaddress.com/";
 char GET_ServerAddress[]    = "http://worldtimeapi.org/api/timezone/America/Toronto.txt";
 
-// 600s = 10 minutes to not flooding, 10s in testing
-#define HTTP_REQUEST_INTERVAL_MS     10000  //600000
+// 600s = 10 minutes to not flooding, 60s in testing
+#define HTTP_REQUEST_INTERVAL_MS     60000  //600000
 
 #include <AsyncHTTPRequest_Generic.h>           // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 

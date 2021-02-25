@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.2
+  Version: 1.1.3
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -27,6 +27,7 @@
   1.1.0    K Hoang     23/12/2020 Add HTTP PUT, PATCH, DELETE and HEAD methods
   1.1.1    K Hoang     24/12/2020 Prevent crash if request and/or method not correct.
   1.1.2    K Hoang     11/02/2021 Rename _lock and _unlock to avoid conflict with AsyncWebServer library
+  1.1.3    K Hoang     25/02/2021 Fix non-persistent Connection header bug
  *****************************************************************************************************************************/
 
 #pragma once
@@ -34,7 +35,7 @@
 #ifndef ASYNC_HTTP_REQUEST_GENERIC_H
 #define ASYNC_HTTP_REQUEST_GENERIC_H
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION   "AsyncHTTPRequest_Generic v1.1.2"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION   "AsyncHTTPRequest_Generic v1.1.3"
 
 #include <Arduino.h>
 
@@ -224,8 +225,11 @@ class AsyncHTTPRequest
     size_t      responseLength();                                       // indicated response length or sum of chunks to date
     int         responseHTTPcode();                                     // HTTP response code or (negative) error code
     String      responseText();                                         // response (whole* or partial* as string)
+    
+    char*       responseLongText();                                     // response long (whole* or partial* as string)
+    
     size_t      responseRead(uint8_t* buffer, size_t len);              // Read response into buffer
-    uint32_t    elapsedTime();                                         // Elapsed time of in progress transaction or last completed (ms)
+    uint32_t    elapsedTime();                                          // Elapsed time of in progress transaction or last completed (ms)
     String      version();                                              // Version of AsyncHTTPRequest
     //___________________________________________________________________________________________________________________________________
 
