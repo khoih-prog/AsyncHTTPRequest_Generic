@@ -155,7 +155,7 @@ This library is based on, modified from:
 
 ### Releases v1.1.4
 
-1. Fix `library.properties` dependency on unpublished [STM32AsyncTCP](https://github.com/philbowles/STM32AsyncTCP) creating error when installing this library using `Library Manager`
+1. Fix `library.properties` dependency
 
 ### Releases v1.1.3
 
@@ -1087,7 +1087,7 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 
 ### Releases v1.1.4
 
-1. Fix `library.properties` dependency on unpublished [STM32AsyncTCP](https://github.com/philbowles/STM32AsyncTCP) creating error when installing this library using `Library Manager`
+1. Fix `library.properties` dependency
 
 ### Releases v1.1.3
 
