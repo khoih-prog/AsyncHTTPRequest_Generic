@@ -18,6 +18,7 @@
   * [Principles of operation](#principles-of-operation)
   * [Currently supported Boards](#currently-supported-boards)
 * [Changelog](#changelog)
+  * [Releases v1.1.4](#releases-v114)
   * [Releases v1.1.3](#releases-v113)
   * [Releases v1.1.2](#releases-v112)
   * [Releases v1.1.1](#releases-v111)
@@ -151,6 +152,10 @@ This library is based on, modified from:
 
 
 ## Changelog
+
+### Releases v1.1.4
+
+1. Fix `library.properties` dependency on unpublished [STM32AsyncTCP](https://github.com/philbowles/STM32AsyncTCP) creating error when installing this library using `Library Manager`
 
 ### Releases v1.1.3
 
@@ -1079,6 +1084,10 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 ---
 
 ## Releases
+
+### Releases v1.1.4
+
+1. Fix `library.properties` dependency on unpublished [STM32AsyncTCP](https://github.com/philbowles/STM32AsyncTCP) creating error when installing this library using `Library Manager`
 
 ### Releases v1.1.3
 
