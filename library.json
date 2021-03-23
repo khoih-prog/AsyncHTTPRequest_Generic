@@ -61,7 +61,7 @@
       "platforms": ["espressif32"]
     },
     {
-      "name": "external-repo",
+      "name": "STM32AsyncTCP",
       "version": "https://github.com/khoih-prog/STM32AsyncTCP"
     }
   ],
