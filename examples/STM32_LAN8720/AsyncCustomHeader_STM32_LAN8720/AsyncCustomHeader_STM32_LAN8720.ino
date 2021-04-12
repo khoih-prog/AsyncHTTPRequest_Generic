@@ -1,7 +1,7 @@
 /****************************************************************************************************************************
-  AsyncWebClientRepeating_STM32.ino - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
+  AsyncCustomHeader_STM32_LAN8720.ino - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32
   
-  For ESP8266, ESP32 and STM32 with built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
+  For ESP8266, ESP32 and STM32 with LAN8720 or built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
   
   AsyncHTTPRequest_Generic is a library for the ESP8266, ESP32 and currently STM32 run built-in Ethernet WebServer
   
@@ -35,14 +35,12 @@
 
 #include "defines.h"
 
-// Select a test server address           
-const char GET_ServerAddress[] = "arduino.cc";
+// Select a test server address
+//char GET_ServerAddress[]      = "192.168.2.110/";
+char GET_ServerAddress[]    = "http://worldtimeapi.org/api/timezone/America/Toronto.txt";
 
-// GET location
-String GET_Location = "/asciilogo.txt";
-
-// 60s = 60 seconds to not flooding the server
-#define HTTP_REQUEST_INTERVAL_MS     60000
+// 600s = 10 minutes to not flooding, 60s in testing
+#define HTTP_REQUEST_INTERVAL_MS     60000  //600000
 
 #include <AsyncHTTPRequest_Generic.h>           // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 
@@ -53,16 +51,18 @@ AsyncHTTPRequest request;
 void sendRequest(void);
 
 // Repeat forever, millis() resolution
-Ticker sendHTTPRequest(sendRequest, HTTP_REQUEST_INTERVAL_MS, 0, MILLIS); 
+Ticker sendHTTPRequest(sendRequest, HTTP_REQUEST_INTERVAL_MS, 0, MILLIS);
 
 void sendRequest(void)
-{ 
+{
   static bool requestOpenResult;
   
   if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
-  {         
-    requestOpenResult = request.open("GET", (GET_ServerAddress + GET_Location).c_str());
+  {
+    Serial.println("\nSending GET Request to " + String(GET_ServerAddress));
     
+    requestOpenResult = request.open("GET", GET_ServerAddress);
+    //request.setReqHeader("X-CUSTOM-HEADER", "custom_value");
     if (requestOpenResult)
     {
       // Only send() if open() returns true, or crash
@@ -84,21 +84,21 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
   (void) optParm;
   
   if (readyState == readyStateDone)
-  {   
+  {
     Serial.println("\n**************************************");
     Serial.println(request->responseText());
     Serial.println("**************************************");
-      
+
     request->setDebug(false);
   }
 }
 
-void setup(void) 
+void setup(void)
 {
   Serial.begin(115200);
-  while (!Serial);
-  
-  Serial.println("\nStart AsyncWebClientRepeating_STM32 on " + String(BOARD_NAME));
+  delay(2000);
+
+  Serial.println("\nStart AsyncCustomHeader_STM32_LAN8720 on " + String(BOARD_NAME));
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
   // start the ethernet connection and the server
@@ -115,15 +115,20 @@ void setup(void)
   Serial.println();
 
   request.setDebug(false);
-  
+
+  // 5s timeout
+  request.setTimeout(5);
+
   request.onReadyStateChange(requestCB);
-  sendHTTPRequest.start(); //start the ticker
+
+  sendHTTPRequest.start(); //start the ticker.
 
   // Send first request now
+  delay(10000);
   sendRequest();
 }
 
-void loop(void) 
+void loop(void)
 {
   sendHTTPRequest.update();
 }

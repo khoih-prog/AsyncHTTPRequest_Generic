@@ -1,7 +1,7 @@
 /****************************************************************************************************************************
-  AsyncWebClientRepeating_STM32.ino - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
+  AsyncWebClientRepeating_STM32_LAN8720.ino - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32
   
-  For ESP8266, ESP32 and STM32 with built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
+  For ESP8266, ESP32 and STM32 with _LAN8720 or built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
   
   AsyncHTTPRequest_Generic is a library for the ESP8266, ESP32 and currently STM32 run built-in Ethernet WebServer
   
@@ -96,9 +96,9 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
 void setup(void) 
 {
   Serial.begin(115200);
-  while (!Serial);
+  delay(2000);
   
-  Serial.println("\nStart AsyncWebClientRepeating_STM32 on " + String(BOARD_NAME));
+  Serial.println("\nStart AsyncWebClientRepeating_STM32_LAN8720 on " + String(BOARD_NAME));
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
   // start the ethernet connection and the server

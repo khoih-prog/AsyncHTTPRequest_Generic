@@ -18,6 +18,7 @@
   * [Principles of operation](#principles-of-operation)
   * [Currently supported Boards](#currently-supported-boards)
 * [Changelog](#changelog)
+  * [Releases v1.2.0](#releases-v120)
   * [Releases v1.1.5](#releases-v115)
   * [Releases v1.1.4](#releases-v114)
   * [Releases v1.1.3](#releases-v113)
@@ -43,6 +44,8 @@
   * [5. For Adafruit SAMD boards](#5-for-adafruit-samd-boards)
   * [6. For Seeeduino SAMD boards](#6-for-seeeduino-samd-boards)
   * [7. For STM32 boards](#7-for-stm32-boards)
+    * [7.1. For STM32 boards to use LAN8720](#71-for-stm32-boards-to-use-lan8720)
+    * [7.2. For STM32 boards to use Serial1](#72-for-stm32-boards-to-use-serial1)
 * [HOWTO Install esp32-s2 core for ESP32-S2 (Saola, AI-Thinker ESP-12K) boards into Arduino IDE)](#howto-install-esp32-s2-core-for-esp32-s2-saola-ai-thinker-esp-12k-boards-into-arduino-ide)
   * [1. Save the original esp32 core](#1-save-the-original-esp32-core)
   * [2. Download esp32-s2 core](#2-download-esp32-s2-core)
@@ -64,15 +67,29 @@
   * [1. ESP32 has 2 ADCs, named ADC1 and ADC2](#1--esp32-has-2-adcs-named-adc1-and-adc2)
   * [2. ESP32 ADCs functions](#2-esp32-adcs-functions)
   * [3. ESP32 WiFi uses ADC2 for WiFi functions](#3-esp32-wifi-uses-adc2-for-wifi-functions)
+* [HOWTO use STM32F4 with LAN8720](#howto-use-stm32f4-with-lan8720)
+  * [1. Wiring](#1-wiring)
+  * [2. HOWTO program using STLink V-2 or V-3](#2-howto-program-using-stlink-v-2-or-v-3)
+  * [3. HOWTO use Serial Port for Debugging](#3-howto-use-serial-port-for-debugging)
 * [Examples](#examples)
-  * [AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP)
-  * [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager)
-  * [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
-  * [AsyncCustomHeader_STM32](examples/AsyncCustomHeader_STM32)
-  * [AsyncDweetGet_STM32](examples/AsyncDweetGet_STM32)
-  * [AsyncDweetPost_STM32](examples/AsyncDweetPost_STM32)
-  * [AsyncSimpleGET_STM32](examples/AsyncSimpleGET_STM32)
-  * [AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32)
+  * [For ESP32 and ESP8266](#for-esp32-and-esp8266)
+    * [1. AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP)
+    * [2. AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager)
+    * [3. AsyncHTTPMultiRequests_ESP](examples/AsyncHTTPMultiRequests_ESP)
+  * [For STM32 using LAN8742A](#for-stm32-using-lan8742a)
+    * [1. AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
+    * [2. AsyncCustomHeader_STM32](examples/AsyncCustomHeader_STM32)
+    * [3. AsyncDweetGet_STM32](examples/AsyncDweetGet_STM32)
+    * [4. AsyncDweetPost_STM32](examples/AsyncDweetPost_STM32)
+    * [5. AsyncSimpleGET_STM32](examples/AsyncSimpleGET_STM32)
+    * [6. AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32)
+  * [For STM32 using LAN8720](#for-stm32-using-lan8720)
+    * [1. AsyncHTTPRequest_STM32_LAN8720](examples/STM32_LAN8720/AsyncHTTPRequest_STM32_LAN8720)
+    * [2. AsyncCustomHeader_STM32_LAN8720](examples/STM32_LAN8720/AsyncCustomHeader_STM32_LAN8720)
+    * [3. AsyncDweetGet_STM32_LAN8720](examples/STM32_LAN8720/AsyncDweetGet_STM32_LAN8720)
+    * [4. AsyncDweetPost_STM32_LAN8720](examples/STM32_LAN8720/AsyncDweetPost_STM32_LAN8720)
+    * [5. AsyncSimpleGET_STM32_LAN8720](examples/STM32_LAN8720/AsyncSimpleGET_STM32_LAN8720)
+    * [6. AsyncWebClientRepeating_STM32_LAN8720](examples/STM32_LAN8720/AsyncWebClientRepeating_STM32_LAN8720)
 * [Example AsyncHTTPRequest_STM32](#example-asynchttprequest_stm32)
   * [1. File AsyncHTTPRequest_STM32.ino](#1-file-asynchttprequest_stm32ino)
   * [2. File defines.h](#2-file-definesh) 
@@ -82,6 +99,7 @@
   * [3. AsyncHTTPRequest_ESP_WiFiManager running on ESP32_DEV](#3-asynchttprequest_esp_wifimanager-running-on-esp32_dev)
   * [4. AsyncHTTPRequest_ESP running on ESP8266_NODEMCU](#4-asynchttprequest_esp-running-on-esp8266_nodemcu)
   * [5. AsyncWebClientRepeating_STM32 running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A](#5-asyncwebclientrepeating_stm32-running-on-stm32f7-nucleo-144-nucleo_f767zi-using-built-in-lan8742a)
+  * [6. AsyncWebClientRepeating_STM32_LAN8720 running on STM32F4 BLACK_F407VE using LAN8720](#6-asyncwebclientrepeating_stm32_lan8720-running-on-stm32f4-black_f407ve-using-lan8720)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -100,10 +118,10 @@
 
 ### Features
 
-1. Asynchronous HTTP Request library for ESP8266, including ESP32-S2 (ESP32-S2 Saola, AI-Thinker ESP-12K, etc.) using built-in WiFi, and STM32 boards using built-in LAN8742A Ethernet. 
+1. Asynchronous HTTP Request library for ESP8266, including ESP32-S2 (ESP32-S2 Saola, AI-Thinker ESP-12K, etc.) using built-in WiFi, and STM32 boards using LAN8720 or built-in LAN8742A Ethernet. 
 2. Providing a subset of HTTP.
 3. Relying on on **[`ESPAsyncTCP`](https://github.com/me-no-dev/ESPAsyncTCP) for ESP8266, [`AsyncTCP`](https://github.com/me-no-dev/AsyncTCP) for ESP32** using built-in WiFi
-4. Relying on **[`STM32duino LwIP`](https://github.com/stm32duino/LwIP)/[`STM32duino STM32Ethernet`](https://github.com/stm32duino/STM32Ethernet)/[`STM32AsyncTCP`](https://github.com/philbowles/STM32AsyncTCP) for STM32 using built-in LAN8742A Ethernet.**
+4. Relying on **[`STM32duino LwIP`](https://github.com/stm32duino/LwIP)/[`STM32duino STM32Ethernet`](https://github.com/stm32duino/STM32Ethernet)/[`STM32AsyncTCP`](https://github.com/philbowles/STM32AsyncTCP) for STM32 using LAN8720 or built-in LAN8742A Ethernet.**
 5. Methods similar in format and usage to XmlHTTPrequest in Javascript.
 
 ### Supports
@@ -147,12 +165,25 @@ This library is based on, modified from:
 2. Discovery STM32F746G-DISCOVERY
 3. Any STM32 boards with enough flash/memory and already configured to run LAN8742A Ethernet.
 
+#### 4. STM32 boards using Ethernet LAN8720
+
+1. **Nucleo-144 (F429ZI, NUCLEO_F746NG, NUCLEO_F746ZG, NUCLEO_F756ZG)**
+2. **Discovery (DISCO_F746NG)**
+3. **STM32F4 boards (BLACK_F407VE, BLACK_F407VG, BLACK_F407ZE, BLACK_F407ZG, BLACK_F407VE_Mini, DIYMORE_F407VGT, FK407M1)**
+
 
 ---
 ---
 
 
 ## Changelog
+
+### Releases v1.2.0
+
+1. Add support to **LAN8720** Ethernet for many **STM32F4** (F407xx, NUCLEO_F429ZI) and **STM32F7** (DISCO_F746NG, NUCLEO_F746ZG, NUCLEO_F756ZG) boards.
+2. Add LAN8720 examples
+3. Add Packages' Patches for STM32 to use LAN8720 with STM32Ethernet and LwIP libraries
+4. Update ESP_WiFiManager-related example to fix multiWiFi timings to work better with latest esp32 core v1.0.6
 
 ### Releases v1.1.5
 
@@ -206,7 +237,7 @@ This library is based on, modified from:
 
  1. [`Arduino IDE 1.8.13+` for Arduino](https://www.arduino.cc/en/Main/Software)
  2. [`ESP8266 Core 2.7.4+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/)
- 3. [`ESP32 Core 1.0.5+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [Latest stable release ![Release Version](https://img.shields.io/github/release/espressif/arduino-esp32.svg?style=plastic)
+ 3. [`ESP32 Core 1.0.6+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [Latest stable release ![Release Version](https://img.shields.io/github/release/espressif/arduino-esp32.svg?style=plastic)
  4. [`ESP32S2 Core 1.0.4+`](https://github.com/espressif/arduino-esp32/tree/esp32s2) for ESP32-S2-based boards.
  5. [`Arduino Core for STM32 1.9.0+`](https://github.com/stm32duino/Arduino_Core_STM32) for for STM32 using built-in Ethernet LAN8742A. [![GitHub release](https://img.shields.io/github/release/stm32duino/Arduino_Core_STM32.svg)](https://github.com/stm32duino/Arduino_Core_STM32/releases/latest)
  6. [`ESPAsyncTCP v1.2.2+`](https://github.com/me-no-dev/ESPAsyncTCP) for ESP8266.
@@ -214,8 +245,8 @@ This library is based on, modified from:
  8. [`STM32Ethernet library v1.2.0+`](https://github.com/stm32duino/STM32Ethernet) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/STM32Ethernet.svg)](https://github.com/stm32duino/STM32Ethernet/releases/latest)
  9. [`LwIP library v2.1.2+`](https://github.com/stm32duino/LwIP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/LwIP.svg)](https://github.com/stm32duino/LwIP/releases/latest)
 10. [`STM32AsyncTCP library v1.0.1+`](https://github.com/khoih-prog/STM32AsyncTCP) for built-in Ethernet on (Nucleo-144, Discovery). To install manually for Arduino IDE.
-11. [`ESPAsync_WiFiManager library v1.6.0+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
-12.  [`LittleFS_esp32 v1.0.5+`](https://github.com/lorol/LITTLEFS) for ESP32-based boards using LittleFS. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/LittleFS_esp32.svg?)](https://www.ardu-badge.com/LittleFS_esp32).
+11. [`ESPAsync_WiFiManager library v1.6.2+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
+12.  [`LittleFS_esp32 v1.0.6+`](https://github.com/lorol/LITTLEFS) for ESP32-based boards using LittleFS. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/LittleFS_esp32.svg?)](https://www.ardu-badge.com/LittleFS_esp32).
 
 ---
 
@@ -365,6 +396,30 @@ This file must be copied into the directory:
 - `~/.arduino15/packages/Seeeduino/hardware/samd/x.yy.zz/platform.txt`
 
 #### 7. For STM32 boards
+
+#### 7.1. For STM32 boards to use LAN8720
+
+To use LAN8720 on some STM32 boards 
+
+- **Nucleo-144 (F429ZI, NUCLEO_F746NG, NUCLEO_F746ZG, NUCLEO_F756ZG)**
+- **Discovery (DISCO_F746NG)**
+- **STM32F4 boards (BLACK_F407VE, BLACK_F407VG, BLACK_F407ZE, BLACK_F407ZG, BLACK_F407VE_Mini, DIYMORE_F407VGT, FK407M1)**
+
+you have to copy the files [stm32f4xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/1.9.0/system/STM32F4xx) and [stm32f7xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/1.9.0/system/STM32F7xx) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/1.9.0/system) to overwrite the old files.
+
+Supposing the STM32 stm32 core version is 1.9.0. These files must be copied into the directory:
+
+- `~/.arduino15/packages/STM32/hardware/stm32/1.9.0/system/STM32F4xx/stm32f4xx_hal_conf_default.h` for STM32F4.
+- `~/.arduino15/packages/STM32/hardware/stm32/1.9.0/system/STM32F7xx/stm32f7xx_hal_conf_default.h` for Nucleo-144 STM32F7.
+
+Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz,
+theses files must be copied into the corresponding directory:
+
+- `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/system/STM32F4xx/stm32f4xx_hal_conf_default.h`
+- `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/system/STM32F7xx/stm32f7xx_hal_conf_default.h
+
+
+#### 7.2. For STM32 boards to use Serial1
 
 **To use Serial1 on some STM32 boards without Serial1 definition (Nucleo-144 NUCLEO_F767ZI, Nucleo-64 NUCLEO_L053R8, etc.) boards**, you have to copy the files [STM32 variant.h](Packages_Patches/STM32/hardware/stm32/1.9.0) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/1.9.0). You have to modify the files corresponding to your boards, this is just an illustration how to do.
 
@@ -587,17 +642,91 @@ Look in file [**adc_common.c**](https://github.com/espressif/esp-idf/blob/master
 ---
 ---
 
+### HOWTO use STM32F4 with LAN8720
+
+#### 1. Wiring
+
+This is the Wiring for STM32F4 (BLACK_F407VE, etc.) using LAN8720
+
+
+|LAN8720 PHY|<--->|STM32F4|
+|:-:|:-:|:-:|
+|TX1|<--->|PB_13|
+|TX_EN|<--->|PB_11|
+|TX0|<--->|PB_12|
+|RX0|<--->|PC_4|
+|RX1|<--->|PC_5|
+|nINT/RETCLK|<--->|PA_1|
+|CRS|<--->|PA_7|
+|MDIO|<--->|PA_2|
+|MDC|<--->|PC_1|
+|GND|<--->|GND|
+|VCC|<--->|+3.3V|
+
+---
+
+#### 2. HOWTO program using STLink V-2 or V-3
+
+Connect as follows. To program, use **STM32CubeProgrammer** or Arduino IDE with 
+
+- **U(S)ART Support: "Enabled (generic Serial)"**
+- **Upload Method : "STM32CubeProgrammer (SWD)"**
+
+
+|STLink|<--->|STM32F4|
+|:-:|:-:|:-:|
+|SWCLK|<--->|SWCLK|
+|SWDIO|<--->|SWDIO|
+|RST|<--->|NRST|
+|GND|<--->|GND|
+|5v|<--->|5V|
+
+
+<p align="center">
+    <img src="https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/master/Images/STM32F407VET6.png">
+</p>
+
+---
+
+#### 3. HOWTO use Serial Port for Debugging
+
+Connect FDTI (USB to Serial) as follows:
+
+|FDTI|<--->|STM32F4|
+|:-:|:-:|:-:|
+|RX|<--->|TX=PA_9|
+|TX|<--->|RX=PA_10|
+|GND|<--->|GND|
+
+
+---
+---
+
 ### Examples
 
-Also see examples:
+#### For ESP32 and ESP8266
+
  1. [AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP)
  2. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager)
- 3. [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
- 4. [AsyncCustomHeader_STM32](examples/AsyncCustomHeader_STM32)
- 5. [AsyncDweetGet_STM32](examples/AsyncDweetGet_STM32)
- 6. [AsyncDweetPost_STM32](examples/AsyncDweetPost_STM32)
- 7. [AsyncSimpleGET_STM32](examples/AsyncSimpleGET_STM32)
- 8. [AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32)
+ 3. [AsyncHTTPMultiRequests_ESP](examples/AsyncHTTPMultiRequests_ESP)
+
+#### For STM32 using LAN8742A
+
+ 1. [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
+ 2. [AsyncCustomHeader_STM32](examples/AsyncCustomHeader_STM32)
+ 3. [AsyncDweetGet_STM32](examples/AsyncDweetGet_STM32)
+ 4. [AsyncDweetPost_STM32](examples/AsyncDweetPost_STM32)
+ 5. [AsyncSimpleGET_STM32](examples/AsyncSimpleGET_STM32)
+ 6. [AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32)
+
+#### For STM32 using LAN8720
+
+ 1. [AsyncHTTPRequest_STM32_LAN8720](examples/STM32_LAN8720/AsyncHTTPRequest_STM32_LAN8720)
+ 2. [AsyncCustomHeader_STM32_LAN8720](examples/STM32_LAN8720/AsyncCustomHeader_STM32_LAN8720)
+ 3. [AsyncDweetGet_STM32_LAN8720](examples/STM32_LAN8720/AsyncDweetGet_STM32_LAN8720)
+ 4. [AsyncDweetPost_STM32_LAN8720](examples/STM32_LAN8720/AsyncDweetPost_STM32_LAN8720)
+ 5. [AsyncSimpleGET_STM32_LAN8720](examples/STM32_LAN8720/AsyncSimpleGET_STM32_LAN8720)
+ 6. [AsyncWebClientRepeating_STM32_LAN8720](examples/STM32_LAN8720/AsyncWebClientRepeating_STM32_LAN8720)
 
 ---
 
@@ -1040,6 +1169,62 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 ```
 
 ---
+
+#### 6. [AsyncWebClientRepeating_STM32_LAN8720](examples/STM32_LAN8720/AsyncWebClientRepeating_STM32_LAN8720) running on STM32F4 BLACK_F407VE using LAN8720
+
+
+```
+Start AsyncWebClientRepeating_STM32_LAN8720 on BLACK_F407VE
+AsyncHTTPRequest_Generic v1.2.0
+AsyncHTTPRequest @ IP : 192.168.2.150
+
+
+**************************************
+
+           `:;;;,`                      .:;;:.           
+        .;;;;;;;;;;;`                :;;;;;;;;;;:     TM 
+      `;;;;;;;;;;;;;;;`            :;;;;;;;;;;;;;;;      
+     :;;;;;;;;;;;;;;;;;;         `;;;;;;;;;;;;;;;;;;     
+    ;;;;;;;;;;;;;;;;;;;;;       .;;;;;;;;;;;;;;;;;;;;    
+   ;;;;;;;;:`   `;;;;;;;;;     ,;;;;;;;;.`   .;;;;;;;;   
+  .;;;;;;,         :;;;;;;;   .;;;;;;;          ;;;;;;;  
+  ;;;;;;             ;;;;;;;  ;;;;;;,            ;;;;;;. 
+ ,;;;;;               ;;;;;;.;;;;;;`              ;;;;;; 
+ ;;;;;.                ;;;;;;;;;;;`      ```       ;;;;;`
+ ;;;;;                  ;;;;;;;;;,       ;;;       .;;;;;
+`;;;;:                  `;;;;;;;;        ;;;        ;;;;;
+,;;;;`    `,,,,,,,,      ;;;;;;;      .,,;;;,,,     ;;;;;
+:;;;;`    .;;;;;;;;       ;;;;;,      :;;;;;;;;     ;;;;;
+:;;;;`    .;;;;;;;;      `;;;;;;      :;;;;;;;;     ;;;;;
+.;;;;.                   ;;;;;;;.        ;;;        ;;;;;
+ ;;;;;                  ;;;;;;;;;        ;;;        ;;;;;
+ ;;;;;                 .;;;;;;;;;;       ;;;       ;;;;;,
+ ;;;;;;               `;;;;;;;;;;;;                ;;;;; 
+ `;;;;;,             .;;;;;; ;;;;;;;              ;;;;;; 
+  ;;;;;;:           :;;;;;;.  ;;;;;;;            ;;;;;;  
+   ;;;;;;;`       .;;;;;;;,    ;;;;;;;;        ;;;;;;;:  
+    ;;;;;;;;;:,:;;;;;;;;;:      ;;;;;;;;;;:,;;;;;;;;;;   
+    `;;;;;;;;;;;;;;;;;;;.        ;;;;;;;;;;;;;;;;;;;;    
+      ;;;;;;;;;;;;;;;;;           :;;;;;;;;;;;;;;;;:     
+       ,;;;;;;;;;;;;;,              ;;;;;;;;;;;;;;       
+         .;;;;;;;;;`                  ,;;;;;;;;:         
+                                                         
+                                                         
+                                                         
+                                                         
+    ;;;   ;;;;;`  ;;;;:  .;;  ;; ,;;;;;, ;;. `;,  ;;;;   
+    ;;;   ;;:;;;  ;;;;;; .;;  ;; ,;;;;;: ;;; `;, ;;;:;;  
+   ,;:;   ;;  ;;  ;;  ;; .;;  ;;   ,;,   ;;;,`;, ;;  ;;  
+   ;; ;:  ;;  ;;  ;;  ;; .;;  ;;   ,;,   ;;;;`;, ;;  ;;. 
+   ;: ;;  ;;;;;:  ;;  ;; .;;  ;;   ,;,   ;;`;;;, ;;  ;;` 
+  ,;;;;;  ;;`;;   ;;  ;; .;;  ;;   ,;,   ;; ;;;, ;;  ;;  
+  ;;  ,;, ;; .;;  ;;;;;:  ;;;;;: ,;;;;;: ;;  ;;, ;;;;;;  
+  ;;   ;; ;;  ;;` ;;;;.   `;;;:  ,;;;;;, ;;  ;;,  ;;;;   
+
+**************************************
+```
+
+---
 ---
 
 ### Debug
@@ -1054,6 +1239,7 @@ You can also change the debugging level from 0 to 4
 // Use from 0 to 4. Higher number, more debugging messages and memory usage.
 #define _ASYNC_HTTP_LOGLEVEL_           1
 ```
+
 ---
 
 ### Troubleshooting
@@ -1084,11 +1270,19 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
  2. Add more examples.
  3. Add debugging features.
  4. Add PUT, PATCH, DELETE and HEAD besides GET and POST.
+ 5. Add support to **Ethernet LAN8720** using [STM32Ethernet library](https://github.com/stm32duino/STM32Ethernet), for boards such as **Nucleo-144 (F429ZI, NUCLEO_F746NG, NUCLEO_F746ZG, NUCLEO_F756ZG), Discovery (DISCO_F746NG)** and **STM32F4 boards (BLACK_F407VE, BLACK_F407VG, BLACK_F407ZE, BLACK_F407ZG, BLACK_F407VE_Mini, DIYMORE_F407VGT, FK407M1)**
 
----
+
 ---
 
 ## Releases
+
+### Releases v1.2.0
+
+1. Add support to **LAN8720** Ethernet for many **STM32F4** (F407xx, NUCLEO_F429ZI) and **STM32F7** (DISCO_F746NG, NUCLEO_F746ZG, NUCLEO_F756ZG) boards.
+2. Add LAN8720 examples
+3. Add Packages' Patches for STM32 to use LAN8720 with STM32Ethernet and LwIP libraries
+4. Update ESP_WiFiManager-related example to fix multiWiFi timings to work better with latest esp32 core v1.0.6
 
 ### Releases v1.1.5
 

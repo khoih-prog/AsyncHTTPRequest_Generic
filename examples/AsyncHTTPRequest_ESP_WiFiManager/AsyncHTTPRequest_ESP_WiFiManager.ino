@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.5
+  Version: 1.2.0
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -30,6 +30,7 @@
   1.1.3    K Hoang     25/02/2021 Fix non-persistent Connection header bug
   1.1.4    K Hoang     21/03/2021 Fix `library.properties` dependency
   1.1.5    K Hoang     22/03/2021 Fix dependency on STM32AsyncTCP Library
+  1.2.0    K Hoang     11/04/2021 Add support to LAN8720 using STM32F4 or STM32F7
  *****************************************************************************************************************************/
 //************************************************************************************************************
 //
@@ -62,7 +63,9 @@
 
 // Level from 0-4
 #define ASYNC_HTTP_DEBUG_PORT     Serial
-#define _ASYNC_HTTP_LOGLEVEL_     1    
+
+#define _ASYNC_HTTP_LOGLEVEL_     1
+#define _WIFIMGR_LOGLEVEL_        1
 
 // 300s = 5 minutes to not flooding, 60s in testing
 #define HTTP_REQUEST_INTERVAL     60  //300
@@ -331,14 +334,20 @@ void configWiFi(WiFi_STA_IPConfig in_WM_STA_IPconfig)
 uint8_t connectMultiWiFi()
 {
 #if ESP32
-  // For ESP32, this better be 0 to shorten the connect time
-  #define WIFI_MULTI_1ST_CONNECT_WAITING_MS       0
+  // For ESP32, this better be 0 to shorten the connect time. 
+  // For ESP32-S2, must be > 500
+  #if ( ARDUINO_ESP32S2_DEV || ARDUINO_FEATHERS2 || ARDUINO_PROS2 || ARDUINO_MICROS2 )
+    #define WIFI_MULTI_1ST_CONNECT_WAITING_MS           500L
+  #else
+    // For ESP32 core v1.0.6, must be >= 500
+    #define WIFI_MULTI_1ST_CONNECT_WAITING_MS           800L
+  #endif
 #else
   // For ESP8266, this better be 2200 to enable connect the 1st time
-  #define WIFI_MULTI_1ST_CONNECT_WAITING_MS       2200L
+  #define WIFI_MULTI_1ST_CONNECT_WAITING_MS             2200L
 #endif
 
-#define WIFI_MULTI_CONNECT_WAITING_MS           100L
+#define WIFI_MULTI_CONNECT_WAITING_MS                   100L
   
   uint8_t status;
 
@@ -370,6 +379,7 @@ uint8_t connectMultiWiFi()
 
   int i = 0;
   status = wifiMulti.run();
+
   delay(WIFI_MULTI_1ST_CONNECT_WAITING_MS);
 
   while ( ( i++ < 20 ) && ( status != WL_CONNECTED ) )

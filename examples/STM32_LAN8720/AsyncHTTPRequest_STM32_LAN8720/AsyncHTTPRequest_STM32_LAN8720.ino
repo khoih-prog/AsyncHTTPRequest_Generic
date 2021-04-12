@@ -1,7 +1,7 @@
 /****************************************************************************************************************************
-  AsyncWebClientRepeating_STM32.ino - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
+  AsyncHTTPRequest_STM32_LAN8720.ino - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32
   
-  For ESP8266, ESP32 and STM32 with built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
+  For ESP8266, ESP32 and STM32 with LAN8720 or built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
   
   AsyncHTTPRequest_Generic is a library for the ESP8266, ESP32 and currently STM32 run built-in Ethernet WebServer
   
@@ -32,21 +32,37 @@
   1.1.5    K Hoang     22/03/2021 Fix dependency on STM32AsyncTCP Library
   1.2.0    K Hoang     11/04/2021 Add support to LAN8720 using STM32F4 or STM32F7
  *****************************************************************************************************************************/
+//************************************************************************************************************
+//
+// There are scores of ways to use AsyncHTTPRequest.  The important thing to keep in mind is that
+// it is asynchronous and just like in JavaScript, everything is event driven.  You will have some
+// reason to initiate an asynchronous HTTP request in your program, but then sending the request
+// headers and payload, gathering the response headers and any payload, and processing
+// of that response, can (and probably should) all be done asynchronously.
+//
+// In this example, a Ticker function is setup to fire every 5 seconds to initiate a request.
+// Everything is handled in AsyncHTTPRequest without blocking.
+// The callback onReadyStateChange is made progressively and like most JS scripts, we look for
+// readyState == 4 (complete) here.  At that time the response is retrieved and printed.
+//
+// Note that there is no code in loop().  A code entered into loop would run oblivious to
+// the ongoing HTTP requests.  The Ticker could be removed and periodic calls to sendRequest()
+// could be made in loop(), resulting in the same asynchronous handling.
+//
+// For demo purposes, debug is turned on for handling of the first request.  These are the
+// events that are being handled in AsyncHTTPRequest.  They all begin with Debug(nnn) where
+// nnn is the elapsed time in milliseconds since the transaction was started.
+//
+//*************************************************************************************************************
 
 #include "defines.h"
 
-// Select a test server address           
-const char GET_ServerAddress[] = "arduino.cc";
+// 600s = 10 minutes to not flooding, 60s in testing
+#define HTTP_REQUEST_INTERVAL_MS     60000  //600000
 
-// GET location
-String GET_Location = "/asciilogo.txt";
+#include <AsyncHTTPRequest_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 
-// 60s = 60 seconds to not flooding the server
-#define HTTP_REQUEST_INTERVAL_MS     60000
-
-#include <AsyncHTTPRequest_Generic.h>           // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
-
-#include <Ticker.h>                             // https://github.com/sstaub/Ticker
+#include <Ticker.h>                   // https://github.com/sstaub/Ticker
 
 AsyncHTTPRequest request;
 
@@ -56,12 +72,13 @@ void sendRequest(void);
 Ticker sendHTTPRequest(sendRequest, HTTP_REQUEST_INTERVAL_MS, 0, MILLIS); 
 
 void sendRequest(void)
-{ 
+{
   static bool requestOpenResult;
   
   if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
-  {         
-    requestOpenResult = request.open("GET", (GET_ServerAddress + GET_Location).c_str());
+  {
+    //requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/London.txt");
+    requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
     
     if (requestOpenResult)
     {
@@ -79,16 +96,16 @@ void sendRequest(void)
   }
 }
 
-void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
+void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState) 
 {
   (void) optParm;
   
-  if (readyState == readyStateDone)
-  {   
+  if (readyState == readyStateDone) 
+  {
     Serial.println("\n**************************************");
     Serial.println(request->responseText());
     Serial.println("**************************************");
-      
+    
     request->setDebug(false);
   }
 }
@@ -96,9 +113,9 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
 void setup(void) 
 {
   Serial.begin(115200);
-  while (!Serial);
+  delay(2000);
   
-  Serial.println("\nStart AsyncWebClientRepeating_STM32 on " + String(BOARD_NAME));
+  Serial.println("\nStart AsyncHTTPRequest_STM32_LAN8720 on " + String(BOARD_NAME));
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
   // start the ethernet connection and the server
@@ -117,9 +134,10 @@ void setup(void)
   request.setDebug(false);
   
   request.onReadyStateChange(requestCB);
-  sendHTTPRequest.start(); //start the ticker
+  sendHTTPRequest.start(); //start the ticker.
 
   // Send first request now
+  //delay(60);
   sendRequest();
 }
 

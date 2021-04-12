@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.1.5
+  Version: 1.2.0
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -30,6 +30,7 @@
   1.1.3    K Hoang     25/02/2021 Fix non-persistent Connection header bug
   1.1.4    K Hoang     21/03/2021 Fix `library.properties` dependency
   1.1.5    K Hoang     22/03/2021 Fix dependency on STM32AsyncTCP Library
+  1.2.0    K Hoang     11/04/2021 Add support to LAN8720 using STM32F4 or STM32F7
  *****************************************************************************************************************************/
  
 #include "defines.h"
