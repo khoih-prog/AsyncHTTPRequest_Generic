@@ -18,6 +18,7 @@
   * [Principles of operation](#principles-of-operation)
   * [Currently supported Boards](#currently-supported-boards)
 * [Changelog](#changelog)
+  * [Releases v1.3.0](#releases-v130)
   * [Releases v1.2.0](#releases-v120)
   * [Releases v1.1.5](#releases-v115)
   * [Releases v1.1.4](#releases-v114)
@@ -46,20 +47,22 @@
   * [7. For STM32 boards](#7-for-stm32-boards)
     * [7.1. For STM32 boards to use LAN8720](#71-for-stm32-boards-to-use-lan8720)
     * [7.2. For STM32 boards to use Serial1](#72-for-stm32-boards-to-use-serial1)
-* [HOWTO Install esp32-s2 core for ESP32-S2 (Saola, AI-Thinker ESP-12K) boards into Arduino IDE)](#howto-install-esp32-s2-core-for-esp32-s2-saola-ai-thinker-esp-12k-boards-into-arduino-ide)
+* [HOWTO Install esp32 core for ESP32-S2 (Saola, AI-Thinker ESP-12K) and ESP32-C3 boards into Arduino IDE](#howto-install-esp32-core-for-esp32-s2-saola-ai-thinker-esp-12k-and-esp32-c3-boards-into-arduino-ide)
   * [1. Save the original esp32 core](#1-save-the-original-esp32-core)
-  * [2. Download esp32-s2 core](#2-download-esp32-s2-core)
-    * [2.1 Download zip](#21-download-zip)
-    * [2.2 Unzip](#22-unzip)
-    * [2.3 Update esp32-s2 core directories](#23-update-esp32-s2-core-directories)
-  * [3. Download tools](#3-download-tools) 
+  * [2. Install esp32 core v1.0.6](#2-install-esp32-core-v106)
+    * [2.1 Install esp32 core](#21-install-esp32-core)
+    * [2.2 Download latest zip with esp32-s2 support](#22-download-latest-zip-with-esp32-s2-support)
+    * [2.3 Unzip](#23-unzip)
+    * [2.3 Update esp32 core directories](#24-update-esp32-core-directories)
+  * [3. Download tools for ESP32-S2](#3-download-tools-for-esp32-s2) 
     * [3.1 Download Toolchain for Xtensa (ESP32-S2) based on GCC](#31-download-toolchain-for-xtensa-esp32-s2-based-on-gcc)
     * [3.2 Download esptool](#32-download-esptool)
     * [3.3 Unzip](#33-unzip)
   * [4. Update tools](#4-update-tools)
     * [4.1 Update Toolchain](#41-update-toolchain)
     * [4.2 Update esptool](#42-update-esptool)
-  * [5. esp32-s2 WebServer Library Patch](#5-esp32-s2-webserver-library-patch)
+  * [5. Download tools for ESP32-C3](#5-download-tools-for-esp32-c3)
+  * [6. esp32-s2 WebServer Library Patch](#6-esp32-s2-webserver-library-patch)
 * [Note for Platform IO using ESP32 LittleFS](#note-for-platform-io-using-esp32-littlefs) 
 * [HOWTO Fix `Multiple Definitions` Linker Error](#howto-fix-multiple-definitions-linker-error)
 * [Note for Platform IO using ESP32 LittleFS](#note-for-platform-io-using-esp32-littlefs)
@@ -90,6 +93,9 @@
     * [4. AsyncDweetPost_STM32_LAN8720](examples/STM32_LAN8720/AsyncDweetPost_STM32_LAN8720)
     * [5. AsyncSimpleGET_STM32_LAN8720](examples/STM32_LAN8720/AsyncSimpleGET_STM32_LAN8720)
     * [6. AsyncWebClientRepeating_STM32_LAN8720](examples/STM32_LAN8720/AsyncWebClientRepeating_STM32_LAN8720)
+  * [For WT32_ETH01](#for-wt32_eth01)
+    * [1. AsyncHTTPRequest_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01)
+    * [2. AsyncHTTPMultiRequests_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPMultiRequests_WT32_ETH01)
 * [Example AsyncHTTPRequest_STM32](#example-asynchttprequest_stm32)
   * [1. File AsyncHTTPRequest_STM32.ino](#1-file-asynchttprequest_stm32ino)
   * [2. File defines.h](#2-file-definesh) 
@@ -100,6 +106,8 @@
   * [4. AsyncHTTPRequest_ESP running on ESP8266_NODEMCU](#4-asynchttprequest_esp-running-on-esp8266_nodemcu)
   * [5. AsyncWebClientRepeating_STM32 running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A](#5-asyncwebclientrepeating_stm32-running-on-stm32f7-nucleo-144-nucleo_f767zi-using-built-in-lan8742a)
   * [6. AsyncWebClientRepeating_STM32_LAN8720 running on STM32F4 BLACK_F407VE using LAN8720](#6-asyncwebclientrepeating_stm32_lan8720-running-on-stm32f4-black_f407ve-using-lan8720)
+  * [7. AsyncHTTPMultiRequests_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720](#7-asynchttpmultirequests_wt32_eth01-on-esp32_dev-with-eth_phy_lan8720)
+  * [8. AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720](#8-asynchttprequest_wt32_eth01-on-esp32_dev-with-eth_phy_lan8720)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -118,7 +126,7 @@
 
 ### Features
 
-1. Asynchronous HTTP Request library for ESP8266, including ESP32-S2 (ESP32-S2 Saola, AI-Thinker ESP-12K, etc.) using built-in WiFi, and STM32 boards using LAN8720 or built-in LAN8742A Ethernet. 
+1. Asynchronous HTTP Request library for ESP8266, including ESP32-S2 (ESP32-S2 Saola, AI-Thinker ESP-12K, etc.) using built-in WiFi, WT32_ETH01 (ESP32 + LAN8720) and STM32 boards using LAN8720 or built-in LAN8742A Ethernet. 
 2. Providing a subset of HTTP.
 3. Relying on on **[`ESPAsyncTCP`](https://github.com/me-no-dev/ESPAsyncTCP) for ESP8266, [`AsyncTCP`](https://github.com/me-no-dev/AsyncTCP) for ESP32** using built-in WiFi
 4. Relying on **[`STM32duino LwIP`](https://github.com/stm32duino/LwIP)/[`STM32duino STM32Ethernet`](https://github.com/stm32duino/STM32Ethernet)/[`STM32AsyncTCP`](https://github.com/philbowles/STM32AsyncTCP) for STM32 using LAN8720 or built-in LAN8742A Ethernet.**
@@ -172,11 +180,18 @@ This library is based on, modified from:
 3. **STM32F4 boards (BLACK_F407VE, BLACK_F407VG, BLACK_F407ZE, BLACK_F407ZG, BLACK_F407VE_Mini, DIYMORE_F407VGT, FK407M1)**
 
 
+#### 5. **WT32_ETH01** using ESP32-based boards and LAN8720 Ethernet
+
 ---
 ---
 
 
 ## Changelog
+
+### Releases v1.3.0
+
+1. Add support to WT32_ETH01 (ESP32 + LAN8720) boards
+2. Add examples with new features
 
 ### Releases v1.2.0
 
@@ -235,18 +250,19 @@ This library is based on, modified from:
 
 ## Prerequisites
 
- 1. [`Arduino IDE 1.8.13+` for Arduino](https://www.arduino.cc/en/Main/Software)
- 2. [`ESP8266 Core 2.7.4+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/)
+ 1. [`Arduino IDE 1.8.15+` for Arduino](https://www.arduino.cc/en/Main/Software)
+ 2. [`ESP8266 Core 3.0.1+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/)
  3. [`ESP32 Core 1.0.6+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [Latest stable release ![Release Version](https://img.shields.io/github/release/espressif/arduino-esp32.svg?style=plastic)
- 4. [`ESP32S2 Core 1.0.4+`](https://github.com/espressif/arduino-esp32/tree/esp32s2) for ESP32-S2-based boards.
- 5. [`Arduino Core for STM32 1.9.0+`](https://github.com/stm32duino/Arduino_Core_STM32) for for STM32 using built-in Ethernet LAN8742A. [![GitHub release](https://img.shields.io/github/release/stm32duino/Arduino_Core_STM32.svg)](https://github.com/stm32duino/Arduino_Core_STM32/releases/latest)
+ 4. [`ESP32-S2/C3 Core 1.0.6+`](https://github.com/espressif/arduino-esp32) for ESP32-S2/C3-based boards. Must follow [HOWTO Install esp32 core for ESP32-S2 (Saola, AI-Thinker ESP-12K) and ESP32-C3 boards into Arduino IDE](#howto-install-esp32-core-for-esp32-s2-saola-ai-thinker-esp-12k-and-esp32-c3-boards-into-arduino-ide).
+ 5. [`Arduino Core for STM32 2.0.0+`](https://github.com/stm32duino/Arduino_Core_STM32) for for STM32 using built-in Ethernet LAN8742A. [![GitHub release](https://img.shields.io/github/release/stm32duino/Arduino_Core_STM32.svg)](https://github.com/stm32duino/Arduino_Core_STM32/releases/latest)
  6. [`ESPAsyncTCP v1.2.2+`](https://github.com/me-no-dev/ESPAsyncTCP) for ESP8266.
  7. [`AsyncTCP v1.1.1+`](https://github.com/me-no-dev/AsyncTCP) for ESP32.
  8. [`STM32Ethernet library v1.2.0+`](https://github.com/stm32duino/STM32Ethernet) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/STM32Ethernet.svg)](https://github.com/stm32duino/STM32Ethernet/releases/latest)
  9. [`LwIP library v2.1.2+`](https://github.com/stm32duino/LwIP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/LwIP.svg)](https://github.com/stm32duino/LwIP/releases/latest)
 10. [`STM32AsyncTCP library v1.0.1+`](https://github.com/khoih-prog/STM32AsyncTCP) for built-in Ethernet on (Nucleo-144, Discovery). To install manually for Arduino IDE.
-11. [`ESPAsync_WiFiManager library v1.6.2+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
+11. [`ESPAsync_WiFiManager library v1.9.1+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
 12.  [`LittleFS_esp32 v1.0.6+`](https://github.com/lorol/LITTLEFS) for ESP32-based boards using LittleFS. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/LittleFS_esp32.svg?)](https://www.ardu-badge.com/LittleFS_esp32).
+13. [`WebServer_WT32_ETH01 library v1.1.0+`](https://github.com/khoih-prog/WebServer_WT32_ETH01) if necessary to use WT32_ETH01 boards. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_WT32_ETH01.svg?)](https://www.ardu-badge.com/WebServer_WT32_ETH01)
 
 ---
 
@@ -437,7 +453,7 @@ theses files must be copied into the corresponding directory:
 ---
 ---
 
-## HOWTO Install esp32-s2 core for ESP32-S2 (Saola, AI-Thinker ESP-12K) boards into Arduino IDE
+## HOWTO Install esp32 core for ESP32-S2 (Saola, AI-Thinker ESP-12K) and ESP32-C3 boards into Arduino IDE
 
 
 These are instructions demonstrating the steps to install esp32-s2 core on Ubuntu machines. For Windows or other OS'es, just follow the the similar principles and steps.
@@ -455,27 +471,32 @@ First, copy the whole original esp32 core to another safe place. Then delete all
 
 ---
 
-### 2. Download esp32-s2 core
 
-#### 2.1 Download zip
+### 2. Install esp32 core v1.0.6
 
-Download [**esp32-s2 core**](https://github.com/espressif/arduino-esp32/tree/esp32s2) in the `zip` format: 
+#### 2.1 Install esp32 core
 
-`arduino-esp32-esp32s2.zip`
+Just use Arduino IDE Board Manager to install [ESP32 Arduino Release 1.0.6 based on ESP-IDF v3.3.5](https://github.com/espressif/arduino-esp32/releases/tag/1.0.6). This official v1.06 core doesn't have esp32-s2/s3 support. You have to download and use the latest master branch.
 
-#### 2.2 Unzip
+
+#### 2.2 Download latest zip with esp32-s2 support
+
+As of **April 16th 2021**, the **esp32-s2/c3** board support has been included in master branch of esp32 core. Download [**esp32 core, master branch**](https://github.com/espressif/arduino-esp32) in the zip format.
+
+#### 2.3 Unzip
 
 <p align="center">
     <img src="https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/master/Images/esp32_s2_Core_Unzipped.png">
 </p>
 
-#### 2.3 Update esp32-s2 core directories
+#### 2.4 Update esp32 core directories
 
-Copy all subdirectories of esp32-s2 core into `/home/your_account/.arduino15/packages/esp32/hardware/esp32/1.0.4`
+Copy all subdirectories of esp32 core into `/home/your_account/.arduino15/packages/esp32/hardware/esp32/1.0.6`
+
 
 ---
 
-### 3 Download tools
+### 3 Download tools for ESP32-S2
 
 
 #### 3.1 Download Toolchain for Xtensa (ESP32-S2) based on GCC
@@ -508,7 +529,7 @@ Download [esptool](https://github.com/espressif/esptool/releases) int the `zip` 
 
 #### 4.1 Update Toolchain
 
-Copy whole `xtensa-esp32s2-elf` directory into `/home/your_account/.arduino15/packages/esp32/hardware/esp32/1.0.4/tools`
+Copy whole `xtensa-esp32s2-elf` directory into `/home/your_account/.arduino15/packages/esp32/hardware/esp32/1.0.6/tools`
 
 
 #### 4.2 Update esptool
@@ -516,7 +537,7 @@ Copy whole `xtensa-esp32s2-elf` directory into `/home/your_account/.arduino15/pa
 Rename `esptool-3.0` directory to `esptool`
 
 
-Copy whole `esptool` directory into `/home/your_account/.arduino15/packages/esp32/hardware/esp32/1.0.4/tools`
+Copy whole `esptool` directory into `/home/your_account/.arduino15/packages/esp32/hardware/esp32/1.0.6/tools`
 
 
 <p align="center">
@@ -524,7 +545,28 @@ Copy whole `esptool` directory into `/home/your_account/.arduino15/packages/esp3
 </p>
 
 
-### 5. esp32-s2 WebServer Library Patch
+### 5 Download tools for ESP32-C3
+
+Download [**esp32-c3 Toolchain**](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/api-guides/tools/idf-tools.html#riscv32-esp-elf) corresponding to your environment (linux-amd64, win64, etc.).
+
+For example`riscv32-esp-elf-gcc8_4_0-crosstool-ng-1.24.0-123-g64eb9ff-linux-amd64.tar.gz`, then un-archive.
+
+Then using the similar steps as in
+
+* [3. Download tools for ESP32-S2](#3-download-tools-for-esp32-s2) 
+  * [3.1 Download Toolchain for Xtensa (ESP32-S2) based on GCC](#31-download-toolchain-for-xtensa-esp32-s2-based-on-gcc)
+  * [3.2 Download esptool](#32-download-esptool)
+  * [3.3 Unzip](#33-unzip)
+* [4. Update tools](#4-update-tools)
+  * [4.1 Update Toolchain](#41-update-toolchain)
+  * [4.2 Update esptool](#42-update-esptool)
+
+then copy whole `riscv32-esp-elf` directory into `/home/your_account/.arduino15/packages/esp32/hardware/esp32/1.0.6/tools`
+
+
+### 6. esp32-s2 WebServer Library Patch
+
+#### Necessary only for esp32 core v1.0.6-
 
 If you haven't installed a new version with [WebServer.handleClient delay PR #4350](https://github.com/espressif/arduino-esp32/pull/4350) or haven't applied the above mentioned PR, you have to use the following patch.
 
@@ -728,6 +770,11 @@ Connect FDTI (USB to Serial) as follows:
  5. [AsyncSimpleGET_STM32_LAN8720](examples/STM32_LAN8720/AsyncSimpleGET_STM32_LAN8720)
  6. [AsyncWebClientRepeating_STM32_LAN8720](examples/STM32_LAN8720/AsyncWebClientRepeating_STM32_LAN8720)
 
+#### For WT32_ETH01
+
+ 1. [AsyncHTTPRequest_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01)
+ 2. [AsyncHTTPMultiRequests_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPMultiRequests_ESP)
+ 
 ---
 
 ### Example [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
@@ -959,7 +1006,7 @@ IPAddress ip(192, 168, 2, 232);
 
 ```
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.1.5
+AsyncHTTPRequest_Generic v1.3.0
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -1004,7 +1051,7 @@ week_number: 37
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.1.5
+AsyncHTTPRequest_Generic v1.3.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -1037,7 +1084,7 @@ HHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
-AsyncHTTPRequest_Generic v1.1.5
+AsyncHTTPRequest_Generic v1.3.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -1088,7 +1135,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.1.5
+AsyncHTTPRequest_Generic v1.3.0
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
@@ -1120,7 +1167,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ```
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.1.5
+AsyncHTTPRequest_Generic v1.3.0
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -1175,7 +1222,7 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 
 ```
 Start AsyncWebClientRepeating_STM32_LAN8720 on BLACK_F407VE
-AsyncHTTPRequest_Generic v1.2.0
+AsyncHTTPRequest_Generic v1.3.0
 AsyncHTTPRequest @ IP : 192.168.2.150
 
 
@@ -1225,6 +1272,63 @@ AsyncHTTPRequest @ IP : 192.168.2.150
 ```
 
 ---
+
+#### 7. [AsyncHTTPMultiRequests_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPMultiRequests_WT32_ETH01) on ESP32_DEV with ETH_PHY_LAN8720
+
+```
+Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
+WebServer_WT32_ETH01 v1.1.0
+AsyncHTTPRequest_Generic v1.3.0
+ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
+AsyncHTTPRequest @ IP : 192.168.2.232
+
+
+***************Current***************
+{"lat":-24.32,"lon":-46.9983,"timezone":"America/Sao_Paulo","timezone_offset":-10800,"current":{"dt":1625887856,"sunrise":1625910700,"sunset":1625949281,"temp":290.45,"feels_like":290.51,"pressure":1022,"humidity":87,"dew_point":288.27,"uvi":0,"clouds":97,"visibility":10000,"wind_speed":1.3,"wind_deg":3,"wind_gust":1.77,"weather":[{"id":804,"main":"Clouds","description":"overcast clouds","icon":"04n"}]}}
+**************************************
+HHHHHH
+***************Minutely***************
+{"lat":-24.32,"lon":-46.9983,"timezone":"America/Sao_Paulo","timezone_offset":-10800,"minutely":[{"dt":1625887920,"precipitation":0},{"dt":1625887980,"precipitation":0},{"dt":1625888040,"precipitation":0},{"dt":1625888100,"precipitation":0},{"dt":1625888160,"precipitation":0},{"dt":1625888220,"precipitation":0},{"dt":1625888280,"precipitation":0},{"dt":1625888340,"precipitation":0},{"dt":1625888400,"precipitation":0},{"dt":1625888460,"precipitation":0},{"dt":1625888520,"precipitation":0},{"dt":1625888580,"precipitation":0},{"dt":1625888640,"precipitation":0},{"dt":1625888700,"precipitation":0},{"dt":1625888760,"precipitation":0},{"dt":1625888820,"precipitation":0},{"dt":1625888880,"precipitation":0},{"dt":1625888940,"precipitation":0},{"dt":1625889000,"precipitation":0},{"dt":1625889060,"precipitation":0},{"dt":1625889120,"precipitation":0},{"dt":1625889180,"precipitation":0},{"dt":1625889240,"precipitation":0},{"dt":1625889300,"precipitation":0},{"dt":1625889360,"precipitation":0},{"dt":1625889420,"precipitation":0},{"dt":1625889480,"precipitation":0},{"dt":1625889540,"precipitation":0},{"dt":1625889600,"precipitation":0},{"dt":1625889660,"precipitation":0},{"dt":1625889720,"precipitation":0},{"dt":1625889780,"precipitation":0},{"dt":1625889840,"precipitation":0},{"dt":1625889900,"precipitation":0},{"dt":1625889960,"precipitation":0},{"dt":1625890020,"precipitation":0},{"dt":1625890080,"precipitation":0},{"dt":1625890140,"precipitation":0},{"dt":1625890200,"precipitation":0},{"dt":1625890260,"precipitation":0},{"dt":1625890320,"precipitation":0},{"dt":1625890380,"precipitation":0},{"dt":1625890440,"precipitation":0},{"dt":1625890500,"precipitation":0},{"dt":1625890560,"precipitation":0},{"dt":1625890620,"precipitation":0},{"dt":1625890680,"precipitation":0},{"dt":1625890740,"precipitation":0},{"dt":1625890800,"precipitation":0},{"dt":1625890860,"precipitation":0},{"dt":1625890920,"precipitation":0},{"dt":1625890980,"precipitation":0},{"dt":1625891040,"precipitation":0},{"dt":1625891100,"precipitation":0},{"dt":1625891160,"precipitation":0},{"dt":1625891220,"precipitation":0},{"dt":1625891280,"precipitation":0},{"dt":1625891340,"precipitation":0},{"dt":1625891400,"precipitation":0},{"dt":1625891460,"precipitation":0},{"dt":1625891520,"precipitation":0}]}
+**************************************
+HHHH HH
+***************Daily***************
+{"lat":-24.32,"lon":-46.9983,"timezone":"America/Sao_Paulo","timezone_offset":-10800,"daily":[{"dt":1625929200,"sunrise":1625910700,"sunset":1625949281,"moonrise":1625912640,"moonset":1625951340,"moon_phase":0.02,"temp":{"day":295.51,"min":288.03,"max":295.54,"night":289.23,"eve":290.52,"morn":288.14},"feels_like":{"day":295.42,"night":289.24,"eve":290.69,"morn":288.1},"pressure":1021,"humidity":62,"dew_point":287.26,"wind_speed":2.25,"wind_deg":151,"wind_gust":2.36,"weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01d"}],"clouds":0,"pop":0.01,"uvi":4.97},{"dt":1626015600,"sunrise":1625997092,"sunset":1626035705,"moonrise":1626001860,"moonset":1626041220,"moon_phase":0.05,"temp":{"day":295.33,"min":288.28,"max":295.45,"night":290.23,"eve":290.91,"morn":288.28},"feels_like":{"day":295.27,"night":290.5,"eve":291.22,"morn":288.07},"pressure":1021,"humidity":64,"dew_point":287.51,"wind_speed":2.46,"wind_deg":173,"wind_gust":2.85,"weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01d"}],"clouds":0,"pop":0,"uvi":5.01},{"dt":1626102000,"sunrise":1626083482,"sunset":1626122130,"moonrise":1626090900,"moonset":1626131100,"moon_phase":0.08,"temp":{"day":295.54,"min":289.16,"max":295.58,"night":290.41,"eve":291.33,"morn":289.32},"feels_like":{"day":295.61,"night":290.7,"eve":291.66,"morn":289.45},"pressure":1022,"humidity":68,"dew_point":288.68,"wind_speed":2.3,"wind_deg":115,"wind_gust":2.47,"weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01d"}],"clouds":0,"pop":0.01,"uvi":5.02},{"dt":1626188400,"sunrise":1626169871,"sunset":1626208556,"moonrise":1626179700,"moonset":1626220980,"moon_phase":0.12,"temp":{"day":297.47,"min":288.79,"max":297.47,"night":291.03,"eve":291.51,"morn":288.79},"feels_like":{"day":297.42,"night":291.09,"eve":291.75,"morn":288.73},"pressure":1020,"humidity":56,"dew_point":287.21,"wind_speed":2.26,"wind_deg":6,"wind_gust":2.64,"weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01d"}],"clouds":7,"pop":0,"uvi":5.16},{"dt":1626274800,"sunrise":1626256259,"sunset":1626294981,"moonrise":1626268380,"moonset":1626310860,"moon_phase":0.15,"temp":{"day":300.56,"min":291.14,"max":300.56,"night":292.56,"eve":293.32,"morn":291.14},"feels_like":{"day":300.44,"night":292.31,"eve":293.3,"morn":290.64},"pressure":1017,"humidity":42,"dew_point":285.41,"wind_speed":2.21,"wind_deg":9,"wind_gust":2.64,"weather":[{"id":804,"main":"Clouds","description":"overcast clouds","icon":"04d"}],"clouds":99,"pop":0,"uvi":1.57},{"dt":1626361200,"sunrise":1626342645,"sunset":1626381407,"moonrise":1626356940,"moonset":1626400740,"moon_phase":0.19,"temp":{"day":303.08,"min":291.35,"max":303.08,"night":294.83,"eve":295.82,"morn":291.35},"feels_like":{"day":302.65,"night":294.54,"eve":295.79,"morn":290.77},"pressure":1012,"humidity":39,"dew_point":286.19,"wind_speed":2.6,"wind_deg":343,"wind_gust":5.27,"weather":[{"id":802,"main":"Clouds","description":"scattered clouds","icon":"03d"}],"clouds":40,"pop":0,"uvi":2},{"dt":1626447600,"sunrise":1626429031,"sunset":1626467833,"moonrise":1626445440,"moonset":1626490680,"moon_phase":0.22,"temp":{"day":292.5,"min":289.95,"max":294.21,"night":289.95,"eve":290.68,"morn":291.26},"feels_like":{"day":292.84,"night":290.14,"eve":290.92,"morn":291.4},"pressure":1021,"humidity":90,"dew_point":290.28,"wind_speed":4.17,"wind_deg":265,"wind_gust":7.18,"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10d"}],"clouds":100,"pop":0.76,"rain":4.13,"uvi":2},{"dt":1626534000,"sunrise":1626515415,"sunset":1626554260,"moonrise":1626534060,"moonset":0,"moon_phase":0.25,"temp":{"day":288.1,"min":287.9,"max":289.38,"night":288.96,"eve":288.71,"morn":288.22},"feels_like":{"day":288.16,"night":289.05,"eve":288.78,"morn":288.24},"pressure":1025,"humidity":96,"dew_point":287.06,"wind_speed":3.79,"wind_deg":144,"wind_gust":6.59,"weather":[{"id":501,"main":"Rain","description":"moderate rain","icon":"10d"}],"clouds":100,"pop":1,"rain":32.28,"uvi":2}]}
+**************************************
+H
+```
+
+---
+
+#### 8. [AsyncHTTPRequest_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01) on ESP32_DEV with ETH_PHY_LAN8720
+
+```
+Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
+WebServer_WT32_ETH01 v1.1.0
+AsyncHTTPRequest_Generic v1.3.0
+ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
+AsyncHTTPRequest @ IP : 192.168.2.232
+
+**************************************
+abbreviation: EDT
+client_ip: 45.72.193.56
+datetime: 2021-07-09T23:16:50.506413-04:00
+day_of_week: 5
+day_of_year: 190
+dst: true
+dst_from: 2021-03-14T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2021-11-07T06:00:00+00:00
+raw_offset: -18000
+timezone: America/Toronto
+unixtime: 1625887010
+utc_datetime: 2021-07-10T03:16:50.506413+00:00
+utc_offset: -04:00
+week_number: 27
+**************************************
+```
+
+
+---
 ---
 
 ### Debug
@@ -1271,11 +1375,16 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
  3. Add debugging features.
  4. Add PUT, PATCH, DELETE and HEAD besides GET and POST.
  5. Add support to **Ethernet LAN8720** using [STM32Ethernet library](https://github.com/stm32duino/STM32Ethernet), for boards such as **Nucleo-144 (F429ZI, NUCLEO_F746NG, NUCLEO_F746ZG, NUCLEO_F756ZG), Discovery (DISCO_F746NG)** and **STM32F4 boards (BLACK_F407VE, BLACK_F407VG, BLACK_F407ZE, BLACK_F407ZG, BLACK_F407VE_Mini, DIYMORE_F407VGT, FK407M1)**
-
+ 6. Add support to **WT32_ETH01** using ESP32-based boards and LAN8720 Ethernet
 
 ---
 
 ## Releases
+
+### Releases v1.3.0
+
+1. Add support to WT32_ETH01 (ESP32 + LAN8720) boards
+2. Add examples with new features
 
 ### Releases v1.2.0
 

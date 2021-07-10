@@ -1,5 +1,5 @@
 /****************************************************************************************************************************
-  AsyncHTTPMultiRequests.ino - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
+  AsyncHTTPMultiRequests_WT32_ETH01.ino - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
   
   For ESP8266, ESP32 and STM32 with built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
   
@@ -40,8 +40,8 @@
 //
 //*************************************************************************************************************
 
-#if !( defined(ESP8266) ||  defined(ESP32) )
-  #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
+#if !( defined(ESP32) )
+  #error This code is intended to run on the ESP32 platform! Please check your Tools->Board setting.
 #endif
 
 // Level from 0-4
@@ -54,16 +54,7 @@
 // 10s
 #define HEARTBEAT_INTERVAL        10
 
-int status;     // the Wifi radio's status
-
-const char* ssid        = "your_ssid";
-const char* password    = "your_pass";
-
-#if (ESP8266)
-  #include <ESP8266WiFi.h>
-#elif (ESP32)
-  #include <WiFi.h>
-#endif
+#include <WebServer_WT32_ETH01.h>               // https://github.com/khoih-prog/WebServer_WT32_ETH01
 
 #include <AsyncHTTPRequest_Generic.h>           // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 #include <Ticker.h>
@@ -72,11 +63,25 @@ AsyncHTTPRequest request;
 Ticker ticker;
 Ticker ticker1;
 
+/////////////////////////////////////////////
+
+// Select the IP address according to your local network
+IPAddress myIP(192, 168, 2, 232);
+IPAddress myGW(192, 168, 2, 1);
+IPAddress mySN(255, 255, 255, 0);
+
+// Google DNS Server IP
+IPAddress myDNS(8, 8, 8, 8);
+
+bool eth_connected = false;
+
+/////////////////////////////////////////////
+
 void heartBeatPrint(void)
 {
   static int num = 1;
 
-  if (WiFi.status() == WL_CONNECTED)
+  if (eth_connected)
     Serial.print(F("H"));        // H means connected to WiFi
   else
     Serial.print(F("F"));        // F means not connected to WiFi
@@ -162,6 +167,55 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
   }
 }
 
+void WiFiEvent(WiFiEvent_t event)
+{
+  switch (event)
+  {
+    case SYSTEM_EVENT_ETH_START:
+      Serial.println("\nETH Started");
+      //set eth hostname here
+      ETH.setHostname("WT32-ETH01");
+      break;
+    case SYSTEM_EVENT_ETH_CONNECTED:
+      Serial.println("ETH Connected");
+      break;
+
+    case SYSTEM_EVENT_ETH_GOT_IP:
+      if (!eth_connected)
+      {
+        Serial.print("ETH MAC: ");
+        Serial.print(ETH.macAddress());
+        Serial.print(", IPv4: ");
+        Serial.print(ETH.localIP());
+
+        if (ETH.fullDuplex())
+        {
+          Serial.print(", FULL_DUPLEX");
+        }
+
+        Serial.print(", ");
+        Serial.print(ETH.linkSpeed());
+        Serial.println("Mbps");
+        eth_connected = true;
+      }
+
+      break;
+
+    case SYSTEM_EVENT_ETH_DISCONNECTED:
+      Serial.println("ETH Disconnected");
+      eth_connected = false;
+      break;
+
+    case SYSTEM_EVENT_ETH_STOP:
+      Serial.println("\nETH Stopped");
+      eth_connected = false;
+      break;
+
+    default:
+      break;
+  }
+}
+
 void setup()
 {
   // put your setup code here, to run once:
@@ -170,23 +224,29 @@ void setup()
   
   delay(200);
   
-  Serial.println("\nStarting AsyncHTTPMultiRequests using " + String(ARDUINO_BOARD));
+  Serial.print("\nStarting AsyncHTTPRequest_WT32_ETH01 on " + String(ARDUINO_BOARD));
+  Serial.println(" with " + String(SHIELD_TYPE));
+  Serial.println(WEBSERVER_WT32_ETH01_VERSION);
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
-  WiFi.mode(WIFI_STA);
+  Serial.setDebugOutput(true);
 
-  WiFi.begin(ssid, password);
-  
-  Serial.println("Connecting to WiFi SSID: " + String(ssid));
+  //bool begin(uint8_t phy_addr=ETH_PHY_ADDR, int power=ETH_PHY_POWER, int mdc=ETH_PHY_MDC, int mdio=ETH_PHY_MDIO, 
+  //           eth_phy_type_t type=ETH_PHY_TYPE, eth_clock_mode_t clk_mode=ETH_CLK_MODE);
+  //ETH.begin(ETH_PHY_ADDR, ETH_PHY_POWER, ETH_PHY_MDC, ETH_PHY_MDIO, ETH_PHY_TYPE, ETH_CLK_MODE);
+  ETH.begin(ETH_PHY_ADDR, ETH_PHY_POWER);
 
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(".");
-  }
+  // Static IP, leave without this line to get IP via DHCP
+  //bool config(IPAddress local_ip, IPAddress gateway, IPAddress subnet, IPAddress dns1 = 0, IPAddress dns2 = 0);
+  ETH.config(myIP, myGW, mySN, myDNS);
+
+  WiFi.onEvent(WiFiEvent);
+
+  while (!eth_connected)
+    delay(100);
 
   Serial.print(F("AsyncHTTPRequest @ IP : "));
-  Serial.println(WiFi.localIP());
+  Serial.println(ETH.localIP());
  
   request.setDebug(false);
   
