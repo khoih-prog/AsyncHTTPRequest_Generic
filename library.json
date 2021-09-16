@@ -34,7 +34,7 @@
       "owner": "me-no-dev",
       "name": "ESPAsyncTCP",
       "version": ">=1.2.2",
-      "platforms": "espressif8266"
+      "platforms": ["espressif8266"]
     },
     {
       "owner": "khoih.prog",
@@ -46,13 +46,13 @@
       "owner": "stm32duino",
       "name": "STM32duino LwIP",
       "version": ">=2.1.2",
-      "platforms": "ststm32"
+      "platforms": ["ststm32"]
     },
     {
       "owner": "stm32duino",
       "name": "STM32Ethernet",
       "version": ">=1.2.0",
-      "platforms": "ststm32"
+      "platforms": ["ststm32"]
     },
     {
       "owner": "lorol",
