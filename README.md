@@ -17,18 +17,7 @@
   * [Supports](#supports)
   * [Principles of operation](#principles-of-operation)
   * [Currently supported Boards](#currently-supported-boards)
-* [Changelog](#changelog)
-  * [Releases v1.3.0](#releases-v130)
-  * [Releases v1.2.0](#releases-v120)
-  * [Releases v1.1.5](#releases-v115)
-  * [Releases v1.1.4](#releases-v114)
-  * [Releases v1.1.3](#releases-v113)
-  * [Releases v1.1.2](#releases-v112)
-  * [Releases v1.1.1](#releases-v111)
-  * [Releases v1.1.0](#releases-v110)
-  * [Releases v1.0.2](#releases-v102)
-  * [Releases v1.0.1](#releases-v101)
-  * [Releases v1.0.0](#releases-v100)
+* [Changelog](changelog.md)
 * [AsyncHTTPRequest_Generic for ESP32, ESP8266 using built-in WiFi and STM32 boards using built-in LAN8742A Ethernet](#asynchttprequest_generic-for-esp32-esp8266-using-built-in-wifi-and-stm32-boards-using-built-in-lan8742a-ethernet)
 * [Prerequisites](#prerequisites)
 * [Installation](#installation)
@@ -111,7 +100,6 @@
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
-* [Releases](#releases)
 * [TO DO](#to-do)
 * [DONE](#done)
 * [Contributions and Thanks](#contributions-and-thanks)
@@ -181,69 +169,6 @@ This library is based on, modified from:
 
 
 #### 5. **WT32_ETH01** using ESP32-based boards and LAN8720 Ethernet
-
----
----
-
-
-## Changelog
-
-### Releases v1.3.0
-
-1. Add support to WT32_ETH01 (ESP32 + LAN8720) boards
-2. Add examples with new features
-
-### Releases v1.2.0
-
-1. Add support to **LAN8720** Ethernet for many **STM32F4** (F407xx, NUCLEO_F429ZI) and **STM32F7** (DISCO_F746NG, NUCLEO_F746ZG, NUCLEO_F756ZG) boards.
-2. Add LAN8720 examples
-3. Add Packages' Patches for STM32 to use LAN8720 with STM32Ethernet and LwIP libraries
-4. Update ESP_WiFiManager-related example to fix multiWiFi timings to work better with latest esp32 core v1.0.6
-
-### Releases v1.1.5
-
-1. Fix dependency on unpublished [**STM32AsyncTCP Library**](https://github.com/philbowles/STM32AsyncTCP). Check [Compilation broken due to error in STM32AsyncTCP dependency](https://github.com/khoih-prog/AsyncWebServer_STM32/issues/4) and [how to run one of the examples?](https://github.com/khoih-prog/AsyncWebServer_STM32/issues/2).
-
-### Releases v1.1.4
-
-1. Fix `library.properties` dependency
-
-### Releases v1.1.3
-
-1. Fix non-persistent Connection header bug. Check [**'Connection' header expects 'disconnect' instead 'close' ? #13**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/13)
-2. Add ESP32-S2 support
-3. Tested with [**Latest ESP32 Core 1.0.5**](https://github.com/espressif/arduino-esp32) for ESP32-based boards.
-
-### Releases v1.1.2
-
-1. Rename _lock and _unlock to avoid conflict with [**ESP32/ESP8266 AsyncWebServer**](https://github.com/me-no-dev/ESPAsyncWebServer) library. Check [**compatibility with ESPAsyncWebServer #11**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/11)
-2. Fix compiler warnings.
-
-### Releases v1.1.1
-
-1. Prevent crash if request and/or method not correct.
-
-
-### Releases v1.1.0
-
-1. Add HTTP PUT, PATCH, DELETE and HEAD methods. Check [Add support for sending PUT, PATCH, DELETE request](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/5)
-2. Add Table of Contents
-3. Add Version String
-
-
-### Releases v1.0.2
-
-1. Make Mutex Lock and delete more reliable and error-proof to prevent random crash.
-
-### Releases v1.0.1
-
-1. Restore cpp code besides Impl.h code to use in case of `multiple definition` linker error. Thanks to [Daniel Brunner](https://github.com/0xFEEDC0DE64) to report and make PR in [**Fixed linker errors when included in multiple .cpp files**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/1). See [**HOWTO Fix `Multiple Definitions` Linker Error**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic#HOWTO-Fix-Multiple-Definitions-Linker-Error)
-
-
-### Releases v1.0.0
-
-1. Initial coding to add support to **STM32F/L/H/G/WB/MP1** using built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc).
-2. Add examples using STM32 boards.
 
 ---
 ---
@@ -1376,62 +1301,6 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
  4. Add PUT, PATCH, DELETE and HEAD besides GET and POST.
  5. Add support to **Ethernet LAN8720** using [STM32Ethernet library](https://github.com/stm32duino/STM32Ethernet), for boards such as **Nucleo-144 (F429ZI, NUCLEO_F746NG, NUCLEO_F746ZG, NUCLEO_F756ZG), Discovery (DISCO_F746NG)** and **STM32F4 boards (BLACK_F407VE, BLACK_F407VG, BLACK_F407ZE, BLACK_F407ZG, BLACK_F407VE_Mini, DIYMORE_F407VGT, FK407M1)**
  6. Add support to **WT32_ETH01** using ESP32-based boards and LAN8720 Ethernet
-
----
-
-## Releases
-
-### Releases v1.3.0
-
-1. Add support to WT32_ETH01 (ESP32 + LAN8720) boards
-2. Add examples with new features
-
-### Releases v1.2.0
-
-1. Add support to **LAN8720** Ethernet for many **STM32F4** (F407xx, NUCLEO_F429ZI) and **STM32F7** (DISCO_F746NG, NUCLEO_F746ZG, NUCLEO_F756ZG) boards.
-2. Add LAN8720 examples
-3. Add Packages' Patches for STM32 to use LAN8720 with STM32Ethernet and LwIP libraries
-4. Update ESP_WiFiManager-related example to fix multiWiFi timings to work better with latest esp32 core v1.0.6
-
-### Releases v1.1.5
-
-1. Fix dependency on unpublished [**STM32AsyncTCP Library**](https://github.com/philbowles/STM32AsyncTCP). Check [Compilation broken due to error in STM32AsyncTCP dependency](https://github.com/khoih-prog/AsyncWebServer_STM32/issues/4) and [how to run one of the examples?](https://github.com/khoih-prog/AsyncWebServer_STM32/issues/2).
-
-### Releases v1.1.4
-
-1. Fix `library.properties` dependency
-
-### Releases v1.1.3
-
-1. Fix non-persistent Connection header bug. Check [**'Connection' header expects 'disconnect' instead 'close' ? #13**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/13)
-2. Add ESP32-S2 support
-3. Tested with [**Latest ESP32 Core 1.0.5**](https://github.com/espressif/arduino-esp32) for ESP32-based boards.
-
-### Releases v1.1.2
-
-1. Rename _lock and _unlock to avoid conflict with [**ESP32/ESP8266 AsyncWebServer**](https://github.com/me-no-dev/ESPAsyncWebServer) library. Check [**compatibility with ESPAsyncWebServer #11**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/11)
-2. Fix compiler warnings.
-
-### Releases v1.1.1
-
-1. Prevent crash if request and/or method not correct.
-
-### Releases v1.1.0
-
-1. Add HTTP PUT, PATCH, DELETE and HEAD methods. Check [Add support for sending PUT, PATCH, DELETE request](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/5)
-
-### Releases v1.0.2
-
-1. Make Mutex Lock and delete more reliable and error-proof to prevent random crash.
-
-### Releases v1.0.1
-
-1. Restore cpp code besides Impl.h code to use in case of `multiple definition` linker error. Thanks to [Daniel Brunner](https://github.com/0xFEEDC0DE64) to report and make PR in [**Fixed linker errors when included in multiple .cpp files**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/1). See [**HOWTO Fix `Multiple Definitions` Linker Error**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic#HOWTO-Fix-Multiple-Definitions-Linker-Error)
-
-### Releases v1.0.0
-
-1. Initial coding to add support to **STM32F/L/H/G/WB/MP1** using built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc).
-2. Add examples using STM32 boards.
 
 ---
 ---
