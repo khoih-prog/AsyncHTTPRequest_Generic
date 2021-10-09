@@ -18,7 +18,6 @@
   * [Principles of operation](#principles-of-operation)
   * [Currently supported Boards](#currently-supported-boards)
 * [Changelog](changelog.md)
-* [AsyncHTTPRequest_Generic for ESP32, ESP8266 using built-in WiFi and STM32 boards using built-in LAN8742A Ethernet](#asynchttprequest_generic-for-esp32-esp8266-using-built-in-wifi-and-stm32-boards-using-built-in-lan8742a-ethernet)
 * [Prerequisites](#prerequisites)
 * [Installation](#installation)
   * [Use Arduino Library Manager](#use-arduino-library-manager)
