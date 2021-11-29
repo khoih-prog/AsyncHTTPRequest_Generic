@@ -1,6 +1,6 @@
 {
   "name":"AsyncHTTPRequest_Generic",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description":"Simple Async HTTP Request library, supporting GET, POST, PUT, PATCH, DELETE and HEAD, on top of AsyncTCP libraries, such as AsyncTCP, ESPAsyncTCP, AsyncTCP_STM32, etc.. for ESP32 (including ESP32-S2), WT32_ETH01 (ESP32 + LAN8720), ESP8266 and currently STM32 with LAN8720 or built-in LAN8742A Ethernet.",
   "keywords":"communication, async, tcp, http, ESP8266, ESP32, ESP32-S2, wt32-eth01, ESPAsyncTCP, AsyncTCP, stm32, ethernet, wifi, lan8742a, lan8720, f407ve, nucleo, nucleo-144, stm32f7, stm32f4",
   "authors": [
@@ -20,8 +20,14 @@
     "type": "git",
     "url": "https://github.com/khoih-prog/AsyncHTTPRequest_Generic"
   },
-  "license": "MIT",
-  "frameworks": "arduino",
+  "homepage": "https://github.com/khoih-prog/AsyncHTTPRequest_Generic",
+  "export": {
+    "exclude": [
+      "linux",
+      "extras",
+      "tests"
+    ]
+  },
   "dependencies": 
   [
     {
@@ -39,7 +45,7 @@
     {
       "owner": "khoih-prog",
       "name": "ESPAsync_WiFiManager",
-      "version": ">=1.9.4",
+      "version": ">=1.9.6",
       "platforms": ["espressif8266", "espressif32"]
     },
     {
@@ -63,7 +69,7 @@
     {
       "owner": "khoih-prog",
       "name": "WebServer_WT32_ETH01",
-      "version": ">=1.2.1",
+      "version": ">=1.4.1",
       "platforms": ["espressif32"]
     },
     {
@@ -71,5 +77,9 @@
       "version": "https://github.com/khoih-prog/STM32AsyncTCP"
     }
   ],
-  "platforms": ["espressif8266", "espressif32", "ststm32"]
+  "license": "LGPL-3.0",
+  "frameworks": "arduino",
+  "platforms": ["espressif8266", "espressif32", "ststm32"],
+  "examples": "examples/*/*/*.ino",
+  "headers": "AsyncHTTPRequest_Generic.h"
 }

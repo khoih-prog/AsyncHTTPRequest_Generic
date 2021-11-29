@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.4.0
+  Version: 1.4.1
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -34,6 +34,7 @@
   1.3.0    K Hoang     09/07/2021 Add support to WT32_ETH01 (ESP32 + LAN8720) boards
   1.3.1    K Hoang     09/10/2021 Update `platform.ini` and `library.json`
   1.4.0    K Hoang     23/11/2021 Fix crashing bug when request a non-existing IP
+  1.4.1    K Hoang     29/11/2021 Auto detect ESP32 core version and improve connection time for WT32_ETH01
  *****************************************************************************************************************************/
  
 #pragma once
