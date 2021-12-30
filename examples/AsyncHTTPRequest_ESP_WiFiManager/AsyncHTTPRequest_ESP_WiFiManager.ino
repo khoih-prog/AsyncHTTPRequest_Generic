@@ -46,6 +46,9 @@
   #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
 #endif
 
+#define ESP_ASYNC_WIFIMANAGER_VERSION_MIN_TARGET          "ESPAsync_WiFiManager v1.10.0"
+#define ESP_ASYNC_WIFIMANAGER_VERSION_MIN                 1010000
+
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.5.0"
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1005000
 
@@ -559,11 +562,11 @@ void setup()
   Serial.println(ESP_ASYNC_WIFIMANAGER_VERSION);
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
-#if defined(ESP_WIFIMANAGER_VERSION_MIN)
-  if (ESP_WIFIMANAGER_VERSION_INT < ESP_WIFIMANAGER_VERSION_MIN)
+#if defined(ESP_ASYNC_WIFIMANAGER_VERSION_INT)
+  if (ESP_ASYNC_WIFIMANAGER_VERSION_INT < ESP_ASYNC_WIFIMANAGER_VERSION_MIN)
   {
-    Serial.print("Warning. Must use this example on Version equal or later than : ");
-    Serial.println(ESP_WIFIMANAGER_VERSION_MIN_TARGET);
+    Serial.print("Warning. Must use this example on Version later than : ");
+    Serial.println(ESP_ASYNC_WIFIMANAGER_VERSION_MIN_TARGET);
   }
 #endif
 
