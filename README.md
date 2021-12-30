@@ -259,14 +259,14 @@ The current library implementation, using `xyz-Impl.h` instead of standard `xyz.
 You can use
 
 ```
-#include <AsyncHTTPRequest_Generic.h>               //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#include <AsyncHTTPRequest_Generic.h>           //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 ```
 
 in many files. But be sure to use the following `#include <AsyncHTTPRequest_Impl_Generic.h>` **in just 1 `.h`, `.cpp` or `.ino` file**, which must **not be included in any other file**, to avoid `Multiple Definitions` Linker Error
 
 ```
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
-#include <AsyncHTTPRequest_Impl_Generic.h>          // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#include <AsyncHTTPRequest_Impl_Generic.h>      // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 ```
 
 Have a look at the discussion in [Different behaviour using the src_cpp or src_h lib #80](https://github.com/khoih-prog/ESPAsync_WiFiManager/discussions/80)
