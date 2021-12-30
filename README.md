@@ -149,16 +149,16 @@ This library is based on, modified from:
 
 ## Prerequisites
 
- 1. [`Arduino IDE 1.8.16+` for Arduino](https://www.arduino.cc/en/Main/Software)
+ 1. [`Arduino IDE 1.8.19+` for Arduino](https://www.arduino.cc/en/Main/Software)
  2. [`ESP8266 Core 3.0.2+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/)
- 3. [`ESP32 Core 2.0.1+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [Latest stable release ![Release Version](https://img.shields.io/github/release/espressif/arduino-esp32.svg?style=plastic)
- 5. [`Arduino Core for STM32 2.1.0+`](https://github.com/stm32duino/Arduino_Core_STM32) for for STM32 using built-in Ethernet LAN8742A. [![GitHub release](https://img.shields.io/github/release/stm32duino/Arduino_Core_STM32.svg)](https://github.com/stm32duino/Arduino_Core_STM32/releases/latest)
+ 3. [`ESP32 Core 2.0.2+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [Latest stable release ![Release Version](https://img.shields.io/github/release/espressif/arduino-esp32.svg?style=plastic)
+ 5. [`Arduino Core for STM32 2.2.0+`](https://github.com/stm32duino/Arduino_Core_STM32) for for STM32 using built-in Ethernet LAN8742A. [![GitHub release](https://img.shields.io/github/release/stm32duino/Arduino_Core_STM32.svg)](https://github.com/stm32duino/Arduino_Core_STM32/releases/latest)
  6. [`ESPAsyncTCP v1.2.2+`](https://github.com/me-no-dev/ESPAsyncTCP) for ESP8266.
  7. [`AsyncTCP v1.1.1+`](https://github.com/me-no-dev/AsyncTCP) for ESP32.
  8. [`STM32Ethernet library v1.2.0+`](https://github.com/stm32duino/STM32Ethernet) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/STM32Ethernet.svg)](https://github.com/stm32duino/STM32Ethernet/releases/latest)
  9. [`LwIP library v2.1.2+`](https://github.com/stm32duino/LwIP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/LwIP.svg)](https://github.com/stm32duino/LwIP/releases/latest)
 10. [`STM32AsyncTCP library v1.0.1+`](https://github.com/khoih-prog/STM32AsyncTCP) for built-in Ethernet on (Nucleo-144, Discovery). To install manually for Arduino IDE.
-11. [`ESPAsync_WiFiManager library v1.9.6+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
+11. [`ESPAsync_WiFiManager library v1.10.0+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
 12.  [`LittleFS_esp32 v1.0.6+`](https://github.com/lorol/LITTLEFS) for ESP32-based boards using LittleFS. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/LittleFS_esp32.svg?)](https://www.ardu-badge.com/LittleFS_esp32).
 13. [`WebServer_WT32_ETH01 library v1.4.1+`](https://github.com/khoih-prog/WebServer_WT32_ETH01) if necessary to use WT32_ETH01 boards. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_WT32_ETH01.svg?)](https://www.ardu-badge.com/WebServer_WT32_ETH01)
 
@@ -254,13 +254,22 @@ Thanks to [Roshan](https://github.com/solroshan) to report the issue in [Error e
 
 ### HOWTO Fix `Multiple Definitions` Linker Error
 
-The current library implementation, using xyz-Impl.h instead of standard xyz.cpp, possibly creates certain `Multiple Definitions` Linker error in certain use cases. Although it's simple to just modify several lines of code, either in the library or in the application, the library is adding a separate source directory, named src_cpp, besides the standard src directory.
+The current library implementation, using `xyz-Impl.h` instead of standard `xyz.cpp`, possibly creates certain `Multiple Definitions` Linker error in certain use cases.
 
-To use the old standard cpp way, just 
+You can use
 
-1. **Rename the h-only src directory into src_h.**
-2. **Then rename the cpp src_cpp directory into src.**
-3. Close then reopen the application code in Arduino IDE, etc. to recompile from scratch.
+```
+#include <AsyncHTTPRequest_Generic.h>               //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+```
+
+in many files. But be sure to use the following `#include <AsyncHTTPRequest_Impl_Generic.h>` **in just 1 `.h`, `.cpp` or `.ino` file**, which must **not be included in any other file**, to avoid `Multiple Definitions` Linker Error
+
+```
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
+#include <AsyncHTTPRequest_Impl_Generic.h>          // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+```
+
+Have a look at the discussion in [Different behaviour using the src_cpp or src_h lib #80](https://github.com/khoih-prog/ESPAsync_WiFiManager/discussions/80)
 
 ---
 ---
@@ -429,10 +438,16 @@ Please take a look at other examples, as well.
 ```cpp
 #include "defines.h"
 
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.5.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1005000
+
 // 600s = 10 minutes to not flooding, 60s in testing
 #define HTTP_REQUEST_INTERVAL_MS     60000  //600000
 
-#include <AsyncHTTPRequest_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
+#include <AsyncHTTPRequest_Impl_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 
 #include <Ticker.h>                   // https://github.com/sstaub/Ticker
 
@@ -489,6 +504,14 @@ void setup(void)
   
   Serial.println("\nStart AsyncHTTPRequest_STM32 on " + String(BOARD_NAME));
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
+
+#if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  {
+    Serial.print("Warning. Must use this example on Version equal or later than : ");
+    Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
+  }
+#endif  
 
   // start the ethernet connection and the server
   // Use random mac
@@ -648,44 +671,47 @@ IPAddress ip(192, 168, 2, 232);
 #### 1. [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A 
 
 ```
+
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.4.1
-AsyncHTTPRequest @ IP : 192.168.2.72
+AsyncHTTPRequest_Generic v1.5.0
+Warning. Must use this example on Version equal or later than : AsyncHTTPRequest_Generic v1.5.0
+AsyncHTTPRequest @ IP : 192.168.2.178
 
 **************************************
-abbreviation: EDT
+abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2020-09-13T18:22:59.555816-04:00
-day_of_week: 0
-day_of_year: 257
-dst: true
-dst_from: 2020-03-08T07:00:00+00:00
-dst_offset: 3600
-dst_until: 2020-11-01T06:00:00+00:00
+datetime: 2021-12-30T13:53:51.012921-05:00
+day_of_week: 4
+day_of_year: 364
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1600035779
-utc_datetime: 2020-09-13T22:22:59.555816+00:00
-utc_offset: -04:00
-week_number: 37
+unixtime: 1640890431
+utc_datetime: 2021-12-30T18:53:51.012921+00:00
+utc_offset: -05:00
+week_number: 52
+**************************************
 
 **************************************
-abbreviation: EDT
+abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2020-09-13T18:27:57.586325-04:00
-day_of_week: 0
-day_of_year: 257
-dst: true
-dst_from: 2020-03-08T07:00:00+00:00
-dst_offset: 3600
-dst_until: 2020-11-01T06:00:00+00:00
+datetime: 2021-12-30T13:54:50.320646-05:00
+day_of_week: 4
+day_of_year: 364
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1600036077
-utc_datetime: 2020-09-13T22:27:57.586325+00:00
-utc_offset: -04:00
-week_number: 37
-**************************************
+unixtime: 1640890490
+utc_datetime: 2021-12-30T18:54:50.320646+00:00
+utc_offset: -05:00
+week_number: 52
+
 ```
 
 ---
@@ -694,28 +720,28 @@ week_number: 37
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.4.1
+AsyncHTTPRequest_Generic v1.5.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
 After waiting 3.43 secs more in setup(), connection result is connected. Local IP: 192.168.2.186
 H
 **************************************
-abbreviation: EDT
+abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2020-09-13T19:35:37.951609-04:00
-day_of_week: 0
-day_of_year: 257
-dst: true
-dst_from: 2020-03-08T07:00:00+00:00
-dst_offset: 3600
-dst_until: 2020-11-01T06:00:00+00:00
+datetime: 2021-12-30T13:54:50.320646-05:00
+day_of_week: 4
+day_of_year: 364
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1600040137
-utc_datetime: 2020-09-13T23:35:37.951609+00:00
-utc_offset: -04:00
-week_number: 37
+unixtime: 1640890490
+utc_datetime: 2021-12-30T18:54:50.320646+00:00
+utc_offset: -05:00
+week_number: 52
 **************************************
 HHHHHH
 
@@ -727,46 +753,46 @@ HHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
-AsyncHTTPRequest_Generic v1.4.1
+AsyncHTTPRequest_Generic v1.5.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
 After waiting 2.35 secs more in setup(), connection result is connected. Local IP: 192.168.2.232
 H
 **************************************
-abbreviation: EDT
+abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2020-09-13T19:37:02.118166-04:00
-day_of_week: 0
-day_of_year: 257
-dst: true
-dst_from: 2020-03-08T07:00:00+00:00
-dst_offset: 3600
-dst_until: 2020-11-01T06:00:00+00:00
+datetime: 2021-12-30T13:54:50.320646-05:00
+day_of_week: 4
+day_of_year: 364
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1600040222
-utc_datetime: 2020-09-13T23:37:02.118166+00:00
-utc_offset: -04:00
-week_number: 37
+unixtime: 1640890490
+utc_datetime: 2021-12-30T18:54:50.320646+00:00
+utc_offset: -05:00
+week_number: 52
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 **************************************
-abbreviation: EDT
+abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2020-09-13T19:42:01.507586-04:00
-day_of_week: 0
-day_of_year: 257
-dst: true
-dst_from: 2020-03-08T07:00:00+00:00
-dst_offset: 3600
-dst_until: 2020-11-01T06:00:00+00:00
+datetime: 2021-12-30T13:56:49.026396-05:00
+day_of_week: 4
+day_of_year: 364
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1600040521
-utc_datetime: 2020-09-13T23:42:01.507586+00:00
-utc_offset: -04:00
-week_number: 37
+unixtime: 1640890609
+utc_datetime: 2021-12-30T18:56:49.026396+00:00
+utc_offset: -05:00
+week_number: 52
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH 
 
@@ -778,27 +804,28 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.4.1
+AsyncHTTPRequest_Generic v1.5.0
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
 
 **************************************
-abbreviation: EDT
+abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2020-09-13T19:56:28.295033-04:00
-day_of_week: 0
-day_of_year: 257
-dst: true
-dst_from: 2020-03-08T07:00:00+00:00
-dst_offset: 3600
-dst_until: 2020-11-01T06:00:00+00:00
+datetime: 2021-12-30T14:02:45.199491-05:00
+day_of_week: 4
+day_of_year: 364
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1600041388
-utc_datetime: 2020-09-13T23:56:28.295033+00:00
-utc_offset: -04:00
-week_number: 37
+unixtime: 1640890965
+utc_datetime: 2021-12-30T19:02:45.199491+00:00
+utc_offset: -05:00
+week_number: 52
+
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 ```
@@ -810,7 +837,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ```
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.4.1
+AsyncHTTPRequest_Generic v1.5.0
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -865,7 +892,7 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 
 ```
 Start AsyncWebClientRepeating_STM32_LAN8720 on BLACK_F407VE
-AsyncHTTPRequest_Generic v1.4.1
+AsyncHTTPRequest_Generic v1.5.0
 AsyncHTTPRequest @ IP : 192.168.2.150
 
 
@@ -921,7 +948,7 @@ AsyncHTTPRequest @ IP : 192.168.2.150
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.4.1
-AsyncHTTPRequest_Generic v1.4.1
+AsyncHTTPRequest_Generic v1.5.0
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
@@ -947,26 +974,27 @@ H
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.4.1
-AsyncHTTPRequest_Generic v1.4.1
+AsyncHTTPRequest_Generic v1.5.0
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
 **************************************
-abbreviation: EDT
-client_ip: 45.72.193.56
-datetime: 2021-07-09T23:16:50.506413-04:00
-day_of_week: 5
-day_of_year: 190
-dst: true
-dst_from: 2021-03-14T07:00:00+00:00
-dst_offset: 3600
-dst_until: 2021-11-07T06:00:00+00:00
+abbreviation: EST
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2021-12-30T14:08:41.290808-05:00
+day_of_week: 4
+day_of_year: 364
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1625887010
-utc_datetime: 2021-07-10T03:16:50.506413+00:00
-utc_offset: -04:00
-week_number: 27
+unixtime: 1640891321
+utc_datetime: 2021-12-30T19:08:41.290808+00:00
+utc_offset: -05:00
+week_number: 52
+
 **************************************
 ```
 
@@ -1021,6 +1049,8 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
  6. Add support to **WT32_ETH01** using ESP32-based boards and LAN8720 Ethernet
  7. Auto detect ESP32 core to use for WT32_ETH01
  8. Fix bug in WT32_ETH01 examples to reduce connection time
+ 9. Fix `multiple-definitions` linker error and weird bug related to `src_cpp`.
+10. Optimize library code by using `reference-passing` instead of `value-passing`
 
 ---
 ---

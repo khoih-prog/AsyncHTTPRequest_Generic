@@ -44,6 +44,12 @@
   #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
 #endif
 
+#define ESP_WIFIMANAGER_VERSION_MIN_TARGET                  "ESP_WiFiManager v1.8.0"
+#define ESP_WIFIMANAGER_VERSION_MIN                         1008000
+
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET       "AsyncHTTPRequest_Generic v1.5.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN              1005000
+
 // Level from 0-4
 #define ASYNC_HTTP_DEBUG_PORT     Serial
 #define _ASYNC_HTTP_LOGLEVEL_     1
@@ -65,7 +71,11 @@ const char* password    = "your_pass";
   #include <WiFi.h>
 #endif
 
-#include <AsyncHTTPRequest_Generic.h>           // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
+#include <AsyncHTTPRequest_Impl_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+
 #include <Ticker.h>
 
 AsyncHTTPRequest request;
@@ -172,6 +182,14 @@ void setup()
   
   Serial.println("\nStarting AsyncHTTPMultiRequests using " + String(ARDUINO_BOARD));
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
+  
+#if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  {
+    Serial.print("Warning. Must use this example on Version equal or later than : ");
+    Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
+  }
+#endif
 
   WiFi.mode(WIFI_STA);
 

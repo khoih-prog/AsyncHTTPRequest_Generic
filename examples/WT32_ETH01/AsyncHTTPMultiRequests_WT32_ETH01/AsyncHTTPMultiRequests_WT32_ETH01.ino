@@ -57,7 +57,14 @@
 
 #include <WebServer_WT32_ETH01.h>               // https://github.com/khoih-prog/WebServer_WT32_ETH01
 
-#include <AsyncHTTPRequest_Generic.h>           // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.5.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1005000
+
+#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
+#include <AsyncHTTPRequest_Impl_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+
 #include <Ticker.h>
 
 AsyncHTTPRequest request;
@@ -183,6 +190,14 @@ void setup()
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
   Serial.setDebugOutput(true);
+
+#if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  {
+    Serial.print("Warning. Must use this example on Version equal or later than : ");
+    Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
+  }
+#endif
 
   // To be called before ETH.begin()
   WT32_ETH01_onEvent();

@@ -46,6 +46,9 @@
   #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
 #endif
 
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.5.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1005000
+
 // Level from 0-4
 #define ASYNC_HTTP_DEBUG_PORT     Serial
 
@@ -238,12 +241,19 @@ IPAddress APStaticSN  = IPAddress(255, 255, 255, 0);
 
 #include <ESPAsync_WiFiManager.h>              //https://github.com/khoih-prog/ESPAsync_WiFiManager
 
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
+#include <ESPAsync_WiFiManager-Impl.h>         //https://github.com/khoih-prog/ESPAsync_WiFiManager
+
 #define HTTP_PORT           80
 
 AsyncWebServer webServer(HTTP_PORT);
 DNSServer dnsServer;
 
-#include <AsyncHTTPRequest_Generic.h>         // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
+#include <AsyncHTTPRequest_Impl_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+
 #include <Ticker.h>
 
 AsyncHTTPRequest request;
@@ -548,6 +558,22 @@ void setup()
   Serial.println(" on " + String(ARDUINO_BOARD));
   Serial.println(ESP_ASYNC_WIFIMANAGER_VERSION);
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
+
+#if defined(ESP_WIFIMANAGER_VERSION_MIN)
+  if (ESP_WIFIMANAGER_VERSION_INT < ESP_WIFIMANAGER_VERSION_MIN)
+  {
+    Serial.print("Warning. Must use this example on Version equal or later than : ");
+    Serial.println(ESP_WIFIMANAGER_VERSION_MIN_TARGET);
+  }
+#endif
+
+#if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  {
+    Serial.print("Warning. Must use this example on Version equal or later than : ");
+    Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
+  }
+#endif
 
   if (FORMAT_FILESYSTEM) 
     FileFS.format();
