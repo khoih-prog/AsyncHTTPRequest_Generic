@@ -11,7 +11,7 @@
 
 ## Table of Contents
 
-
+* [Important Breaking Change from v1.5.0](#Important-Breaking-Change-from-v150)
 * [Why do we need the new Async AsyncHTTPRequest_Generic library](#why-do-we-need-this-async-asynchttprequest_generic-library)
   * [Features](#features)
   * [Supports](#supports)
@@ -80,6 +80,29 @@
 * [Contributing](#contributing)
 * [License and credits](#license-and-credits)
 * [Copyright](#copyright)
+
+---
+---
+
+### Important Breaking Change from v1.5.0
+
+Please have a look at [HOWTO Fix `Multiple Definitions` Linker Error](#howto-fix-multiple-definitions-linker-error)
+
+From v1.5.0, you must use
+
+```
+#include <AsyncHTTPRequest_Generic.h>           //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
+#include <AsyncHTTPRequest_Impl_Generic.h>      // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+```
+
+instead of only
+
+```
+#include <AsyncHTTPRequest_Generic.h>           //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+```
+
 
 ---
 ---
