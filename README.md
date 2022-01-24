@@ -11,7 +11,7 @@
 
 ## Table of Contents
 
-* [Important Breaking Change from v1.5.0](#Important-Breaking-Change-from-v150)
+* [Important Change from v1.6.0](#Important-Change-from-v160)
 * [Why do we need the new Async AsyncHTTPRequest_Generic library](#why-do-we-need-this-async-asynchttprequest_generic-library)
   * [Features](#features)
   * [Supports](#supports)
@@ -59,6 +59,8 @@
   * [For WT32_ETH01](#for-wt32_eth01)
     * [1. AsyncHTTPRequest_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01)
     * [2. AsyncHTTPMultiRequests_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPMultiRequests_WT32_ETH01)
+  * [For ESP or STM32](#For-ESP-or-STM32)
+    * [1. **multiFileProject**](examples/multiFileProject) **New** 
 * [Example AsyncHTTPRequest_STM32](#example-asynchttprequest_stm32)
   * [1. File AsyncHTTPRequest_STM32.ino](#1-file-asynchttprequest_stm32ino)
   * [2. File defines.h](#2-file-definesh) 
@@ -84,25 +86,9 @@
 ---
 ---
 
-### Important Breaking Change from v1.5.0
+### Important Change from v1.6.0
 
 Please have a look at [HOWTO Fix `Multiple Definitions` Linker Error](#howto-fix-multiple-definitions-linker-error)
-
-From v1.5.0, you must use
-
-```
-#include <AsyncHTTPRequest_Generic.h>           //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
-
-// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
-#include <AsyncHTTPRequest_Impl_Generic.h>      // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
-```
-
-instead of only
-
-```
-#include <AsyncHTTPRequest_Generic.h>           //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
-```
-
 
 ---
 ---
@@ -181,7 +167,7 @@ This library is based on, modified from:
  8. [`STM32Ethernet library v1.2.0+`](https://github.com/stm32duino/STM32Ethernet) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/STM32Ethernet.svg)](https://github.com/stm32duino/STM32Ethernet/releases/latest)
  9. [`LwIP library v2.1.2+`](https://github.com/stm32duino/LwIP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/LwIP.svg)](https://github.com/stm32duino/LwIP/releases/latest)
 10. [`STM32AsyncTCP library v1.0.1+`](https://github.com/khoih-prog/STM32AsyncTCP) for built-in Ethernet on (Nucleo-144, Discovery). To install manually for Arduino IDE.
-11. [`ESPAsync_WiFiManager library v1.10.0+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
+11. [`ESPAsync_WiFiManager library v1.11.0+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
 12.  [`LittleFS_esp32 v1.0.6+`](https://github.com/lorol/LITTLEFS) for ESP32-based boards using LittleFS. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/LittleFS_esp32.svg?)](https://www.ardu-badge.com/LittleFS_esp32).
 13. [`WebServer_WT32_ETH01 library v1.4.1+`](https://github.com/khoih-prog/WebServer_WT32_ETH01) if necessary to use WT32_ETH01 boards. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_WT32_ETH01.svg?)](https://www.ardu-badge.com/WebServer_WT32_ETH01)
 
@@ -219,12 +205,12 @@ To use LAN8720 on some STM32 boards
 - **Discovery (DISCO_F746NG)**
 - **STM32F4 boards (BLACK_F407VE, BLACK_F407VG, BLACK_F407ZE, BLACK_F407ZG, BLACK_F407VE_Mini, DIYMORE_F407VGT, FK407M1)**
 
-you have to copy the files [stm32f4xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/2.1.0/system/STM32F4xx) and [stm32f7xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/2.1.0/system/STM32F7xx) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/2.1.0/system) to overwrite the old files.
+you have to copy the files [stm32f4xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/2.2.0/system/STM32F4xx) and [stm32f7xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/2.2.0/system/STM32F7xx) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/2.2.0/system) to overwrite the old files.
 
-Supposing the STM32 stm32 core version is 2.1.0. These files must be copied into the directory:
+Supposing the STM32 stm32 core version is 2.2.0. These files must be copied into the directory:
 
-- `~/.arduino15/packages/STM32/hardware/stm32/2.1.0/system/STM32F4xx/stm32f4xx_hal_conf_default.h` for STM32F4.
-- `~/.arduino15/packages/STM32/hardware/stm32/2.1.0/system/STM32F7xx/stm32f7xx_hal_conf_default.h` for Nucleo-144 STM32F7.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.2.0/system/STM32F4xx/stm32f4xx_hal_conf_default.h` for STM32F4.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.2.0/system/STM32F7xx/stm32f7xx_hal_conf_default.h` for Nucleo-144 STM32F7.
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz,
 theses files must be copied into the corresponding directory:
@@ -235,12 +221,12 @@ theses files must be copied into the corresponding directory:
 
 #### 2. For STM32 boards to use Serial1
 
-**To use Serial1 on some STM32 boards without Serial1 definition (Nucleo-144 NUCLEO_F767ZI, Nucleo-64 NUCLEO_L053R8, etc.) boards**, you have to copy the files [STM32 variant.h](Packages_Patches/STM32/hardware/stm32/2.1.0) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/2.1.0). You have to modify the files corresponding to your boards, this is just an illustration how to do.
+**To use Serial1 on some STM32 boards without Serial1 definition (Nucleo-144 NUCLEO_F767ZI, Nucleo-64 NUCLEO_L053R8, etc.) boards**, you have to copy the files [STM32 variant.h](Packages_Patches/STM32/hardware/stm32/2.2.0) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/2.2.0). You have to modify the files corresponding to your boards, this is just an illustration how to do.
 
-Supposing the STM32 stm32 core version is 2.1.0. These files must be copied into the directory:
+Supposing the STM32 stm32 core version is 2.2.0. These files must be copied into the directory:
 
-- `~/.arduino15/packages/STM32/hardware/stm32/2.1.0/variants/STM32F7xx/F765Z(G-I)T_F767Z(G-I)T_F777ZIT/NUCLEO_F767ZI/variant.h` for Nucleo-144 NUCLEO_F767ZI.
-- `~/.arduino15/packages/STM32/hardware/stm32/2.1.0/variants/STM32L0xx/L052R(6-8)T_L053R(6-8)T_L063R8T/NUCLEO_L053R8/variant.h` for Nucleo-64 NUCLEO_L053R8.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.2.0/variants/STM32F7xx/F765Z(G-I)T_F767Z(G-I)T_F777ZIT/NUCLEO_F767ZI/variant.h` for Nucleo-144 NUCLEO_F767ZI.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.2.0/variants/STM32L0xx/L052R(6-8)T_L053R(6-8)T_L063R8T/NUCLEO_L053R8/variant.h` for Nucleo-64 NUCLEO_L053R8.
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz,
 theses files must be copied into the corresponding directory:
@@ -279,18 +265,21 @@ Thanks to [Roshan](https://github.com/solroshan) to report the issue in [Error e
 
 The current library implementation, using `xyz-Impl.h` instead of standard `xyz.cpp`, possibly creates certain `Multiple Definitions` Linker error in certain use cases.
 
-You can use
+You can include this `.hpp` file
 
 ```
-#include <AsyncHTTPRequest_Generic.h>           //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+// Can be included as many times as necessary, without `Multiple Definitions` Linker Error
+#include "AsyncHTTPRequest_Generic.hpp"     //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 ```
 
-in many files. But be sure to use the following `#include <AsyncHTTPRequest_Impl_Generic.h>` **in just 1 `.h`, `.cpp` or `.ino` file**, which must **not be included in any other file**, to avoid `Multiple Definitions` Linker Error
+in many files. But be sure to use the following `.h` file **in just 1 `.h`, `.cpp` or `.ino` file**, which must **not be included in any other file**, to avoid `Multiple Definitions` Linker Error
 
 ```
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
-#include <AsyncHTTPRequest_Impl_Generic.h>      // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#include "AsyncHTTPRequest_Generic.h"           //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 ```
+
+Check the new [**multiFileProject** example](examples/multiFileProject) for a `HOWTO` demo.
 
 Have a look at the discussion in [Different behaviour using the src_cpp or src_h lib #80](https://github.com/khoih-prog/ESPAsync_WiFiManager/discussions/80)
 
@@ -450,6 +439,11 @@ Connect FDTI (USB to Serial) as follows:
  1. [AsyncHTTPRequest_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01)
  2. [AsyncHTTPMultiRequests_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPMultiRequests_ESP)
  
+#### For ESP or STM32
+
+ 1. [**multiFileProject**](examples/multiFileProject) **New** 
+
+
 ---
 
 ### Example [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
@@ -461,16 +455,14 @@ Please take a look at other examples, as well.
 ```cpp
 #include "defines.h"
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.5.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1005000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.6.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1006000
 
 // 600s = 10 minutes to not flooding, 60s in testing
 #define HTTP_REQUEST_INTERVAL_MS     60000  //600000
 
-#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
-
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
-#include <AsyncHTTPRequest_Impl_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 
 #include <Ticker.h>                   // https://github.com/sstaub/Ticker
 
@@ -694,47 +686,44 @@ IPAddress ip(192, 168, 2, 232);
 #### 1. [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A 
 
 ```
-
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.5.0
-Warning. Must use this example on Version equal or later than : AsyncHTTPRequest_Generic v1.5.0
+AsyncHTTPRequest_Generic v1.6.0
 AsyncHTTPRequest @ IP : 192.168.2.178
 
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2021-12-30T13:53:51.012921-05:00
-day_of_week: 4
-day_of_year: 364
+datetime: 2022-01-23T19:06:29.846071-05:00
+day_of_week: 0
+day_of_year: 23
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1640890431
-utc_datetime: 2021-12-30T18:53:51.012921+00:00
+unixtime: 1642982789
+utc_datetime: 2022-01-24T00:06:29.846071+00:00
 utc_offset: -05:00
-week_number: 52
-**************************************
+week_number: 3
+*********************
 
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2021-12-30T13:54:50.320646-05:00
-day_of_week: 4
-day_of_year: 364
+datetime: 2022-01-23T19:08:29.871390-05:00
+day_of_week: 0
+day_of_year: 23
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1640890490
-utc_datetime: 2021-12-30T18:54:50.320646+00:00
+unixtime: 1642982909
+utc_datetime: 2022-01-24T00:08:29.871390+00:00
 utc_offset: -05:00
-week_number: 52
-
+week_number: 3
 ```
 
 ---
@@ -743,7 +732,7 @@ week_number: 52
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.5.0
+AsyncHTTPRequest_Generic v1.6.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -752,19 +741,19 @@ H
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2021-12-30T13:54:50.320646-05:00
-day_of_week: 4
-day_of_year: 364
+datetime: 2022-01-23T19:08:29.871390-05:00
+day_of_week: 0
+day_of_year: 23
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1640890490
-utc_datetime: 2021-12-30T18:54:50.320646+00:00
+unixtime: 1642982909
+utc_datetime: 2022-01-24T00:08:29.871390+00:00
 utc_offset: -05:00
-week_number: 52
+week_number: 3
 **************************************
 HHHHHH
 
@@ -776,7 +765,7 @@ HHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
-AsyncHTTPRequest_Generic v1.5.0
+AsyncHTTPRequest_Generic v1.6.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -785,37 +774,37 @@ H
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2021-12-30T13:54:50.320646-05:00
-day_of_week: 4
-day_of_year: 364
+datetime: 2022-01-23T19:06:29.846071-05:00
+day_of_week: 0
+day_of_year: 23
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1640890490
-utc_datetime: 2021-12-30T18:54:50.320646+00:00
+unixtime: 1642982789
+utc_datetime: 2022-01-24T00:06:29.846071+00:00
 utc_offset: -05:00
-week_number: 52
+week_number: 3
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2021-12-30T13:56:49.026396-05:00
-day_of_week: 4
-day_of_year: 364
+datetime: 2022-01-23T19:08:29.871390-05:00
+day_of_week: 0
+day_of_year: 23
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1640890609
-utc_datetime: 2021-12-30T18:56:49.026396+00:00
+unixtime: 1642982909
+utc_datetime: 2022-01-24T00:08:29.871390+00:00
 utc_offset: -05:00
-week_number: 52
+week_number: 3
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH 
 
@@ -827,7 +816,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.5.0
+AsyncHTTPRequest_Generic v1.6.0
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
@@ -835,20 +824,20 @@ HTTP WebServer is @ IP : 192.168.2.81
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2021-12-30T14:02:45.199491-05:00
-day_of_week: 4
-day_of_year: 364
+
+datetime: 2022-01-23T19:08:29.871390-05:00
+day_of_week: 0
+day_of_year: 23
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1640890965
-utc_datetime: 2021-12-30T19:02:45.199491+00:00
+unixtime: 1642982909
+utc_datetime: 2022-01-24T00:08:29.871390+00:00
 utc_offset: -05:00
-week_number: 52
-
+week_number: 3
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 ```
@@ -860,7 +849,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ```
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.5.0
+AsyncHTTPRequest_Generic v1.6.0
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -915,7 +904,7 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 
 ```
 Start AsyncWebClientRepeating_STM32_LAN8720 on BLACK_F407VE
-AsyncHTTPRequest_Generic v1.5.0
+AsyncHTTPRequest_Generic v1.6.0
 AsyncHTTPRequest @ IP : 192.168.2.150
 
 
@@ -971,7 +960,7 @@ AsyncHTTPRequest @ IP : 192.168.2.150
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.4.1
-AsyncHTTPRequest_Generic v1.5.0
+AsyncHTTPRequest_Generic v1.6.0
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
@@ -997,7 +986,7 @@ H
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.4.1
-AsyncHTTPRequest_Generic v1.5.0
+AsyncHTTPRequest_Generic v1.6.0
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
@@ -1074,6 +1063,7 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
  8. Fix bug in WT32_ETH01 examples to reduce connection time
  9. Fix `multiple-definitions` linker error and weird bug related to `src_cpp`.
 10. Optimize library code by using `reference-passing` instead of `value-passing`
+11. Enable compatibility with old code to include only `AsyncHTTPRequest_Generic.h`
 
 ---
 ---

@@ -29,16 +29,14 @@ const char POST_ServerAddress[] = "dweet.io";
 // use your own thing name here
 String dweetName = "/dweet/for/pinA0-Read?";
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.5.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1005000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.6.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1006000
 
 // 600s = 10 minutes to not flooding, 60s in testing
 #define HTTP_REQUEST_INTERVAL_MS     60000  //600000
 
-#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
-
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
-#include <AsyncHTTPRequest_Impl_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 
 #include <Ticker.h>                             // https://github.com/sstaub/Ticker
 
