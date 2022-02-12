@@ -253,6 +253,8 @@ bool initialConfig = false;
 IPAddress dns1IP      = gatewayIP;
 IPAddress dns2IP      = IPAddress(8, 8, 8, 8);
 
+#define USE_CUSTOM_AP_IP          false
+
 IPAddress APStaticIP  = IPAddress(192, 168, 100, 1);
 IPAddress APStaticGW  = IPAddress(192, 168, 100, 1);
 IPAddress APStaticSN  = IPAddress(255, 255, 255, 0);
@@ -260,17 +262,17 @@ IPAddress APStaticSN  = IPAddress(255, 255, 255, 0);
 #include <ESPAsync_WiFiManager.h>              //https://github.com/khoih-prog/ESPAsync_WiFiManager
 
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
-#include <ESPAsync_WiFiManager-Impl.h>         //https://github.com/khoih-prog/ESPAsync_WiFiManager
+//#include <ESPAsync_WiFiManager-Impl.h>         //https://github.com/khoih-prog/ESPAsync_WiFiManager
 
 #define HTTP_PORT           80
 
-AsyncWebServer webServer(HTTP_PORT);
-DNSServer dnsServer;
+//AsyncWebServer webServer(HTTP_PORT);
+//DNSServer dnsServer;
 
 #include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
-#include <AsyncHTTPRequest_Impl_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+//#include <AsyncHTTPRequest_Impl_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 
 #include <Ticker.h>
 
@@ -624,17 +626,28 @@ void setup()
   // Use this to default DHCP hostname to ESP8266-XXXXXX or ESP32-XXXXXX
   //ESPAsync_WiFiManager ESPAsync_wifiManager(&webServer, &dnsServer);
   // Use this to personalize DHCP hostname (RFC952 conformed)
-  ESPAsync_WiFiManager ESPAsync_wifiManager(&webServer, &dnsServer, "AutoConnectAP");
+  AsyncWebServer webServer(HTTP_PORT);
+  
+  //ESPAsync_WiFiManager ESPAsync_wifiManager(&webServer, &dnsServer, "AutoConnectAP");
+#if ( USING_ESP32_S2 || USING_ESP32_C3 )
+  ESPAsync_WiFiManager ESPAsync_wifiManager(&webServer, NULL, "AutoConnectAP");
+#else
+  DNSServer dnsServer;
 
-  ESPAsync_wifiManager.setDebugOutput(true);
+  ESPAsync_WiFiManager ESPAsync_wifiManager(&webServer, &dnsServer, "AutoConnectAP");
+#endif  
+
+  //ESPAsync_wifiManager.setDebugOutput(true);
 
   //reset settings - for testing
   //ESPAsync_wifiManager.resetSettings();
 
+#if USE_CUSTOM_AP_IP
   //set custom ip for portal
   // New in v1.4.0
   ESPAsync_wifiManager.setAPStaticIPConfig(WM_AP_IPconfig);
   //////
+#endif
 
   ESPAsync_wifiManager.setMinimumSignalQuality(-1);
 
@@ -688,6 +701,19 @@ void setup()
     Serial.println(F("We haven't got any access point credentials, so get them now"));
 
     initialConfig = true;
+
+    Serial.print(F("Starting configuration portal @ "));
+    
+#if USE_CUSTOM_AP_IP    
+    Serial.print(APStaticIP);
+#else
+    Serial.print(F("192.168.4.1"));
+#endif
+
+    Serial.print(F(", SSID = "));
+    Serial.print(AP_SSID);
+    Serial.print(F(", PASS = "));
+    Serial.println(AP_PASS);
 
     // Starts an access point
     //if (!ESPAsync_wifiManager.startConfigPortal((const char *) ssid.c_str(), password))
