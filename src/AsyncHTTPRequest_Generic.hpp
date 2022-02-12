@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.6.0
+  Version: 1.7.0
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -37,6 +37,7 @@
   1.4.1    K Hoang     29/11/2021 Auto detect ESP32 core version and improve connection time for WT32_ETH01
   1.5.0    K Hoang     30/12/2021 Fix `multiple-definitions` linker error
   1.6.0    K Hoang     23/01/2022 Enable compatibility with old code to include only AsyncHTTPRequest_Generic.h
+  1.7.0    K Hoang     10/02/2022 Add support to new ESP32-S3. Add LittleFS support to ESP32-C3. Use core LittleFS
  *****************************************************************************************************************************/
 
 #pragma once
@@ -44,13 +45,13 @@
 #ifndef ASYNC_HTTP_REQUEST_GENERIC_HPP
 #define ASYNC_HTTP_REQUEST_GENERIC_HPP
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION            "AsyncHTTPRequest_Generic v1.6.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION            "AsyncHTTPRequest_Generic v1.7.0"
 
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MAJOR      1
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MINOR      6
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MINOR      7
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_PATCH      0
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT        1006000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT        1007000
 
 #include <Arduino.h>
 

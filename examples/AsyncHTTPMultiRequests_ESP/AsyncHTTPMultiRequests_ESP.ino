@@ -44,11 +44,9 @@
   #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
 #endif
 
-#define ESP_WIFIMANAGER_VERSION_MIN_TARGET                  "ESP_WiFiManager v1.9.0"
-#define ESP_WIFIMANAGER_VERSION_MIN                         1009000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.7.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1007000
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.6.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1006000
 // Level from 0-4
 #define ASYNC_HTTP_DEBUG_PORT     Serial
 #define _ASYNC_HTTP_LOGLEVEL_     1
@@ -137,12 +135,12 @@ void sendRequest()
     }
     else
     {
-      Serial.println("Can't send bad request");
+      Serial.println(F("Can't send bad request"));
     }
   }
   else
   {
-    Serial.println("Can't send request");
+    Serial.println(F("Can't send request"));
   }
 }
 
@@ -152,9 +150,9 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
   
   if (readyState == readyStateDone) 
   { 
-    Serial.print("\n***************"); Serial.print(requestName[ requestIndex ]); Serial.println("***************");
+    Serial.print(F("\n***************")); Serial.print(requestName[ requestIndex ]); Serial.println(F("***************"));
     Serial.println(request->responseText());
-    Serial.println("**************************************");
+    Serial.println(F("**************************************"));
 
 #if 1
     // Bypass hourly
@@ -179,13 +177,13 @@ void setup()
   
   delay(200);
   
-  Serial.println("\nStarting AsyncHTTPMultiRequests using " + String(ARDUINO_BOARD));
+  Serial.print(F("\nStarting AsyncHTTPMultiRequests using ")); Serial.println(ARDUINO_BOARD);
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
   
 #if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
   if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
   {
-    Serial.print("Warning. Must use this example on Version equal or later than : ");
+    Serial.print(F("Warning. Must use this example on Version equal or later than : "));
     Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
   }
 #endif
@@ -194,12 +192,12 @@ void setup()
 
   WiFi.begin(ssid, password);
   
-  Serial.println("Connecting to WiFi SSID: " + String(ssid));
+  Serial.print(F("Connecting to WiFi SSID: ")); Serial.println(ssid);
 
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
-    Serial.print(".");
+    Serial.print(F("."));
   }
 
   Serial.print(F("AsyncHTTPRequest @ IP : "));

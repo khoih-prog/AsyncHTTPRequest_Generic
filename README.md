@@ -6,7 +6,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/AsyncHTTPRequest_Generic.svg)](http://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues)
 
-<a href="https://www.buymeacoffee.com/khoihprog6" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="https://www.buymeacoffee.com/khoihprog6" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 50px !important;width: 181px !important;" ></a>
 
 ---
 ---
@@ -75,6 +75,8 @@
   * [6. AsyncWebClientRepeating_STM32_LAN8720 running on STM32F4 BLACK_F407VE using LAN8720](#6-asyncwebclientrepeating_stm32_lan8720-running-on-stm32f4-black_f407ve-using-lan8720)
   * [7. AsyncHTTPMultiRequests_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720](#7-asynchttpmultirequests_wt32_eth01-on-esp32_dev-with-eth_phy_lan8720)
   * [8. AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720](#8-asynchttprequest_wt32_eth01-on-esp32_dev-with-eth_phy_lan8720)
+  * [9. AsyncHTTPRequest_ESP_WiFiManager running on ESP32C3_DEV](#9-asynchttprequest_esp_wifimanager-running-on-ESP32C3_DEV) **New**
+  * [10. AsyncHTTPRequest_ESP_WiFiManager running on ESP32S3_DEV](#10-asynchttprequest_esp_wifimanager-running-on-ESP32S3_DEV) **New**
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -136,7 +138,11 @@ This library is based on, modified from:
 
 ### Currently Supported Boards
 
-#### 1. ESP32 including ESP32-S2 (ESP32-S2 Saola, AI-Thinker ESP-12K, etc.)
+#### 1. ESP32 including ESP32_S2 (ESP32_S2 Saola, AI-Thinker ESP-12K, etc.), ESP32_S3 and ESP32_C3
+
+1. **ESP32-S2 (ESP32-S2 Saola, AI-Thinker ESP-12K, etc.) using EEPROM, SPIFFS or LittleFS**.
+2. **ESP32-C3 (ARDUINO_ESP32C3_DEV) using EEPROM, SPIFFS or LittleFS**.
+3. **ESP32-S3 (ESP32S3_DEV, ESP32_S3_BOX, UM TINYS3, UM PROS3, UM FEATHERS3, etc.) using EEPROM, SPIFFS or LittleFS**.
 
 #### 2. ESP8266
 
@@ -169,7 +175,7 @@ This library is based on, modified from:
  8. [`STM32Ethernet library v1.2.0+`](https://github.com/stm32duino/STM32Ethernet) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/STM32Ethernet.svg)](https://github.com/stm32duino/STM32Ethernet/releases/latest)
  9. [`LwIP library v2.1.2+`](https://github.com/stm32duino/LwIP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/LwIP.svg)](https://github.com/stm32duino/LwIP/releases/latest)
 10. [`STM32AsyncTCP library v1.0.1+`](https://github.com/khoih-prog/STM32AsyncTCP) for built-in Ethernet on (Nucleo-144, Discovery). To install manually for Arduino IDE.
-11. [`ESPAsync_WiFiManager library v1.11.0+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
+11. [`ESPAsync_WiFiManager library v1.12.1+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
 12.  [`LittleFS_esp32 v1.0.6+`](https://github.com/lorol/LITTLEFS) for ESP32-based boards using LittleFS. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/LittleFS_esp32.svg?)](https://www.ardu-badge.com/LittleFS_esp32).
 13. [`WebServer_WT32_ETH01 library v1.4.1+`](https://github.com/khoih-prog/WebServer_WT32_ETH01) if necessary to use WT32_ETH01 boards. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_WT32_ETH01.svg?)](https://www.ardu-badge.com/WebServer_WT32_ETH01)
 
@@ -191,7 +197,7 @@ The best and easiest way is to use `Arduino Library Manager`. Search for `AsyncH
 
 1. Install [VS Code](https://code.visualstudio.com/)
 2. Install [PlatformIO](https://platformio.org/platformio-ide)
-3. Install [**AsyncHTTPRequest_Generic** library](https://platformio.org/lib/show/11235/AsyncHTTPRequest_Generic) by using [Library Manager](https://platformio.org/lib/show/11235/AsyncHTTPRequest_Generic/installation). Search for AsyncHTTPRequest_Generic in [Platform.io Author's Libraries](https://platformio.org/lib/search?query=author:%22Khoi%20Hoang%22)
+3. Install [**AsyncHTTPRequest_Generic** library](https://registry.platformio.org/libraries/khoih-prog/AsyncHTTPRequest_Generic) by using [Library Manager](https://registry.platformio.org/libraries/khoih-prog/AsyncHTTPRequest_Generic/installation). Search for AsyncHTTPRequest_Generic in [Platform.io Author's Libraries](https://platformio.org/lib/search?query=author:%22Khoi%20Hoang%22)
 4. Use included [platformio.ini](platformio/platformio.ini) file from examples to ensure that all dependent libraries will installed automatically. Please visit documentation for the other options and examples at [Project Configuration File](https://docs.platformio.org/page/projectconf.html)
 
 ---
@@ -457,8 +463,8 @@ Please take a look at other examples, as well.
 ```cpp
 #include "defines.h"
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.6.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1006000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.7.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1007000
 
 // 600s = 10 minutes to not flooding, 60s in testing
 #define HTTP_REQUEST_INTERVAL_MS     60000  //600000
@@ -689,7 +695,7 @@ IPAddress ip(192, 168, 2, 232);
 
 ```
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.6.0
+AsyncHTTPRequest_Generic v1.7.0
 AsyncHTTPRequest @ IP : 192.168.2.178
 
 **************************************
@@ -734,7 +740,7 @@ week_number: 3
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.6.0
+AsyncHTTPRequest_Generic v1.7.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -758,7 +764,6 @@ utc_offset: -05:00
 week_number: 3
 **************************************
 HHHHHH
-
 ```
 
 ---
@@ -767,7 +772,7 @@ HHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
-AsyncHTTPRequest_Generic v1.6.0
+AsyncHTTPRequest_Generic v1.7.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -809,7 +814,6 @@ utc_offset: -05:00
 week_number: 3
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH 
-
 ```
 
 ---
@@ -818,7 +822,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.6.0
+AsyncHTTPRequest_Generic v1.7.0
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
@@ -851,7 +855,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ```
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.6.0
+AsyncHTTPRequest_Generic v1.7.0
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -895,8 +899,6 @@ AsyncHTTPRequest @ IP : 192.168.2.72
   ,;;;;;  ;;`;;   ;;  ;; .;;  ;;   ,;,   ;; ;;;, ;;  ;;
   ;;  ,;, ;; .;;  ;;;;;:  ;;;;;: ,;;;;;: ;;  ;;, ;;;;;;
   ;;   ;; ;;  ;;` ;;;;.   `;;;:  ,;;;;;, ;;  ;;,  ;;;;
-
-
 ```
 
 ---
@@ -906,7 +908,7 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 
 ```
 Start AsyncWebClientRepeating_STM32_LAN8720 on BLACK_F407VE
-AsyncHTTPRequest_Generic v1.6.0
+AsyncHTTPRequest_Generic v1.7.0
 AsyncHTTPRequest @ IP : 192.168.2.150
 
 
@@ -962,7 +964,7 @@ AsyncHTTPRequest @ IP : 192.168.2.150
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.4.1
-AsyncHTTPRequest_Generic v1.6.0
+AsyncHTTPRequest_Generic v1.7.0
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
@@ -988,7 +990,7 @@ H
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.4.1
-AsyncHTTPRequest_Generic v1.6.0
+AsyncHTTPRequest_Generic v1.7.0
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
@@ -1012,6 +1014,107 @@ week_number: 52
 **************************************
 ```
 
+---
+
+#### 9. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP32C3_DEV
+
+```
+Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32C3_DEV
+ESPAsync_WiFiManager v1.12.1
+AsyncHTTPRequest_Generic v1.7.0
+Stored: SSID = HueNet1, Pass = password
+Got stored Credentials. Timeout 120s
+ConnectMultiWiFi in setup
+After waiting 9.23 secs more in setup(), connection result is connected. Local IP: 192.168.2.85
+H
+**************************************
+abbreviation: EST
+client_ip: 45.72.193.77
+datetime: 2022-02-11T22:20:36.434352-05:00
+day_of_week: 5
+day_of_year: 42
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
+raw_offset: -18000
+timezone: America/Toronto
+unixtime: 1644636036
+utc_datetime: 2022-02-12T03:20:36.434352+00:00
+utc_offset: -05:00
+week_number: 6
+**************************************
+HHHHHH
+**************************************
+abbreviation: EST
+client_ip: 45.72.193.77
+datetime: 2022-02-11T22:21:36.398307-05:00
+day_of_week: 5
+day_of_year: 42
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
+raw_offset: -18000
+timezone: America/Toronto
+unixtime: 1644636096
+utc_datetime: 2022-02-12T03:21:36.398307+00:00
+utc_offset: -05:00
+week_number: 6
+**************************************
+```
+
+---
+
+#### 10. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP32S3_DEV
+
+
+```
+Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32S3_DEV
+ESPAsync_WiFiManager v1.12.1
+AsyncHTTPRequest_Generic v1.7.0
+Stored: SSID = HueNet1, Pass = password
+Got stored Credentials. Timeout 120s
+ConnectMultiWiFi in setup
+After waiting 7.77 secs more in setup(), connection result is connected. Local IP: 192.168.2.83
+H
+**************************************
+abbreviation: EST
+client_ip: 45.72.193.77
+datetime: 2022-02-11T22:58:46.055783-05:00
+day_of_week: 5
+day_of_year: 42
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
+raw_offset: -18000
+timezone: America/Toronto
+unixtime: 1644638326
+utc_datetime: 2022-02-12T03:58:46.055783+00:00
+utc_offset: -05:00
+week_number: 6
+**************************************
+
+HHHHHH
+**************************************
+abbreviation: EST
+client_ip: 45.72.193.77
+datetime: 2022-02-11T22:59:45.988493-05:00
+day_of_week: 5
+day_of_year: 42
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
+raw_offset: -18000
+timezone: America/Toronto
+unixtime: 1644638385
+utc_datetime: 2022-02-12T03:59:45.988493+00:00
+utc_offset: -05:00
+week_number: 6
+**************************************
+```
 
 ---
 ---
@@ -1066,6 +1169,10 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
  9. Fix `multiple-definitions` linker error and weird bug related to `src_cpp`.
 10. Optimize library code by using `reference-passing` instead of `value-passing`
 11. Enable compatibility with old code to include only `AsyncHTTPRequest_Generic.h`
+12. Add support to **ESP32-S3 (ESP32S3_DEV, ESP32_S3_BOX, UM TINYS3, UM PROS3, UM FEATHERS3, etc.) using EEPROM, SPIFFS or LittleFS**
+13. Add `LittleFS` support to **ESP32-C3**
+14. Use `ESP32-core's LittleFS` library instead of `Lorol's LITTLEFS` library for ESP32 core v2.0.0+
+
 
 ---
 ---

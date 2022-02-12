@@ -46,11 +46,11 @@
   #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
 #endif
 
-#define ESP_ASYNC_WIFIMANAGER_VERSION_MIN_TARGET          "ESPAsync_WiFiManager v1.11.0"
-#define ESP_ASYNC_WIFIMANAGER_VERSION_MIN                 1011000
+#define ESP_ASYNC_WIFIMANAGER_VERSION_MIN_TARGET          "ESPAsync_WiFiManager v1.12.1"
+#define ESP_ASYNC_WIFIMANAGER_VERSION_MIN                 1012001
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.6.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1006000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.7.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1007000
 
 // Level from 0-4
 #define ASYNC_HTTP_DEBUG_PORT     Serial
@@ -81,10 +81,25 @@
 
     // The library will be depreciated after being merged to future major Arduino esp32 core release 2.x
     // At that time, just remove this library inclusion
-    #include <LITTLEFS.h>             // https://github.com/lorol/LITTLEFS
-    
-    FS* filesystem =      &LITTLEFS;
-    #define FileFS        LITTLEFS
+    #if ( defined(ESP_ARDUINO_VERSION_MAJOR) && (ESP_ARDUINO_VERSION_MAJOR >= 2) )
+      #warning Using ESP32 Core 1.0.6 or 2.0.0+ and core LittleFS library
+      // The library has been merged into esp32 core from release 1.0.6
+      #include <LittleFS.h>             // https://github.com/espressif/arduino-esp32/tree/master/libraries/LittleFS
+      
+      //#define FileFS        LittleFS
+      //#define FS_Name       "LittleFS"
+      FS* filesystem =      &LittleFS;
+      #define FileFS        LittleFS
+    #else
+      #warning Using ESP32 Core 1.0.5-. You must install LITTLEFS library
+      // The library has been merged into esp32 core from release 1.0.6
+      #include <LITTLEFS.h>             // https://github.com/lorol/LITTLEFS
+      
+      //#define FileFS        LITTLEFS
+      FS* filesystem =      &LITTLEFS;
+      #define FileFS        LITTLEFS
+    #endif
+   
     #define FS_Name       "LittleFS"
   #elif USE_SPIFFS
     #include <SPIFFS.h>
@@ -209,8 +224,8 @@ bool initialConfig = false;
   #define USE_DHCP_IP     true
 #else
   // You can select DHCP or Static IP here
-  //#define USE_DHCP_IP     true
-  #define USE_DHCP_IP     false
+  #define USE_DHCP_IP     true
+  //#define USE_DHCP_IP     false
 #endif
 
 #if ( USE_DHCP_IP || ( defined(USE_STATIC_IP_CONFIG_IN_CP) && !USE_STATIC_IP_CONFIG_IN_CP ) )
@@ -309,10 +324,10 @@ void initSTAIPConfigStruct(WiFi_STA_IPConfig &in_WM_STA_IPconfig)
 
 void displayIPConfigStruct(WiFi_STA_IPConfig in_WM_STA_IPconfig)
 {
-  LOGERROR3(F("stationIP ="), in_WM_STA_IPconfig._sta_static_ip, ", gatewayIP =", in_WM_STA_IPconfig._sta_static_gw);
+  LOGERROR3(F("stationIP ="), in_WM_STA_IPconfig._sta_static_ip, F(", gatewayIP ="), in_WM_STA_IPconfig._sta_static_gw);
   LOGERROR1(F("netMask ="), in_WM_STA_IPconfig._sta_static_sn);
 #if USE_CONFIGURABLE_DNS
-  LOGERROR3(F("dns1IP ="), in_WM_STA_IPconfig._sta_static_dns1, ", dns2IP =", in_WM_STA_IPconfig._sta_static_dns2);
+  LOGERROR3(F("dns1IP ="), in_WM_STA_IPconfig._sta_static_dns1, F(", dns2IP ="), in_WM_STA_IPconfig._sta_static_dns2);
 #endif
 }
 
@@ -402,7 +417,7 @@ uint8_t connectMultiWiFi()
   return status;
 }
 
-void heartBeatPrint(void)
+void heartBeatPrint()
 {
   static int num = 1;
 
@@ -422,7 +437,7 @@ void heartBeatPrint(void)
   }
 }
 
-void check_WiFi(void)
+void check_WiFi()
 {
   if ( (WiFi.status() != WL_CONNECTED) )
   {
@@ -431,7 +446,7 @@ void check_WiFi(void)
   }
 }  
 
-void check_status(void)
+void check_status()
 {
   static ulong checkstatus_timeout  = 0;
   static ulong checkwifi_timeout    = 0;
@@ -528,12 +543,12 @@ void sendRequest()
     }
     else
     {
-      Serial.println("Can't send bad request");
+      Serial.println(F("Can't send bad request"));
     }
   }
   else
   {
-    Serial.println("Can't send request");
+    Serial.println(F("Can't send request"));
   }
 }
 
@@ -543,9 +558,9 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
   
   if (readyState == readyStateDone) 
   {
-    Serial.println("\n**************************************");
+    Serial.println(F("\n**************************************"));
     Serial.println(request->responseText());
-    Serial.println("**************************************");
+    Serial.println(F("**************************************"));
     
     request->setDebug(false);
   }
@@ -556,16 +571,18 @@ void setup()
   // put your setup code here, to run once:
   Serial.begin(115200);
   while (!Serial);
+
+  delay(200);
   
-  Serial.print("\nStarting AsyncHTTPRequest_ESP_WiFiManager using " + String(FS_Name));
-  Serial.println(" on " + String(ARDUINO_BOARD));
+  Serial.print(F("\nStarting AsyncHTTPRequest_ESP_WiFiManager using ")); Serial.print(FS_Name);
+  Serial.print(F(" on ")); Serial.println(ARDUINO_BOARD);
   Serial.println(ESP_ASYNC_WIFIMANAGER_VERSION);
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
 #if defined(ESP_ASYNC_WIFIMANAGER_VERSION_INT)
   if (ESP_ASYNC_WIFIMANAGER_VERSION_INT < ESP_ASYNC_WIFIMANAGER_VERSION_MIN)
   {
-    Serial.print("Warning. Must use this example on Version later than : ");
+    Serial.print(F("Warning. Must use this example on Version later than : "));
     Serial.println(ESP_ASYNC_WIFIMANAGER_VERSION_MIN_TARGET);
   }
 #endif
@@ -573,7 +590,7 @@ void setup()
 #if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
   if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
   {
-    Serial.print("Warning. Must use this example on Version equal or later than : ");
+    Serial.print(F("Warning. Must use this example on Version equal or later than : "));
     Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
   }
 #endif
@@ -645,16 +662,17 @@ void setup()
   Router_Pass = ESPAsync_wifiManager.WiFi_Pass();
 
   //Remove this line if you do not want to see WiFi password printed
-  Serial.println("Stored: SSID = " + Router_SSID + ", Pass = " + Router_Pass);
+  Serial.print(F("Stored: SSID = ")); Serial.print(Router_SSID);
+  Serial.print(F(", Pass = ")); Serial.println(Router_Pass);
 
   if (Router_SSID != "")
   {
     ESPAsync_wifiManager.setConfigPortalTimeout(120); //If no access point name has been previously entered disable timeout.
-    Serial.println("Got stored Credentials. Timeout 120s");
+    Serial.println(F("Got stored Credentials. Timeout 120s"));
   }
   else
   {
-    Serial.println("No stored Credentials. No timeout");
+    Serial.println(F("No stored Credentials. No timeout"));
   }
 
   String chipID = String(ESP_getChipId(), HEX);
@@ -667,16 +685,16 @@ void setup()
   // From v1.1.0, Don't permit NULL password
   if ( (Router_SSID == "") || (Router_Pass == "") )
   {
-    Serial.println("We haven't got any access point credentials, so get them now");
+    Serial.println(F("We haven't got any access point credentials, so get them now"));
 
     initialConfig = true;
 
     // Starts an access point
     //if (!ESPAsync_wifiManager.startConfigPortal((const char *) ssid.c_str(), password))
     if ( !ESPAsync_wifiManager.startConfigPortal(AP_SSID.c_str(), AP_PASS.c_str()) )
-      Serial.println("Not connected to WiFi but continuing anyway.");
+      Serial.println(F("Not connected to WiFi but continuing anyway."));
     else
-      Serial.println("WiFi connected...yeey :)");
+      Serial.println(F("WiFi connected...yeey :)"));
 
     // Stored  for later usage, from v1.1.0, but clear first
     memset(&WM_config, 0, sizeof(WM_config));
@@ -735,19 +753,19 @@ void setup()
 
     if ( WiFi.status() != WL_CONNECTED ) 
     {
-      Serial.println("ConnectMultiWiFi in setup");
+      Serial.println(F("ConnectMultiWiFi in setup"));
      
       connectMultiWiFi();
     }
   }
 
-  Serial.print("After waiting ");
+  Serial.print(F("After waiting "));
   Serial.print((float) (millis() - startedAt) / 1000L);
-  Serial.print(" secs more in setup(), connection result is ");
+  Serial.print(F(" secs more in setup(), connection result is "));
 
   if (WiFi.status() == WL_CONNECTED)
   {
-    Serial.print("connected. Local IP: ");
+    Serial.print(F("connected. Local IP: "));
     Serial.println(WiFi.localIP());
   }
   else

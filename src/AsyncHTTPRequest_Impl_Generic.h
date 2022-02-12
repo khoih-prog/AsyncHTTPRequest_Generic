@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.6.0
+  Version: 1.7.0
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -37,6 +37,7 @@
   1.4.1    K Hoang     29/11/2021 Auto detect ESP32 core version and improve connection time for WT32_ETH01
   1.5.0    K Hoang     30/12/2021 Fix `multiple-definitions` linker error
   1.6.0    K Hoang     23/01/2022 Enable compatibility with old code to include only AsyncHTTPRequest_Generic.h
+  1.7.0    K Hoang     10/02/2022 Add support to new ESP32-S3. Add LittleFS support to ESP32-C3. Use core LittleFS
  *****************************************************************************************************************************/
  
 #pragma once
@@ -318,8 +319,8 @@ String xbuf::readString(int endPos)
   }
   
   // KH, to remove
-    AHTTP_LOGDEBUG1("xbuf::readString: Reserved size = ", endPos + 1);
-    ///////
+  AHTTP_LOGDEBUG1("xbuf::readString: Reserved size = ", endPos + 1);
+  ///////
   
   if (endPos > _used) 
   {
@@ -855,8 +856,6 @@ String AsyncHTTPRequest::responseText()
 
 //**************************************************************************************************************
 
-#if 1
-
 #if (ESP32)
   #define GLOBAL_STR_LEN      (32 * 1024)
 #elif (ESP8266)
@@ -898,7 +897,6 @@ char* AsyncHTTPRequest::responseLongText()
   
   return globalLongString;
 }
-#endif
 
 //**************************************************************************************************************
 size_t AsyncHTTPRequest::responseRead(uint8_t* buf, size_t len)
@@ -1929,7 +1927,7 @@ char* AsyncHTTPRequest::_charstar(const __FlashStringHelper * str)
     strcpy_P(ptr, (PGM_P)str);
   }
   
-  // Rturn good ptr or nullptr
+  // Return good ptr or nullptr
   return ptr;
 }
 
