@@ -79,7 +79,7 @@
   * [8. AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720](#8-asynchttprequest_wt32_eth01-on-esp32_dev-with-eth_phy_lan8720)
   * [9. AsyncHTTPRequest_ESP_WiFiManager running on ESP32C3_DEV](#9-asynchttprequest_esp_wifimanager-running-on-ESP32C3_DEV) **New**
   * [10. AsyncHTTPRequest_ESP_WiFiManager running on ESP32S3_DEV](#10-asynchttprequest_esp_wifimanager-running-on-ESP32S3_DEV) **New**
-  * [11. AsyncHTTPRequest_ESP_Multi running on ESP32_DEV](#10-AsyncHTTPRequest_ESP_Multi-running-on-ESP32_DEV) **New**
+  * [11. AsyncHTTPRequest_ESP_Multi running on ESP32_DEV](#11-AsyncHTTPRequest_ESP_Multi-running-on-ESP32_DEV) **New**
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
