@@ -6,7 +6,8 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/AsyncHTTPRequest_Generic.svg)](http://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues)
 
-<a href="https://www.buymeacoffee.com/khoihprog6" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 50px !important;width: 181px !important;" ></a>
+<a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
+<a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
 
 ---
 ---
@@ -44,6 +45,7 @@
     * [1. AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP)
     * [2. AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager)
     * [3. AsyncHTTPMultiRequests_ESP](examples/AsyncHTTPMultiRequests_ESP)
+    * [4. AsyncHTTPRequest_ESP_Multi](examples/AsyncHTTPRequest_ESP_Multi) **New**
   * [For STM32 using LAN8742A](#for-stm32-using-lan8742a)
     * [1. AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
     * [2. AsyncCustomHeader_STM32](examples/AsyncCustomHeader_STM32)
@@ -77,6 +79,7 @@
   * [8. AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720](#8-asynchttprequest_wt32_eth01-on-esp32_dev-with-eth_phy_lan8720)
   * [9. AsyncHTTPRequest_ESP_WiFiManager running on ESP32C3_DEV](#9-asynchttprequest_esp_wifimanager-running-on-ESP32C3_DEV) **New**
   * [10. AsyncHTTPRequest_ESP_WiFiManager running on ESP32S3_DEV](#10-asynchttprequest_esp_wifimanager-running-on-ESP32S3_DEV) **New**
+  * [11. AsyncHTTPRequest_ESP_Multi running on ESP32_DEV](#10-AsyncHTTPRequest_ESP_Multi-running-on-ESP32_DEV) **New**
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -423,6 +426,7 @@ Connect FDTI (USB to Serial) as follows:
  1. [AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP)
  2. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager)
  3. [AsyncHTTPMultiRequests_ESP](examples/AsyncHTTPMultiRequests_ESP)
+ 4. [AsyncHTTPRequest_ESP_Multi](examples/AsyncHTTPRequest_ESP_Multi) **New**
 
 #### For STM32 using LAN8742A
 
@@ -460,231 +464,15 @@ Please take a look at other examples, as well.
 
 #### 1. File [AsyncHTTPRequest_STM32.ino](examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino)
 
-```cpp
-#include "defines.h"
+https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/98733a6c4a1906ff53f6de0d19a239c672c4569a/examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino#L1-L144
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.7.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1007000
-
-// 600s = 10 minutes to not flooding, 60s in testing
-#define HTTP_REQUEST_INTERVAL_MS     60000  //600000
-
-// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
-#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
-
-#include <Ticker.h>                   // https://github.com/sstaub/Ticker
-
-AsyncHTTPRequest request;
-
-void sendRequest(void);
-
-// Repeat forever, millis() resolution
-Ticker sendHTTPRequest(sendRequest, HTTP_REQUEST_INTERVAL_MS, 0, MILLIS); 
-
-void sendRequest(void)
-{
-  static bool requestOpenResult;
-  
-  if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
-  {
-    //requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/London.txt");
-    requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
-    
-    if (requestOpenResult)
-    {
-      // Only send() if open() returns true, or crash
-      request.send();
-    }
-    else
-    {
-      Serial.println("Can't send bad request");
-    }
-  }
-  else
-  {
-    Serial.println("Can't send request");
-  }
-}
-
-void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState) 
-{
-  (void) optParm;
-  
-  if (readyState == readyStateDone) 
-  {
-    Serial.println("\n**************************************");
-    Serial.println(request->responseText());
-    Serial.println("**************************************");
-    
-    request->setDebug(false);
-  }
-}
-
-void setup(void) 
-{
-  Serial.begin(115200);
-  while (!Serial);
-  
-  Serial.println("\nStart AsyncHTTPRequest_STM32 on " + String(BOARD_NAME));
-  Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
-
-#if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
-  if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
-  {
-    Serial.print("Warning. Must use this example on Version equal or later than : ");
-    Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
-  }
-#endif  
-
-  // start the ethernet connection and the server
-  // Use random mac
-  uint16_t index = millis() % NUMBER_OF_MAC;
-
-  // Use Static IP
-  //Ethernet.begin(mac[index], ip);
-  // Use DHCP dynamic IP and random mac
-  Ethernet.begin(mac[index]);
-
-  Serial.print(F("AsyncHTTPRequest @ IP : "));
-  Serial.println(Ethernet.localIP());
-  Serial.println();
-
-  request.setDebug(false);
-  
-  request.onReadyStateChange(requestCB);
-  sendHTTPRequest.start(); //start the ticker.
-
-  // Send first request now
-  //delay(60);
-  sendRequest();
-}
-
-void loop(void) 
-{
-  sendHTTPRequest.update();
-}
-```
 
 ---
 
 #### 2. File [defines.h](examples/AsyncHTTPRequest_STM32/defines.h)
 
+https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/98733a6c4a1906ff53f6de0d19a239c672c4569a/examples/AsyncHTTPRequest_STM32/defines.h#L1-L134
 
-```cpp
-/*
-   Currently support
-   1) STM32 boards with built-in Ethernet (to use USE_BUILTIN_ETHERNET = true) such as :
-      - Nucleo-144 (F429ZI, F767ZI)
-      - Discovery (STM32F746G-DISCOVERY)
-      - STM32 boards (STM32F/L/H/G/WB/MP1) with 32K+ Flash, with Built-in Ethernet, 
-      - See How To Use Built-in Ethernet at (https://github.com/khoih-prog/EthernetWebServer_STM32/issues/1)
-   2) STM32F/L/H/G/WB/MP1 boards (with 32+K Flash) running ENC28J60 shields (to use USE_BUILTIN_ETHERNET = false)
-   3) STM32F/L/H/G/WB/MP1 boards (with 32+K Flash) running W5x00 shields
-*/
-
-#ifndef defines_h
-#define defines_h
-
-#if !( defined(STM32F0) || defined(STM32F1) || defined(STM32F2) || defined(STM32F3)  ||defined(STM32F4) || defined(STM32F7) || \
-       defined(STM32L0) || defined(STM32L1) || defined(STM32L4) || defined(STM32H7)  ||defined(STM32G0) || defined(STM32G4) || \
-       defined(STM32WB) || defined(STM32MP1) )
-  #error This code is designed to run on STM32F/L/H/G/WB/MP1 platform! Please check your Tools->Board setting.
-#endif
-
-#define ASYNC_HTTP_DEBUG_PORT           Serial
-
-// Use from 0 to 4. Higher number, more debugging messages and memory usage.
-#define _ASYNC_HTTP_LOGLEVEL_           1
-
-
-#if defined(STM32F0)
-  #warning STM32F0 board selected
-  #define BOARD_TYPE  "STM32F0"
-#elif defined(STM32F1)
-  #warning STM32F1 board selected
-  #define BOARD_TYPE  "STM32F1"
-#elif defined(STM32F2)
-  #warning STM32F2 board selected
-  #define BOARD_TYPE  "STM32F2"
-#elif defined(STM32F3)
-  #warning STM32F3 board selected
-  #define BOARD_TYPE  "STM32F3"
-#elif defined(STM32F4)
-  #warning STM32F4 board selected
-  #define BOARD_TYPE  "STM32F4"
-#elif defined(STM32F7)
-  #warning STM32F7 board selected
-  #define BOARD_TYPE  "STM32F7"
-#elif defined(STM32L0)
-  #warning STM32L0 board selected
-  #define BOARD_TYPE  "STM32L0"
-#elif defined(STM32L1)
-  #warning STM32L1 board selected
-  #define BOARD_TYPE  "STM32L1"
-#elif defined(STM32L4)
-  #warning STM32L4 board selected
-  #define BOARD_TYPE  "STM32L4"
-#elif defined(STM32H7)
-  #warning STM32H7 board selected
-  #define BOARD_TYPE  "STM32H7"
-#elif defined(STM32G0)
-  #warning STM32G0 board selected
-  #define BOARD_TYPE  "STM32G0"
-#elif defined(STM32G4)
-  #warning STM32G4 board selected
-  #define BOARD_TYPE  "STM32G4"
-#elif defined(STM32WB)
-  #warning STM32WB board selected
-  #define BOARD_TYPE  "STM32WB"
-#elif defined(STM32MP1)
-  #warning STM32MP1 board selected
-  #define BOARD_TYPE  "STM32MP1"
-#else
-  #warning STM32 unknown board selected
-  #define BOARD_TYPE  "STM32 Unknown"
-#endif
-
-#ifndef BOARD_NAME
-  #define BOARD_NAME    BOARD_TYPE
-#endif
-
-#include <LwIP.h>
-#include <STM32Ethernet.h>
-
-//#include <AsyncUDP_STM32.h>
-
-// Enter a MAC address and IP address for your controller below.
-#define NUMBER_OF_MAC      20
-
-byte mac[][NUMBER_OF_MAC] =
-{
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x01 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x02 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x03 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x04 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x05 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x06 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x07 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x08 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x09 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x0A },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x0B },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x0C },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x0D },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x0E },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x0F },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x10 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x11 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x12 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x13 },
-  { 0xDE, 0xAD, 0xBE, 0xEF, 0x32, 0x14 },
-};
-
-// Select the static IP address according to your local network
-IPAddress ip(192, 168, 2, 232);
-
-#endif    //defines_h
-```
 
 ---
 ---
@@ -695,7 +483,7 @@ IPAddress ip(192, 168, 2, 232);
 
 ```
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.7.0
+AsyncHTTPRequest_Generic v1.7.1
 AsyncHTTPRequest @ IP : 192.168.2.178
 
 **************************************
@@ -740,7 +528,7 @@ week_number: 3
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.7.0
+AsyncHTTPRequest_Generic v1.7.1
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -772,7 +560,7 @@ HHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
-AsyncHTTPRequest_Generic v1.7.0
+AsyncHTTPRequest_Generic v1.7.1
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -822,7 +610,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.7.0
+AsyncHTTPRequest_Generic v1.7.1
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
@@ -855,7 +643,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ```
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.7.0
+AsyncHTTPRequest_Generic v1.7.1
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -908,7 +696,7 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 
 ```
 Start AsyncWebClientRepeating_STM32_LAN8720 on BLACK_F407VE
-AsyncHTTPRequest_Generic v1.7.0
+AsyncHTTPRequest_Generic v1.7.1
 AsyncHTTPRequest @ IP : 192.168.2.150
 
 
@@ -964,7 +752,7 @@ AsyncHTTPRequest @ IP : 192.168.2.150
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.4.1
-AsyncHTTPRequest_Generic v1.7.0
+AsyncHTTPRequest_Generic v1.7.1
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
@@ -990,7 +778,7 @@ H
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.4.1
-AsyncHTTPRequest_Generic v1.7.0
+AsyncHTTPRequest_Generic v1.7.1
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
@@ -1021,7 +809,7 @@ week_number: 52
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32C3_DEV
 ESPAsync_WiFiManager v1.12.1
-AsyncHTTPRequest_Generic v1.7.0
+AsyncHTTPRequest_Generic v1.7.1
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -1072,7 +860,7 @@ week_number: 6
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32S3_DEV
 ESPAsync_WiFiManager v1.12.1
-AsyncHTTPRequest_Generic v1.7.0
+AsyncHTTPRequest_Generic v1.7.1
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -1114,6 +902,67 @@ utc_datetime: 2022-02-12T03:59:45.988493+00:00
 utc_offset: -05:00
 week_number: 6
 **************************************
+```
+
+---
+
+#### 11. [AsyncHTTPRequest_ESP_Multi](examples/AsyncHTTPRequest_ESP_Multi) running on ESP32_DEV
+
+The terminal output of [AsyncHTTPRequest_ESP_Multi example](examples/AsyncHTTPRequest_ESP_Multi) running on `ESP32_DEV` to demonstrate how to send requests to multiple addresses and receive responses from them. 
+
+```
+Starting AsyncHTTPRequest_ESP_Multi using ESP32_DEV
+AsyncHTTPRequest_Generic v1.7.1
+Connecting to WiFi SSID: HueNet1
+.......
+AsyncHTTPSRequest @ IP : 192.168.2.88
+
+Sending request: http://worldtimeapi.org/api/timezone/Europe/Prague.txt
+
+Sending request: http://www.myexternalip.com/raw
+
+**************************************
+abbreviation: CET
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2022-02-26T01:54:15.753826+01:00
+day_of_week: 6
+day_of_year: 57
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
+raw_offset: 3600
+timezone: Europe/Prague
+unixtime: 1645836855
+utc_datetime: 2022-02-26T00:54:15.753826+00:00
+utc_offset: +01:00
+week_number: 8
+**************************************
+
+**************************************
+aaa.bbb.ccc.ddd
+**************************************
+
+Sending request: http://worldtimeapi.org/api/timezone/America/Toronto.txt
+
+**************************************
+abbreviation: EST
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2022-02-25T19:54:15.822746-05:00
+day_of_week: 5
+day_of_year: 56
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
+raw_offset: -18000
+timezone: America/Toronto
+unixtime: 1645836855
+utc_datetime: 2022-02-26T00:54:15.822746+00:00
+utc_offset: -05:00
+week_number: 8
+**************************************
+HHH
 ```
 
 ---
@@ -1172,6 +1021,7 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 12. Add support to **ESP32-S3 (ESP32S3_DEV, ESP32_S3_BOX, UM TINYS3, UM PROS3, UM FEATHERS3, etc.) using EEPROM, SPIFFS or LittleFS**
 13. Add `LittleFS` support to **ESP32-C3**
 14. Use `ESP32-core's LittleFS` library instead of `Lorol's LITTLEFS` library for ESP32 core v2.0.0+
+15. Add example [AsyncHTTPRequest_ESP_Multi](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_Multi) to demonstrate how to send requests to multiple addresses and receive responses from them.
 
 
 ---
@@ -1193,6 +1043,8 @@ This library is based on, modified, bug-fixed and improved from:
 
 6. Thanks to [andrewk123](https://github.com/andrewk123) to report [**Http GET polling causes crash when host disconnected #22**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/22) leading to new release v1.4.0 to fix bug.
 
+7. Thanks to [DavidAntonin](https://github.com/DavidAntonin) to report [Cannot send requests to different addresses #4](https://github.com/khoih-prog/AsyncHTTPSRequest_Generic/issues/4) leading to new release v1.7.1 to demonstrate how to send requests to multiple addresses and receive responses from them.
+
 
 <table>
   <tr>
@@ -1202,7 +1054,10 @@ This library is based on, modified, bug-fixed and improved from:
     <td align="center"><a href="https://github.com/baddwarf"><img src="https://github.com/baddwarf.png" width="100px;" alt="baddwarf"/><br /><sub><b>BadDwarf</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/spdi"><img src="https://github.com/spdi.png" width="100px;" alt="spdi"/><br /><sub><b>spdi</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/andrewk123"><img src="https://github.com/andrewk123.png" width="100px;" alt="andrewk123"/><br /><sub><b>andrewk123</b></sub></a><br /></td>
-  </tr> 
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/DavidAntonin"><img src="https://github.com/DavidAntonin.png" width="100px;" alt="DavidAntonin"/><br /><sub><b>DavidAntonin</b></sub></a><br /></td>
+  </tr>
 </table>
 
 ---

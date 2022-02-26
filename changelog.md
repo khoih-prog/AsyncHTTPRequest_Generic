@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.7.1](#releases-v171)
   * [Releases v1.7.0](#releases-v170)
   * [Releases v1.6.0](#releases-v160)
   * [Releases v1.5.0](#releases-v150)
@@ -34,6 +35,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.7.1
+
+1. Add example [AsyncHTTPRequest_ESP_Multi](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_Multi) to demo connection to multiple addresses.
+2. Update `Packages' Patches`
 
 ### Releases v1.7.0
 
