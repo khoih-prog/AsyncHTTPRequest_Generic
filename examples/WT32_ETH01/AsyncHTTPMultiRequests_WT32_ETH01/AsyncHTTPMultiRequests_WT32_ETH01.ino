@@ -79,15 +79,13 @@ IPAddress mySN(255, 255, 255, 0);
 // Google DNS Server IP
 IPAddress myDNS(8, 8, 8, 8);
 
-bool eth_connected = false;
-
 /////////////////////////////////////////////
 
 void heartBeatPrint(void)
 {
   static int num = 1;
 
-  if (eth_connected)
+  if (WT32_ETH01_isConnected())
     Serial.print(F("H"));        // H means connected to WiFi
   else
     Serial.print(F("F"));        // F means not connected to WiFi
