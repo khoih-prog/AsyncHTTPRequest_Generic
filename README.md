@@ -40,12 +40,15 @@
   * [1. Wiring](#1-wiring)
   * [2. HOWTO program using STLink V-2 or V-3](#2-howto-program-using-stlink-v-2-or-v-3)
   * [3. HOWTO use Serial Port for Debugging](#3-howto-use-serial-port-for-debugging)
+* [HOWTO use ESP8266 with W5x00 Ethernet](#HOWTO-use-ESP8266-with-W5x00-Ethernet)
+	* [1. ESP8266 Wiring](#1-ESP8266-wiring)
 * [Examples](#examples)
   * [For ESP32 and ESP8266](#for-esp32-and-esp8266)
     * [1. AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP)
     * [2. AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager)
     * [3. AsyncHTTPMultiRequests_ESP](examples/AsyncHTTPMultiRequests_ESP)
     * [4. AsyncHTTPRequest_ESP_Multi](examples/AsyncHTTPRequest_ESP_Multi) **New**
+    * [5. AsyncHTTPRequest_ESP8266_Ethernet](examples/AsyncHTTPRequest_ESP8266_Ethernet) **New**
   * [For STM32 using LAN8742A](#for-stm32-using-lan8742a)
     * [1. AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
     * [2. AsyncCustomHeader_STM32](examples/AsyncCustomHeader_STM32)
@@ -80,6 +83,9 @@
   * [9. AsyncHTTPRequest_ESP_WiFiManager running on ESP32C3_DEV](#9-asynchttprequest_esp_wifimanager-running-on-ESP32C3_DEV) **New**
   * [10. AsyncHTTPRequest_ESP_WiFiManager running on ESP32S3_DEV](#10-asynchttprequest_esp_wifimanager-running-on-ESP32S3_DEV) **New**
   * [11. AsyncHTTPRequest_ESP_Multi running on ESP32_DEV](#11-AsyncHTTPRequest_ESP_Multi-running-on-ESP32_DEV) **New**
+  * [12. AsyncHTTPRequest_ESP8266_Ethernet running on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet](#12-AsyncHTTPRequest_ESP8266_Ethernet-running-on-ESP8266_NODEMCU_ESP12E-using-ESP8266_W5500-Ethernet) **New**
+  
+  AsyncHTTPRequest_ESP8266_Ethernet running on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -149,6 +155,9 @@ This library is based on, modified from:
 
 #### 2. ESP8266
 
+1. Using WiFi
+2. Using **W5x00** with [**lwIP_w5100**](https://github.com/esp8266/Arduino/tree/master/libraries/lwIP_w5100) or [**lwIP_w5500**](https://github.com/esp8266/Arduino/tree/master/libraries/lwIP_w5500) library
+
 #### 3. STM32F/L/H/G/WB/MP1 with built-in LAN8742A Ethernet.
 
 1. Nucleo-144 (F429ZI, F746ZG, F756ZG, F767ZI)
@@ -178,7 +187,7 @@ This library is based on, modified from:
  8. [`STM32Ethernet library v1.2.0+`](https://github.com/stm32duino/STM32Ethernet) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/STM32Ethernet.svg)](https://github.com/stm32duino/STM32Ethernet/releases/latest)
  9. [`LwIP library v2.1.2+`](https://github.com/stm32duino/LwIP) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/LwIP.svg)](https://github.com/stm32duino/LwIP/releases/latest)
 10. [`STM32AsyncTCP library v1.0.1+`](https://github.com/khoih-prog/STM32AsyncTCP) for built-in Ethernet on (Nucleo-144, Discovery). To install manually for Arduino IDE.
-11. [`ESPAsync_WiFiManager library v1.12.1+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
+11. [`ESPAsync_WiFiManager library v1.12.2+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
 12.  [`LittleFS_esp32 v1.0.6+`](https://github.com/lorol/LITTLEFS) for ESP32-based boards using LittleFS. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/LittleFS_esp32.svg?)](https://www.ardu-badge.com/LittleFS_esp32).
 13. [`WebServer_WT32_ETH01 library v1.4.1+`](https://github.com/khoih-prog/WebServer_WT32_ETH01) if necessary to use WT32_ETH01 boards. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_WT32_ETH01.svg?)](https://www.ardu-badge.com/WebServer_WT32_ETH01)
 
@@ -415,6 +424,24 @@ Connect FDTI (USB to Serial) as follows:
 |TX|<--->|RX=PA_10|
 |GND|<--->|GND|
 
+---
+
+### HOWTO use ESP8266 with W5x00 Ethernet
+
+#### 1. ESP8266 Wiring
+
+This is the wiring for EP8266 W5x00 Ethernet when using `SS = GPIO16`
+
+
+|W5x00 Ethernet|<--->|ESP8266|
+|:-:|:-:|:-:|
+|MOSI|<--->|MOSI = GPIO14|
+|MISO|<--->|MISO = GPIO12|
+|SCK|<--->|SCK = GPIO13|
+|SS|<--->|GPIO16|
+|GND|<--->|GND|
+|VCC|<--->|+3.3V|
+
 
 ---
 ---
@@ -427,6 +454,7 @@ Connect FDTI (USB to Serial) as follows:
  2. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager)
  3. [AsyncHTTPMultiRequests_ESP](examples/AsyncHTTPMultiRequests_ESP)
  4. [AsyncHTTPRequest_ESP_Multi](examples/AsyncHTTPRequest_ESP_Multi) **New**
+ 5. [AsyncHTTPRequest_ESP8266_Ethernet](examples/AsyncHTTPRequest_ESP8266_Ethernet) **New**
 
 #### For STM32 using LAN8742A
 
@@ -483,43 +511,43 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/98733a6c4a1906ff53f6
 
 ```
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.7.1
+AsyncHTTPRequest_Generic v1.8.0
 AsyncHTTPRequest @ IP : 192.168.2.178
 
 **************************************
-abbreviation: EST
+abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-01-23T19:06:29.846071-05:00
-day_of_week: 0
-day_of_year: 23
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+datetime: 2022-04-13T22:00:07.669102-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1642982789
-utc_datetime: 2022-01-24T00:06:29.846071+00:00
-utc_offset: -05:00
-week_number: 3
+unixtime: 1649901607
+utc_datetime: 2022-04-14T02:00:07.669102+00:00
+utc_offset: -04:00
+week_number: 15
 *********************
 
 **************************************
-abbreviation: EST
+abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-01-23T19:08:29.871390-05:00
-day_of_week: 0
-day_of_year: 23
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+datetime: 2022-04-13T22:01:07.647308-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1642982909
-utc_datetime: 2022-01-24T00:08:29.871390+00:00
-utc_offset: -05:00
-week_number: 3
+unixtime: 1649901667
+utc_datetime: 2022-04-14T02:01:07.647308+00:00
+utc_offset: -04:00
+week_number: 15
 ```
 
 ---
@@ -528,28 +556,28 @@ week_number: 3
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.7.1
+AsyncHTTPRequest_Generic v1.8.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
 After waiting 3.43 secs more in setup(), connection result is connected. Local IP: 192.168.2.186
 H
 **************************************
-abbreviation: EST
+abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-01-23T19:08:29.871390-05:00
-day_of_week: 0
-day_of_year: 23
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+datetime: 2022-04-13T22:02:07.647703-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1642982909
-utc_datetime: 2022-01-24T00:08:29.871390+00:00
-utc_offset: -05:00
-week_number: 3
+unixtime: 1649901727
+utc_datetime: 2022-04-14T02:02:07.647703+00:00
+utc_offset: -04:00
+week_number: 15
 **************************************
 HHHHHH
 ```
@@ -560,46 +588,46 @@ HHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
-AsyncHTTPRequest_Generic v1.7.1
+AsyncHTTPRequest_Generic v1.8.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
 After waiting 2.35 secs more in setup(), connection result is connected. Local IP: 192.168.2.232
 H
 **************************************
-abbreviation: EST
+abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-01-23T19:06:29.846071-05:00
-day_of_week: 0
-day_of_year: 23
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+datetime: 2022-04-13T22:03:07.647977-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1642982789
-utc_datetime: 2022-01-24T00:06:29.846071+00:00
-utc_offset: -05:00
-week_number: 3
+unixtime: 1649901787
+utc_datetime: 2022-04-14T02:03:07.647977+00:00
+utc_offset: -04:00
+week_number: 15
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 **************************************
-abbreviation: EST
+abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-01-23T19:08:29.871390-05:00
-day_of_week: 0
-day_of_year: 23
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+datetime: 2022-04-13T22:04:07.648721-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1642982909
-utc_datetime: 2022-01-24T00:08:29.871390+00:00
-utc_offset: -05:00
-week_number: 3
+unixtime: 1649901847
+utc_datetime: 2022-04-14T02:04:07.648721+00:00
+utc_offset: -04:00
+week_number: 15
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH 
 ```
@@ -610,28 +638,27 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.7.1
+AsyncHTTPRequest_Generic v1.8.0
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
 
 **************************************
-abbreviation: EST
+abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-
-datetime: 2022-01-23T19:08:29.871390-05:00
-day_of_week: 0
-day_of_year: 23
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+datetime: 2022-04-13T22:03:07.647977-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1642982909
-utc_datetime: 2022-01-24T00:08:29.871390+00:00
-utc_offset: -05:00
-week_number: 3
+unixtime: 1649901787
+utc_datetime: 2022-04-14T02:03:07.647977+00:00
+utc_offset: -04:00
+week_number: 15
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 ```
@@ -643,7 +670,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ```
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.7.1
+AsyncHTTPRequest_Generic v1.8.0
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -696,7 +723,7 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 
 ```
 Start AsyncWebClientRepeating_STM32_LAN8720 on BLACK_F407VE
-AsyncHTTPRequest_Generic v1.7.1
+AsyncHTTPRequest_Generic v1.8.0
 AsyncHTTPRequest @ IP : 192.168.2.150
 
 
@@ -752,7 +779,7 @@ AsyncHTTPRequest @ IP : 192.168.2.150
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.4.1
-AsyncHTTPRequest_Generic v1.7.1
+AsyncHTTPRequest_Generic v1.8.0
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
@@ -778,27 +805,26 @@ H
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.4.1
-AsyncHTTPRequest_Generic v1.7.1
+AsyncHTTPRequest_Generic v1.8.0
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
 **************************************
-abbreviation: EST
+abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2021-12-30T14:08:41.290808-05:00
-day_of_week: 4
-day_of_year: 364
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+datetime: 2022-04-13T22:04:07.648721-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1640891321
-utc_datetime: 2021-12-30T19:08:41.290808+00:00
-utc_offset: -05:00
-week_number: 52
-
+unixtime: 1649901847
+utc_datetime: 2022-04-14T02:04:07.648721+00:00
+utc_offset: -04:00
+week_number: 15
 **************************************
 ```
 
@@ -809,46 +835,46 @@ week_number: 52
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32C3_DEV
 ESPAsync_WiFiManager v1.12.1
-AsyncHTTPRequest_Generic v1.7.1
+AsyncHTTPRequest_Generic v1.8.0
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
 After waiting 9.23 secs more in setup(), connection result is connected. Local IP: 192.168.2.85
 H
 **************************************
-abbreviation: EST
-client_ip: 45.72.193.77
-datetime: 2022-02-11T22:20:36.434352-05:00
-day_of_week: 5
-day_of_year: 42
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+abbreviation: EDT
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2022-04-13T22:05:07.648251-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1644636036
-utc_datetime: 2022-02-12T03:20:36.434352+00:00
-utc_offset: -05:00
-week_number: 6
+unixtime: 1649901907
+utc_datetime: 2022-04-14T02:05:07.648251+00:00
+utc_offset: -04:00
+week_number: 15
 **************************************
 HHHHHH
 **************************************
-abbreviation: EST
-client_ip: 45.72.193.77
-datetime: 2022-02-11T22:21:36.398307-05:00
-day_of_week: 5
-day_of_year: 42
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+abbreviation: EDT
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2022-04-13T22:06:07.648775-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1644636096
-utc_datetime: 2022-02-12T03:21:36.398307+00:00
-utc_offset: -05:00
-week_number: 6
+unixtime: 1649901967
+utc_datetime: 2022-04-14T02:06:07.648775+00:00
+utc_offset: -04:00
+week_number: 15
 **************************************
 ```
 
@@ -860,47 +886,47 @@ week_number: 6
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32S3_DEV
 ESPAsync_WiFiManager v1.12.1
-AsyncHTTPRequest_Generic v1.7.1
+AsyncHTTPRequest_Generic v1.8.0
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
 After waiting 7.77 secs more in setup(), connection result is connected. Local IP: 192.168.2.83
 H
 **************************************
-abbreviation: EST
-client_ip: 45.72.193.77
-datetime: 2022-02-11T22:58:46.055783-05:00
-day_of_week: 5
-day_of_year: 42
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+abbreviation: EDT
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2022-04-13T22:07:07.649344-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1644638326
-utc_datetime: 2022-02-12T03:58:46.055783+00:00
-utc_offset: -05:00
-week_number: 6
+unixtime: 1649902027
+utc_datetime: 2022-04-14T02:07:07.649344+00:00
+utc_offset: -04:00
+week_number: 15
 **************************************
 
 HHHHHH
 **************************************
-abbreviation: EST
-client_ip: 45.72.193.77
-datetime: 2022-02-11T22:59:45.988493-05:00
-day_of_week: 5
-day_of_year: 42
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+abbreviation: EDT
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2022-04-13T22:08:07.649062-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1644638385
-utc_datetime: 2022-02-12T03:59:45.988493+00:00
-utc_offset: -05:00
-week_number: 6
+unixtime: 1649902087
+utc_datetime: 2022-04-14T02:08:07.649062+00:00
+utc_offset: -04:00
+week_number: 15
 **************************************
 ```
 
@@ -912,7 +938,7 @@ The terminal output of [AsyncHTTPRequest_ESP_Multi example](examples/AsyncHTTPRe
 
 ```
 Starting AsyncHTTPRequest_ESP_Multi using ESP32_DEV
-AsyncHTTPRequest_Generic v1.7.1
+AsyncHTTPRequest_Generic v1.8.0
 Connecting to WiFi SSID: HueNet1
 .......
 AsyncHTTPSRequest @ IP : 192.168.2.88
@@ -966,6 +992,56 @@ HHH
 ```
 
 ---
+
+#### 12. [AsyncHTTPRequest_ESP8266_Ethernet](examples/AsyncHTTPRequest_ESP8266_Ethernet) running on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet
+
+The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](examples/AsyncHTTPRequest_ESP8266_Ethernet) running on `ESP8266_NODEMCU_ESP12E` to demonstrate how to use ESP8266_W5500 Ethernet Async feature.
+
+```
+Starting AsyncHTTPRequest_ESP8266_Ethernet on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet
+AsyncHTTPRequest_Generic v1.8.0
+Connecting ethernet..
+Ethernet IP address: 192.168.2.187
+
+**************************************
+abbreviation: EDT
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2022-04-13T21:58:31.037966-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
+raw_offset: -18000
+timezone: America/Toronto
+unixtime: 1649901511
+utc_datetime: 2022-04-14T01:58:31.037966+00:00
+utc_offset: -04:00
+week_number: 15
+**************************************
+HHHHHH
+**************************************
+abbreviation: EDT
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2022-04-13T21:59:31.025188-04:00
+day_of_week: 3
+day_of_year: 103
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
+raw_offset: -18000
+timezone: America/Toronto
+unixtime: 1649901571
+utc_datetime: 2022-04-14T01:59:31.025188+00:00
+utc_offset: -04:00
+week_number: 15
+**************************************
+HH
+```
+
+---
 ---
 
 ### Debug
@@ -1000,7 +1076,7 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 ## TO DO
 
  1. Fix bug. Add enhancement
- 2. Add support to more Ethernet / WiFi shields
+ 2. Add support to more Ethernet / WiFi shields with lwIP-based feature.
  3. Add support to more boards.
  4. Add many more examples.
 
@@ -1022,7 +1098,7 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 13. Add `LittleFS` support to **ESP32-C3**
 14. Use `ESP32-core's LittleFS` library instead of `Lorol's LITTLEFS` library for ESP32 core v2.0.0+
 15. Add example [AsyncHTTPRequest_ESP_Multi](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_Multi) to demonstrate how to send requests to multiple addresses and receive responses from them.
-
+16. Add support to ESP8266 using **W5x00** with [**lwIP_w5100**](https://github.com/esp8266/Arduino/tree/master/libraries/lwIP_w5100) or [**lwIP_w5500**](https://github.com/esp8266/Arduino/tree/master/libraries/lwIP_w5500) library
 
 ---
 ---

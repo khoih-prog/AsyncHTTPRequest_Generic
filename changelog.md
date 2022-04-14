@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+	* [Releases v1.8.0](#releases-v180)
   * [Releases v1.7.1](#releases-v171)
   * [Releases v1.7.0](#releases-v170)
   * [Releases v1.6.0](#releases-v160)
@@ -35,6 +36,12 @@
 ---
 
 ## Changelog
+
+### Releases v1.8.0
+
+1. Add support to ESP8266 using W5x00 with [lwIP_w5100](https://github.com/esp8266/Arduino/tree/master/libraries/lwIP_w5100) or [lwIP_w5500](https://github.com/esp8266/Arduino/tree/master/libraries/lwIP_w5500) library
+2. Add example [AsyncHTTPRequest_ESP8266_Ethernet](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP8266_Ethernet) to demo the new feature.
+3. Update `Packages' Patches`
 
 ### Releases v1.7.1
 
