@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.8.0
+  Version: 1.8.1
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -40,6 +40,7 @@
   1.7.0    K Hoang     10/02/2022 Add support to new ESP32-S3. Add LittleFS support to ESP32-C3. Use core LittleFS
   1.7.1    K Hoang     25/02/2022 Add example AsyncHTTPRequest_ESP_Multi to demo connection to multiple addresses
   1.8.0    K Hoang     13/04/2022 Add support to ESP8266 using W5x00 with lwip_W5100 or lwip_W5500 library
+  1.8.1    K Hoang     13/04/2022 Add support to ESP8266 using ENC28J60 with lwip_enc28j60 library
  *****************************************************************************************************************************/
 
 #pragma once
@@ -47,13 +48,13 @@
 #ifndef ASYNC_HTTP_REQUEST_GENERIC_HPP
 #define ASYNC_HTTP_REQUEST_GENERIC_HPP
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION            "AsyncHTTPRequest_Generic v1.8.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION            "AsyncHTTPRequest_Generic v1.8.1"
 
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MAJOR      1
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MINOR      8
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_PATCH      0
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_PATCH      1
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT        1008000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT        1008001
 
 #include <Arduino.h>
 

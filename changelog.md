@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+	* [Releases v1.8.1](#releases-v181)
 	* [Releases v1.8.0](#releases-v180)
   * [Releases v1.7.1](#releases-v171)
   * [Releases v1.7.0](#releases-v170)
@@ -36,6 +37,10 @@
 ---
 
 ## Changelog
+
+### Releases v1.8.1
+
+1. Add support to ESP8266 using ENC28J60 with [lwIP_enc28j60](https://github.com/esp8266/Arduino/tree/master/libraries/lwIP_enc28j60) library
 
 ### Releases v1.8.0
 
