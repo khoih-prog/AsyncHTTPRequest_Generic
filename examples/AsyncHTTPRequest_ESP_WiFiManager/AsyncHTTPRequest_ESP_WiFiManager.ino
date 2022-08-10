@@ -483,7 +483,9 @@ void loadConfigData()
   memset(&WM_config,       0, sizeof(WM_config));
 
   // New in v1.4.0
-  memset(&WM_STA_IPconfig, 0, sizeof(WM_STA_IPconfig));
+  //memset(&WM_STA_IPconfig, 0, sizeof(WM_STA_IPconfig));
+  // New in v1.8.2
+  initSTAIPConfigStruct(WM_STA_IPconfig);
   //////
     
   if (file)

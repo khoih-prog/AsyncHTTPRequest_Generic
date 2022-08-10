@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+	* [Releases v1.8.2](#releases-v182)
 	* [Releases v1.8.1](#releases-v181)
 	* [Releases v1.8.0](#releases-v180)
   * [Releases v1.7.1](#releases-v171)
@@ -37,6 +38,13 @@
 ---
 
 ## Changelog
+
+### Releases v1.8.2
+
+1. Fix library.properties to remove unavailable items from depends. Check [Remove unavailable items from depends field of library.properties #35](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/35)
+2. Remove lorol's LittleFS_esp32 library dependency as LittleFS has been included in new ESP32 cores v1.0.6+
+3. Fix compile error for [AsyncHTTPRequest_ESP_WiFiManager example](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_WiFiManager)
+4. Update `Packages' Patches`
 
 ### Releases v1.8.1
 
