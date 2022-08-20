@@ -115,10 +115,6 @@ void sendRequest1()
 
 void sendRequests()
 {
-  for (int index = 0; index < NUM_DIFFERENT_SITES; index++)
-  {
-    reqCount[index] = 2;
-  }
   reqCount[0] = NUM_ENTRIES_SITE_0;
   reqCount[1] = NUM_ENTRIES_SITE_1;
 }
