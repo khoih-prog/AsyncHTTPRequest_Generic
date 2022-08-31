@@ -478,14 +478,14 @@ Please take a look at other examples, as well.
 
 #### 1. File [AsyncHTTPRequest_STM32.ino](examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino)
 
-https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/98733a6c4a1906ff53f6de0d19a239c672c4569a/examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino#L1-L144
+https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/07e2add9960fb3ab7333acd84fb2c697f3efc6a6/examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino#L43-L148
 
 
 ---
 
 #### 2. File [defines.h](examples/AsyncHTTPRequest_STM32/defines.h)
 
-https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/98733a6c4a1906ff53f6de0d19a239c672c4569a/examples/AsyncHTTPRequest_STM32/defines.h#L1-L134
+https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/07e2add9960fb3ab7333acd84fb2c697f3efc6a6/examples/AsyncHTTPRequest_STM32/defines.h#L22-L134
 
 
 ---
