@@ -35,8 +35,8 @@ const char GET_ServerAddress[] = "dweet.io";
 // use your own thing name here
 String dweetName = "/dweet/for/currentSecond?second=";
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.7.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1007000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.9.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1009000
 
 // 600s = 10 minutes to not flooding, 60s in testing
 #define HTTP_REQUEST_INTERVAL_MS     60000  //600000
@@ -119,25 +119,36 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
   
   if (readyState == readyStateDone)
   {
-    String responseText = request->responseText();
-    
-    Serial.println("\n**************************************");
-    //Serial.println(request->responseText());
-    Serial.println(responseText);
-    Serial.println("**************************************");
+    Serial.println();
+    AHTTP_LOGDEBUG(F("**************************************"));
+    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
 
-    parseResponse(responseText);
+    if (request->responseHTTPcode() == 200)
+    {
+      String responseText = request->responseText();
       
-    request->setDebug(false);
+      Serial.println("\n**************************************");
+      //Serial.println(request->responseText());
+      Serial.println(responseText);
+      Serial.println("**************************************");
+  
+      parseResponse(responseText);
+        
+      request->setDebug(false);
+    }
+    else
+    {
+      AHTTP_LOGERROR(F("Response error"));
+    }
   }
 }
 
 void setup(void) 
 {
   Serial.begin(115200);
-  while (!Serial);
-  
-  Serial.println("\nStart AsyncDweetGET_STM32 on " + String(BOARD_NAME));
+  while (!Serial && millis() < 5000);
+
+  Serial.print("\nStart AsyncDweetGET_STM32 on "); Serial.println(BOARD_NAME);
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
 #if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)

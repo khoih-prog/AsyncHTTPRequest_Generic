@@ -126,9 +126,19 @@ void requestCB0(void* optParm, AsyncHTTPRequest* thisRequest, int readyState)
 
   if (readyState == readyStateDone)
   {
-    Serial.println("\n**************************************");
-    Serial.println(thisRequest->responseText());
-    Serial.println("**************************************");
+    AHTTP_LOGERROR(F("\n**************************************"));
+    AHTTP_LOGERROR1(F("Response Code = "), request->responseHTTPString());
+
+    if (request->responseHTTPcode() == 200)
+    {
+      Serial.println(F("\n**************************************"));
+      Serial.println(request->responseText());
+      Serial.println(F("**************************************"));
+    }
+    else
+    {
+      AHTTP_LOGERROR(F("Response error"));
+    }
 
     thisRequest->setDebug(false);
     readySend[0] = true;
@@ -141,9 +151,19 @@ void requestCB1(void* optParm, AsyncHTTPRequest* thisRequest, int readyState)
 
   if (readyState == readyStateDone)
   {
-    Serial.println("\n**************************************");
-    Serial.println(thisRequest->responseText());
-    Serial.println("**************************************");
+    AHTTP_LOGERROR(F("\n**************************************"));
+    AHTTP_LOGERROR1(F("Response Code = "), request->responseHTTPString());
+
+    if (request->responseHTTPcode() == 200)
+    {
+      Serial.println(F("\n**************************************"));
+      Serial.println(request->responseText());
+      Serial.println(F("**************************************"));
+    }
+    else
+    {
+      AHTTP_LOGERROR(F("Response error"));
+    }
 
     thisRequest->setDebug(false);
     readySend[1] = true;
@@ -154,9 +174,9 @@ void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  while (!Serial);
+  while (!Serial && millis() < 5000);
 
-  Serial.println("\nStarting AsyncHTTPRequest_ESP_Multi using " + String(ARDUINO_BOARD));
+  Serial.print("\nStart AsyncHTTPRequest_ESP_Multi on "); Serial.println(ARDUINO_BOARD);
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
   WiFi.mode(WIFI_STA);

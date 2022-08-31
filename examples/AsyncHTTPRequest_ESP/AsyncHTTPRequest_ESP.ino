@@ -46,7 +46,7 @@
 
 // Level from 0-4
 #define ASYNC_HTTP_DEBUG_PORT     Serial
-#define _ASYNC_HTTP_LOGLEVEL_     1    
+#define _ASYNC_HTTP_LOGLEVEL_     1
 
 // 300s = 5 minutes to not flooding
 #define HTTP_REQUEST_INTERVAL     60  //300
@@ -65,8 +65,8 @@ const char* password    = "your_pass";
   #include <WiFi.h>
 #endif
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.7.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1007000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.9.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1009000
 
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
@@ -122,17 +122,21 @@ void sendRequest()
   }
 }
 
-void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState) 
+void requestCB(void *optParm, AsyncHTTPRequest *request, int readyState)
 {
   (void) optParm;
-  
-  if (readyState == readyStateDone) 
+
+  if (readyState == readyStateDone)
   {
-    Serial.println(F("\n**************************************"));
-    Serial.println(request->responseText());
-    Serial.println(F("**************************************"));
-    
-    request->setDebug(false);
+    AHTTP_LOGDEBUG(F("\n**************************************"));
+    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
+
+    if (request->responseHTTPcode() == 200)
+    {
+      Serial.println(F("\n**************************************"));
+      Serial.println(request->responseText());
+      Serial.println(F("**************************************"));
+    }
   }
 }
 
@@ -140,9 +144,7 @@ void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  while (!Serial);
-
-  delay(200);
+  while (!Serial && millis() < 5000);
   
   Serial.print(F("\nStarting AsyncHTTPRequest_ESP using ")); Serial.println(ARDUINO_BOARD);
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);

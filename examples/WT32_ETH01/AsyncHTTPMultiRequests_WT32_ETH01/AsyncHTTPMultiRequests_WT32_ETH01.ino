@@ -57,8 +57,8 @@
 
 #include <WebServer_WT32_ETH01.h>               // https://github.com/khoih-prog/WebServer_WT32_ETH01
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.7.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1007000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.9.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1009000
 
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
@@ -152,9 +152,15 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
   
   if (readyState == readyStateDone) 
   { 
-    Serial.print("\n***************"); Serial.print(requestName[ requestIndex ]); Serial.println("***************");
-    Serial.println(request->responseText());
-    Serial.println("**************************************");
+    AHTTP_LOGDEBUG(F("\n**************************************"));
+    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
+
+    if (request->responseHTTPcode() == 200)
+    {
+      Serial.print(F("\n***************")); Serial.print(requestName[ requestIndex ]); Serial.println(F("***************"));
+      Serial.println(request->responseText());
+      Serial.println(F("**************************************"));
+    }
 
 #if 1
     // Bypass hourly
@@ -165,7 +171,7 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
 #else
     // hourly too long, not display anyway. Not enough heap.
     requestIndex = (requestIndex + 1) % NUM_REQUESTS;
-   #endif
+#endif
    
     request->setDebug(false);
   }
@@ -176,12 +182,12 @@ void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  while (!Serial);
+  while (!Serial && millis() < 5000);
   
   delay(200);
   
-  Serial.print("\nStarting AsyncHTTPRequest_WT32_ETH01 on " + String(ARDUINO_BOARD));
-  Serial.println(" with " + String(SHIELD_TYPE));
+  Serial.print("\nStart AsyncHTTPMultiRequests_WT32_ETH01 on "); Serial.print(ARDUINO_BOARD);
+  Serial.print(" with ");  Serial.println(SHIELD_TYPE);
   Serial.println(WEBSERVER_WT32_ETH01_VERSION);
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 

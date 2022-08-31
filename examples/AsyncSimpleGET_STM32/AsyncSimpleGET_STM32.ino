@@ -24,8 +24,8 @@
 //char GET_ServerAddress[]    = "ipv4bot.whatismyipaddress.com/";
 char GET_ServerAddress[]    = "http://worldtimeapi.org/api/timezone/America/Toronto.txt";
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.7.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1007000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.9.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1009000
 
 // 600s = 10 minutes to not flooding, 60s in testing
 #define HTTP_REQUEST_INTERVAL_MS     60000  //600000
@@ -37,12 +37,12 @@ char GET_ServerAddress[]    = "http://worldtimeapi.org/api/timezone/America/Toro
 
 AsyncHTTPRequest request;
 
-void sendRequest(void);
+void sendRequest();
 
 // Repeat forever, millis() resolution
 Ticker sendHTTPRequest(sendRequest, HTTP_REQUEST_INTERVAL_MS, 0, MILLIS); 
 
-void sendRequest(void)
+void sendRequest()
 {
   static bool requestOpenResult;
   
@@ -66,26 +66,30 @@ void sendRequest(void)
   }
 }
 
-void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
+void requestCB(void *optParm, AsyncHTTPRequest *request, int readyState)
 {
   (void) optParm;
-  
+
   if (readyState == readyStateDone)
   {
-    Serial.println("\n**************************************");
-    Serial.println(request->responseText());
-    Serial.println("**************************************");
+    AHTTP_LOGDEBUG(F("\n**************************************"));
+    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
 
-    request->setDebug(false);
+    if (request->responseHTTPcode() == 200)
+    {
+      Serial.println(F("\n**************************************"));
+      Serial.println(request->responseText());
+      Serial.println(F("**************************************"));
+    }
   }
 }
 
-void setup(void) 
+void setup() 
 {
   Serial.begin(115200);
-  while (!Serial);
-  
-  Serial.println("\nStart AsyncSimpleGET_STM32 on " + String(BOARD_NAME));
+  while (!Serial && millis() < 5000);
+
+  Serial.print("\nStart AsyncSimpleGET_STM32 on "); Serial.println(BOARD_NAME);
   Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
 #if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
@@ -105,8 +109,7 @@ void setup(void)
   // Use DHCP dynamic IP and random mac
   Ethernet.begin(mac[index]);
 
-  Serial.print(F("AsyncHTTPRequest @ IP : "));
-  Serial.println(Ethernet.localIP());
+  Serial.print(F("AsyncHTTPRequest @ IP : ")); Serial.println(Ethernet.localIP());
   Serial.println();
 
   request.setDebug(false);
@@ -119,7 +122,7 @@ void setup(void)
   sendRequest();
 }
 
-void loop(void) 
+void loop() 
 {
   sendHTTPRequest.update();
 }

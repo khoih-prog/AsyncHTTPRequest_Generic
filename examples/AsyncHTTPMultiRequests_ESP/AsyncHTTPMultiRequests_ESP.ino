@@ -44,12 +44,12 @@
   #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
 #endif
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.7.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1007000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.9.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1009000
 
 // Level from 0-4
 #define ASYNC_HTTP_DEBUG_PORT     Serial
-#define _ASYNC_HTTP_LOGLEVEL_     1
+#define _ASYNC_HTTP_LOGLEVEL_     4
 
 // 300s = 5 minutes to not flooding
 #define HTTP_REQUEST_INTERVAL     60  //300
@@ -68,10 +68,8 @@ const char* password    = "your_pass";
   #include <WiFi.h>
 #endif
 
-#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
-
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
-#include <AsyncHTTPRequest_Impl_Generic.h>        // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 
 #include <Ticker.h>
 
@@ -150,9 +148,15 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
   
   if (readyState == readyStateDone) 
   { 
-    Serial.print(F("\n***************")); Serial.print(requestName[ requestIndex ]); Serial.println(F("***************"));
-    Serial.println(request->responseText());
-    Serial.println(F("**************************************"));
+    AHTTP_LOGDEBUG(F("\n**************************************"));
+    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
+
+    if (request->responseHTTPcode() == 200)
+    {
+      Serial.print(F("\n***************")); Serial.print(requestName[ requestIndex ]); Serial.println(F("***************"));
+      Serial.println(request->responseText());
+      Serial.println(F("**************************************"));
+    }
 
 #if 1
     // Bypass hourly
@@ -163,7 +167,7 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
 #else
     // hourly too long, not display anyway. Not enough heap.
     requestIndex = (requestIndex + 1) % NUM_REQUESTS;
-   #endif
+#endif
    
     request->setDebug(false);
   }
@@ -173,7 +177,7 @@ void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  while (!Serial);
+  while (!Serial && millis() < 5000);
   
   delay(200);
   

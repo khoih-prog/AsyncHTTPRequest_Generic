@@ -17,7 +17,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.8.2
+  Version: 1.9.0
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -28,6 +28,7 @@
   1.8.0    K Hoang     13/04/2022 Add support to ESP8266 using W5x00 with lwip_W5100 or lwip_W5500 library
   1.8.1    K Hoang     13/04/2022 Add support to ESP8266 using ENC28J60 with lwip_enc28j60 library
   1.8.2    K Hoang     10/08/2022 Fix library.properties to remove unavailable items from depends
+  1.9.0    K Hoang     30/08/2022 Fix bug. Improve debug messages. Optimize code.
  *****************************************************************************************************************************/
 
 #pragma once
@@ -35,13 +36,13 @@
 #ifndef ASYNC_HTTP_REQUEST_GENERIC_HPP
 #define ASYNC_HTTP_REQUEST_GENERIC_HPP
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION            "AsyncHTTPRequest_Generic v1.8.2"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION            "AsyncHTTPRequest_Generic v1.9.0"
 
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MAJOR      1
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MINOR      8
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_PATCH      2
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MINOR      9
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_PATCH      0
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT        1008002
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT        1009000
 
 #include <Arduino.h>
 
@@ -251,30 +252,26 @@ class AsyncHTTPRequest
       }
     };
 
-    struct  URL 
-    {
-      char*   scheme;
-      char*   user;
-      char*   pwd;
-      char*   host;
-      int     port;
-      char*   path;
-      char*   query;
-      char*   fragment;
+  struct  URL 
+  {
+      char 		*buffer;
+      char 		*scheme;
+      char 		*host;
+      int 		port;
+      char 		*path;
+      char 		*query;
       
-      URL():  scheme(nullptr), user(nullptr), pwd(nullptr), host(nullptr),
-              port(80), path(nullptr), query(nullptr), fragment(nullptr)
+      URL():	buffer(nullptr), scheme(nullptr), host(nullptr),
+        			port(80), path(nullptr), query(nullptr)
       {};
-      
-      ~URL() 
+        
+      ~URL()
       {
+        SAFE_DELETE_ARRAY(buffer)
         SAFE_DELETE_ARRAY(scheme)
-        SAFE_DELETE_ARRAY(user)
-        SAFE_DELETE_ARRAY(pwd)
         SAFE_DELETE_ARRAY(host)
         SAFE_DELETE_ARRAY(path)
         SAFE_DELETE_ARRAY(query)
-        SAFE_DELETE_ARRAY(fragment)
       }
     };
 
@@ -333,6 +330,7 @@ class AsyncHTTPRequest
     size_t      available();                                            // response available
     size_t      responseLength();                                       // indicated response length or sum of chunks to date
     int         responseHTTPcode();                                     // HTTP response code or (negative) error code
+    String      responseHTTPString();
     String      responseText();                                         // response (whole* or partial* as string)
     
     char*       responseLongText();                                     // response long (whole* or partial* as string)

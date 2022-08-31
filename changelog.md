@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+	* [Releases v1.9.0](#releases-v190)
 	* [Releases v1.8.2](#releases-v182)
 	* [Releases v1.8.1](#releases-v181)
 	* [Releases v1.8.0](#releases-v180)
@@ -38,6 +39,15 @@
 ---
 
 ## Changelog
+
+### Releases v1.9.0
+
+1. Fix long timeout if using `IPAddress`. Check [setTimeout() hasn't any effect #38](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/38)
+2. Optimize code
+3. Display only successful responseText in examples
+4. Improve debug messages by adding functions to display error messages instead of `cryptic error number`
+5. Remove support to STM32 using **LAN8720** due to problem with new STM32 core v2.3.0
+5. Update `Packages' Patches`
 
 ### Releases v1.8.2
 
