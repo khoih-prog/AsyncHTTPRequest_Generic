@@ -15,9 +15,10 @@
   as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-  You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
+  You should have received a copy of the GNU General Public License along with this program.  
+  If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.9.0
+  Version: 1.9.1
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -28,7 +29,8 @@
   1.8.0    K Hoang     13/04/2022 Add support to ESP8266 using W5x00 with lwip_W5100 or lwip_W5500 library
   1.8.1    K Hoang     13/04/2022 Add support to ESP8266 using ENC28J60 with lwip_enc28j60 library
   1.8.2    K Hoang     10/08/2022 Fix library.properties to remove unavailable items from depends
-  1.9.0    K Hoang     30/08/2022 Fix bug. Improve debug messages. Optimize code.
+  1.9.0    K Hoang     30/08/2022 Fix bug. Improve debug messages. Optimize code
+  1.9.1    K Hoang     09/09/2022 Fix ESP32 chipID for example `AsyncHTTPRequest_ESP_WiFiManager`
  *****************************************************************************************************************************/
  
 #pragma once
@@ -1271,7 +1273,8 @@ size_t  AsyncHTTPRequest::_send()
     
     // KH fix bug https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/38
     _HTTPcode = HTTPCODE_NOT_CONNECTED;
-    _setReadyState(readyStateUnsent);
+    _setReadyState(readyStateDone);
+    
     ///////////////////////////
 
     return 0;

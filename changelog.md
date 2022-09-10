@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+	* [Releases v1.9.1](#releases-v191)
 	* [Releases v1.9.0](#releases-v190)
 	* [Releases v1.8.2](#releases-v182)
 	* [Releases v1.8.1](#releases-v181)
@@ -39,6 +40,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.9.1
+
+1. Fix ESP32 chipID for example `AsyncHTTPRequest_ESP_WiFiManager`
+2. Remove dependency on `LittleFS_esp32` library to prevent PIO error when using new ESP32 core v1.0.6+
 
 ### Releases v1.9.0
 
