@@ -173,7 +173,7 @@ Support for LAN8720 has been **removed** from STM32 core v2.3.0
 
  1. [`Arduino IDE 1.8.19+` for Arduino](https://github.com/arduino/Arduino). [![GitHub release](https://img.shields.io/github/release/arduino/Arduino.svg)](https://github.com/arduino/Arduino/releases/latest)
  2. [`ESP8266 Core 3.0.2+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/)
- 3. [`ESP32 Core 2.0.4+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [Latest stable release ![Release Version](https://img.shields.io/github/release/espressif/arduino-esp32.svg?style=plastic)
+ 3. [`ESP32 Core 2.0.5+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [Latest stable release ![Release Version](https://img.shields.io/github/release/espressif/arduino-esp32.svg?style=plastic)
  5. [`Arduino Core for STM32 2.3.0+`](https://github.com/stm32duino/Arduino_Core_STM32) for for STM32 using built-in Ethernet LAN8742A. [![GitHub release](https://img.shields.io/github/release/stm32duino/Arduino_Core_STM32.svg)](https://github.com/stm32duino/Arduino_Core_STM32/releases/latest)
  6. [`ESPAsyncTCP v1.2.2+`](https://github.com/me-no-dev/ESPAsyncTCP) for ESP8266.
  7. [`AsyncTCP v1.1.1+`](https://github.com/me-no-dev/AsyncTCP) for ESP32.
@@ -257,13 +257,13 @@ In Platform IO, to fix the error when using [`LittleFS_esp32 v1.0.6`](https://gi
 
 from
 
-```
+```cpp
 //#define CONFIG_LITTLEFS_FOR_IDF_3_2   /* For old IDF - like in release 1.0.4 */
 ```
 
 to
 
-```
+```cpp
 #define CONFIG_LITTLEFS_FOR_IDF_3_2   /* For old IDF - like in release 1.0.4 */
 ```
 
@@ -280,14 +280,14 @@ The current library implementation, using `xyz-Impl.h` instead of standard `xyz.
 
 You can include this `.hpp` file
 
-```
+```cpp
 // Can be included as many times as necessary, without `Multiple Definitions` Linker Error
 #include "AsyncHTTPRequest_Generic.hpp"     //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 ```
 
 in many files. But be sure to use the following `.h` file **in just 1 `.h`, `.cpp` or `.ino` file**, which must **not be included in any other file**, to avoid `Multiple Definitions` Linker Error
 
-```
+```cpp
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include "AsyncHTTPRequest_Generic.h"           //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 ```
@@ -305,13 +305,13 @@ In Platform IO, to fix the error when using [`LittleFS_esp32 v1.0`](https://gith
 
 from
 
-```
+```cpp
 //#define CONFIG_LITTLEFS_FOR_IDF_3_2   /* For old IDF - like in release 1.0.4 */
 ```
 
 to
 
-```
+```cpp
 #define CONFIG_LITTLEFS_FOR_IDF_3_2   /* For old IDF - like in release 1.0.4 */
 ```
 
@@ -478,14 +478,14 @@ Please take a look at other examples, as well.
 
 #### 1. File [AsyncHTTPRequest_STM32.ino](examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino)
 
-https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/07e2add9960fb3ab7333acd84fb2c697f3efc6a6/examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino#L43-L148
+https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/79f62c3f4a8d0b686fb7ac6b3e5b8c7ca269f49c/examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino#L43-L148
 
 
 ---
 
 #### 2. File [defines.h](examples/AsyncHTTPRequest_STM32/defines.h)
 
-https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/07e2add9960fb3ab7333acd84fb2c697f3efc6a6/examples/AsyncHTTPRequest_STM32/defines.h#L22-L134
+https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/79f62c3f4a8d0b686fb7ac6b3e5b8c7ca269f49c/examples/AsyncHTTPRequest_STM32/defines.h#L22-L134
 
 
 ---
@@ -497,43 +497,43 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/07e2add9960fb3ab7333
 
 ```
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.9.1
+AsyncHTTPRequest_Generic v1.9.2
 AsyncHTTPRequest @ IP : 192.168.2.178
 
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T22:00:07.669102-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:07:55.344362-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649901607
-utc_datetime: 2022-04-14T02:00:07.669102+00:00
+unixtime: 1666120075
+utc_datetime: 2022-10-18T19:07:55.344362+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 *********************
 
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T22:01:07.647308-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:08:54.489027-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649901667
-utc_datetime: 2022-04-14T02:01:07.647308+00:00
+unixtime: 1666120134
+utc_datetime: 2022-10-18T19:08:54.489027+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 ```
 
 ---
@@ -542,7 +542,7 @@ week_number: 15
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.9.1
+AsyncHTTPRequest_Generic v1.9.2
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -551,19 +551,19 @@ H
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T22:02:07.647703-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:09:54.390100-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649901727
-utc_datetime: 2022-04-14T02:02:07.647703+00:00
+unixtime: 1666120194
+utc_datetime: 2022-10-18T19:09:54.390100+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 HHHHHH
 ```
@@ -574,7 +574,7 @@ HHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
-AsyncHTTPRequest_Generic v1.9.1
+AsyncHTTPRequest_Generic v1.9.2
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -583,37 +583,37 @@ H
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T22:03:07.647977-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:09:54.390100-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649901787
-utc_datetime: 2022-04-14T02:03:07.647977+00:00
+unixtime: 1666120194
+utc_datetime: 2022-10-18T19:09:54.390100+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T22:04:07.648721-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:10:54.440157-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649901847
-utc_datetime: 2022-04-14T02:04:07.648721+00:00
+unixtime: 1666120254
+utc_datetime: 2022-10-18T19:10:54.440157+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH 
 ```
@@ -624,7 +624,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.9.1
+AsyncHTTPRequest_Generic v1.9.2
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
@@ -632,19 +632,19 @@ HTTP WebServer is @ IP : 192.168.2.81
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T22:03:07.647977-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:11:54.424167-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649901787
-utc_datetime: 2022-04-14T02:03:07.647977+00:00
+unixtime: 1666120314
+utc_datetime: 2022-10-18T19:11:54.424167+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 ```
@@ -656,7 +656,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ```
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.9.1
+AsyncHTTPRequest_Generic v1.9.2
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -710,26 +710,26 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.5.0
-AsyncHTTPRequest_Generic v1.9.1
+AsyncHTTPRequest_Generic v1.9.2
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T22:04:07.648721-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:12:55.228159-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649901847
-utc_datetime: 2022-04-14T02:04:07.648721+00:00
+unixtime: 1666120375
+utc_datetime: 2022-10-18T19:12:55.228159+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 ```
 
@@ -740,7 +740,7 @@ week_number: 15
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32C3_DEV
 ESPAsync_WiFiManager v1.14.0
-AsyncHTTPRequest_Generic v1.9.1
+AsyncHTTPRequest_Generic v1.9.2
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -749,37 +749,37 @@ H
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T22:05:07.648251-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:07:55.344362-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649901907
-utc_datetime: 2022-04-14T02:05:07.648251+00:00
+unixtime: 1666120075
+utc_datetime: 2022-10-18T19:07:55.344362+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 HHHHHH
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T22:06:07.648775-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:08:54.489027-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649901967
-utc_datetime: 2022-04-14T02:06:07.648775+00:00
+unixtime: 1666120134
+utc_datetime: 2022-10-18T19:08:54.489027+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 ```
 
@@ -791,7 +791,7 @@ week_number: 15
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32S3_DEV
 ESPAsync_WiFiManager v1.14.0
-AsyncHTTPRequest_Generic v1.9.1
+AsyncHTTPRequest_Generic v1.9.2
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -800,38 +800,38 @@ H
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T22:07:07.649344-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:09:54.390100-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649902027
-utc_datetime: 2022-04-14T02:07:07.649344+00:00
+unixtime: 1666120194
+utc_datetime: 2022-10-18T19:09:54.390100+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 
 HHHHHH
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T22:08:07.649062-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:10:54.440157-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649902087
-utc_datetime: 2022-04-14T02:08:07.649062+00:00
+unixtime: 1666120254
+utc_datetime: 2022-10-18T19:10:54.440157+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 ```
 
@@ -843,7 +843,7 @@ The terminal output of [AsyncHTTPRequest_ESP_Multi example](examples/AsyncHTTPRe
 
 ```
 Starting AsyncHTTPRequest_ESP_Multi using ESP32_DEV
-AsyncHTTPRequest_Generic v1.9.1
+AsyncHTTPRequest_Generic v1.9.2
 Connecting to WiFi SSID: HueNet1
 .......
 AsyncHTTPSRequest @ IP : 192.168.2.88
@@ -853,21 +853,21 @@ Sending request: http://worldtimeapi.org/api/timezone/Europe/Prague.txt
 Sending request: http://www.myexternalip.com/raw
 
 **************************************
-abbreviation: CET
+abbreviation: CEST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-02-26T01:54:15.753826+01:00
-day_of_week: 6
-day_of_year: 57
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+datetime: 2022-10-19T04:06:40.111091+02:00
+day_of_week: 3
+day_of_year: 292
+dst: true
+dst_from: 2022-03-27T01:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-10-30T01:00:00+00:00
 raw_offset: 3600
 timezone: Europe/Prague
-unixtime: 1645836855
-utc_datetime: 2022-02-26T00:54:15.753826+00:00
-utc_offset: +01:00
-week_number: 8
+unixtime: 1666145200
+utc_datetime: 2022-10-19T02:06:40.111091+00:00
+utc_offset: +02:00
+week_number: 42
 **************************************
 
 **************************************
@@ -877,21 +877,21 @@ aaa.bbb.ccc.ddd
 Sending request: http://worldtimeapi.org/api/timezone/America/Toronto.txt
 
 **************************************
-abbreviation: EST
+abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-02-25T19:54:15.822746-05:00
-day_of_week: 5
-day_of_year: 56
-dst: false
-dst_from: 
-dst_offset: 0
-dst_until: 
+datetime: 2022-10-18T22:06:42.109821-04:00
+day_of_week: 2
+day_of_year: 291
+dst: true
+dst_from: 2022-03-13T07:00:00+00:00
+dst_offset: 3600
+dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1645836855
-utc_datetime: 2022-02-26T00:54:15.822746+00:00
-utc_offset: -05:00
-week_number: 8
+unixtime: 1666145202
+utc_datetime: 2022-10-19T02:06:42.109821+00:00
+utc_offset: -04:00
+week_number: 42
 **************************************
 HHH
 ```
@@ -904,44 +904,44 @@ The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](examples/Asyn
 
 ```
 Starting AsyncHTTPRequest_ESP8266_Ethernet on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet
-AsyncHTTPRequest_Generic v1.9.1
+AsyncHTTPRequest_Generic v1.9.2
 Connecting ethernet..
 Ethernet IP address: 192.168.2.187
 
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T21:58:31.037966-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:07:55.344362-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649901511
-utc_datetime: 2022-04-14T01:58:31.037966+00:00
+unixtime: 1666120075
+utc_datetime: 2022-10-18T19:07:55.344362+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 HHHHHH
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T21:59:31.025188-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:08:54.489027-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649901571
-utc_datetime: 2022-04-14T01:59:31.025188+00:00
+unixtime: 1666120134
+utc_datetime: 2022-10-18T19:08:54.489027+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 HH
 ```
@@ -954,44 +954,44 @@ The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](examples/Asyn
 
 ```
 Starting AsyncHTTPRequest_ESP8266_Ethernet on ESP8266_NODEMCU_ESP12E using ESP8266_ENC28J60 Ethernet
-AsyncHTTPRequest_Generic v1.9.1
+AsyncHTTPRequest_Generic v1.9.2
 Connecting to network : ..........................................................
 Ethernet IP address: 192.168.2.187
 
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T23:54:42.973735-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:09:54.390100-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649908482
-utc_datetime: 2022-04-14T03:54:42.973735+00:00
+unixtime: 1666120194
+utc_datetime: 2022-10-18T19:09:54.390100+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 **************************************
 HHHHHH
 **************************************
 abbreviation: EDT
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-04-13T23:55:42.894333-04:00
-day_of_week: 3
-day_of_year: 103
+datetime: 2022-10-18T15:10:54.440157-04:00
+day_of_week: 2
+day_of_year: 291
 dst: true
 dst_from: 2022-03-13T07:00:00+00:00
 dst_offset: 3600
 dst_until: 2022-11-06T06:00:00+00:00
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1649908542
-utc_datetime: 2022-04-14T03:55:42.894333+00:00
+unixtime: 1666120254
+utc_datetime: 2022-10-18T19:10:54.440157+00:00
 utc_offset: -04:00
-week_number: 15
+week_number: 42
 ```
 
 
@@ -1059,6 +1059,8 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 19. Remove support to STM32 using **LAN8720** due to problem with new STM32 core v2.3.0
 20. Fix ESP32 chipID for example`AsyncHTTPRequest_ESP_WiFiManager`
 21. Remove dependency on `LittleFS_esp32` library to prevent PIO error when using new ESP32 core v1.0.6+
+22. Not try to reconnect to the same `host:port` after connected
+
 
 ---
 ---
@@ -1103,6 +1105,7 @@ If you want to contribute to this project:
 - Create issues and pull requests
 - Tell other people about this library
 
+---
 ---
 
 ### License and credits ###
