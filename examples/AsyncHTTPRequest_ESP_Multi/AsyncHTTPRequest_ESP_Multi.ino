@@ -139,15 +139,14 @@ void sendRequests()
   reqCount[1] = NUM_ENTRIES_SITE_1;
 }
 
-
 void requestCB0(void* optParm, AsyncHTTPRequest* thisRequest, int readyState)
 {
   (void) optParm;
 
   if (readyState == readyStateDone)
   {
-    AHTTP_LOGERROR(F("\n**************************************"));
-    AHTTP_LOGERROR1(F("Response Code = "), request->responseHTTPString());
+    AHTTP_LOGWARN(F("\n**************************************"));
+    AHTTP_LOGWARN1(F("Response Code = "), request->responseHTTPString());
 
     if (request->responseHTTPcode() == 200)
     {
@@ -171,8 +170,8 @@ void requestCB1(void* optParm, AsyncHTTPRequest* thisRequest, int readyState)
 
   if (readyState == readyStateDone)
   {
-    AHTTP_LOGERROR(F("\n**************************************"));
-    AHTTP_LOGERROR1(F("Response Code = "), request->responseHTTPString());
+    AHTTP_LOGWARN(F("\n**************************************"));
+    AHTTP_LOGWARN1(F("Response Code = "), request->responseHTTPString());
 
     if (request->responseHTTPcode() == 200)
     {
@@ -207,7 +206,7 @@ void setup()
 
   while (WiFi.status() != WL_CONNECTED)
   {
-    delay(500);
+    delay(1000);
     Serial.print(".");
   }
 
@@ -231,12 +230,11 @@ void loop()
   for (int index = 0; index < NUM_DIFFERENT_SITES; index++)
   {
     if ((reqCount[index] > 0) && readySend[index])
-    // OK but have to use delay(100)
-    //if ( reqCount[index] > 0 )
     {
       sendRequestCB[index]();
-  
-      //delay(100);
+
+      // Don't send too fast
+      delay(1000);
     }
   }
 }

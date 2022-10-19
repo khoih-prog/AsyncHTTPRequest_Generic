@@ -24,8 +24,8 @@
 //char GET_ServerAddress[]      = "192.168.2.110/";
 char GET_ServerAddress[]    = "http://worldtimeapi.org/api/timezone/America/Toronto.txt";
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.9.1"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1009001
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.9.2"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1009002
 
 // 600s = 10 minutes to not flooding, 60s in testing
 #define HTTP_REQUEST_INTERVAL_MS     60000  //600000

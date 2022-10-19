@@ -18,7 +18,7 @@
   You should have received a copy of the GNU General Public License along with this program.  
   If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.9.1
+  Version: 1.9.2
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -31,6 +31,7 @@
   1.8.2    K Hoang     10/08/2022 Fix library.properties to remove unavailable items from depends
   1.9.0    K Hoang     30/08/2022 Fix bug. Improve debug messages. Optimize code
   1.9.1    K Hoang     09/09/2022 Fix ESP32 chipID for example `AsyncHTTPRequest_ESP_WiFiManager`
+  1.9.2    K Hoang     18/10/2022 Not try to reconnect to the same host:port after connected
  *****************************************************************************************************************************/
  
 #pragma once
@@ -305,7 +306,7 @@ String xbuf::readString(int endPos)
   if ( ! result.reserve(endPos + 1)) 
   {
     // KH, to remove
-    //AHTTP_LOGERROR1(F("xbuf::readString: can't reserve size ="), endPos + 1);
+    //AHTTP_LOGDEBUG1(F("xbuf::readString: can't reserve size ="), endPos + 1);
     ///////
       
     return result;
@@ -388,7 +389,7 @@ void xbuf::addSeg()
     
     if (_tail->next == NULL)
     {
-      AHTTP_LOGERROR(F("xbuf::addSeg: error new 1"));
+      AHTTP_LOGDEBUG(F("xbuf::addSeg: error new 1"));
     }  
     else  
     {
@@ -402,7 +403,7 @@ void xbuf::addSeg()
     _tail = _head = (xseg*) new uint32_t[_segSize / 4 + 1];
     
     if (_tail == NULL)
-      AHTTP_LOGERROR(F("xbuf::addSeg: error new 2"));
+      AHTTP_LOGDEBUG(F("xbuf::addSeg: error new 2"));
   }
   
   // KH, Must check NULL here
@@ -493,7 +494,7 @@ bool  AsyncHTTPRequest::open(const char* method, const char* URL)
 
   if (_readyState != readyStateUnsent && _readyState != readyStateDone)
   {
-    AHTTP_LOGERROR(F("open: not ready"));
+    AHTTP_LOGWARN(F("open: not ready"));
     
     return false;
   }
@@ -559,12 +560,25 @@ bool  AsyncHTTPRequest::open(const char* method, const char* URL)
     
     return false;
   }
-  
-  if ( _client && _client->connected() && (strcmp(_URL->host, _connectedHost) != 0 || _URL->port != _connectedPort))
+
+  if ( _client && _client->connected() )
   {
-    AHTTP_LOGERROR(F("open: not connected"));
+    if ( (strcmp(_URL->host, _connectedHost) == 0) && (_URL->port == _connectedPort) )
+    {
+      AHTTP_LOGINFO(F("open: already connected"));
+      
+      _lastActivity = millis();
     
-    return false;
+      _requestReadyToSend = true;
+        
+      return _connect();
+    }
+    else
+    { 
+      AHTTP_LOGINFO(F("open: not connected: different host or port"));
+      
+      return false;
+    }
   }
 
   char* hostName = new char[strlen(_URL->host) + 10];
@@ -609,7 +623,7 @@ void  AsyncHTTPRequest::setTimeout(int seconds)
 }
 
 //**************************************************************************************************************
-bool  AsyncHTTPRequest::send() 
+bool AsyncHTTPRequest::send() 
 { 
   // New in v1.1.1
   if (_requestReadyToSend)
@@ -618,7 +632,8 @@ bool  AsyncHTTPRequest::send()
   }
   else
   {
-    AHTTP_LOGERROR(CANT_SEND_BAD_REQUEST);
+    AHTTP_LOGWARN(CANT_SEND_BAD_REQUEST);
+    
     return false;
   }
   //////
@@ -645,16 +660,17 @@ bool AsyncHTTPRequest::send(const String& body)
   }
   else
   {
-    AHTTP_LOGERROR(CANT_SEND_BAD_REQUEST);
+    AHTTP_LOGWARN(CANT_SEND_BAD_REQUEST);
+    
     return false;
   }
   //////
   
-  AHTTP_LOGERROR1(F("01) send String body ="), body);
+  AHTTP_LOGDEBUG1(F("01) send String body ="), body);
 
   MUTEX_LOCK(false)
   
-  AHTTP_LOGERROR1(F("02) send String body ="), body);
+  AHTTP_LOGDEBUG1(F("02) send String body ="), body);
   
   _addHeader("Content-Length", String(body.length()).c_str());
   
@@ -665,14 +681,14 @@ bool AsyncHTTPRequest::send(const String& body)
     return false;
   }
   
-  AHTTP_LOGERROR1(F("1) send String body ="), body);
+  AHTTP_LOGDEBUG1(F("1) send String body ="), body);
   
   _request->write(body);
   
-  AHTTP_LOGERROR1(F("2) send String body ="), body);
+  AHTTP_LOGDEBUG1(F("2) send String body ="), body);
   _send();
   
-  AHTTP_LOGERROR1(F("3) send String body ="), body);
+  AHTTP_LOGDEBUG1(F("3) send String body ="), body);
   
   _AHTTP_unlock;
   
@@ -689,7 +705,7 @@ bool  AsyncHTTPRequest::send(const char* body)
   }
   else
   {
-    AHTTP_LOGERROR(CANT_SEND_BAD_REQUEST);
+    AHTTP_LOGWARN(CANT_SEND_BAD_REQUEST);
     return false;
   }
   //////
@@ -723,7 +739,7 @@ bool  AsyncHTTPRequest::send(const uint8_t* body, size_t len)
   }
   else
   {
-    AHTTP_LOGERROR(CANT_SEND_BAD_REQUEST);
+    AHTTP_LOGWARN(CANT_SEND_BAD_REQUEST);
     return false;
   }
   //////
@@ -757,7 +773,8 @@ bool AsyncHTTPRequest::send(xbuf* body, size_t len)
   }
   else
   {
-    AHTTP_LOGERROR(CANT_SEND_BAD_REQUEST);
+    AHTTP_LOGWARN(CANT_SEND_BAD_REQUEST);
+    
     return false;
   }
   //////
@@ -893,7 +910,7 @@ String AsyncHTTPRequest::responseText()
   
   if ( ! _response || _readyState < readyStateLoading || ! available())
   {
-    AHTTP_LOGERROR(F("responseText() no data"));
+    AHTTP_LOGWARN(F("responseText() no data"));
 
     _AHTTP_unlock;
     
@@ -906,7 +923,7 @@ String AsyncHTTPRequest::responseText()
     
     if (localString.length() < avail) 
     {
-        AHTTP_LOGERROR(F("!responseText() no buffer"))
+        AHTTP_LOGWARN(F("!responseText() no buffer"))
         _HTTPcode = HTTPCODE_TOO_LESS_RAM;
         _client->abort();
         _AHTTP_unlock;
@@ -943,7 +960,7 @@ char* AsyncHTTPRequest::responseLongText()
   
   if ( ! _response || _readyState < readyStateLoading || ! available())
   {
-    AHTTP_LOGERROR(F("responseText() no data"));
+    AHTTP_LOGWARN(F("responseText() no data"));
 
     _AHTTP_unlock;
     
@@ -972,7 +989,7 @@ size_t AsyncHTTPRequest::responseRead(uint8_t* buf, size_t len)
 {
   if ( ! _response || _readyState < readyStateLoading || ! available())
   {
-    AHTTP_LOGERROR(F("responseRead() no data"));
+    AHTTP_LOGWARN(F("responseRead() no data"));
 
     return 0;
   }
@@ -1179,7 +1196,7 @@ bool  AsyncHTTPRequest::_connect()
 
   if ( ! _client->connected())
   {
-    AHTTP_LOGDEBUG3(F("_client->connecting to"), _URL->host, F(","), _URL->port);
+    AHTTP_LOGINFO3(F("_client->connecting to"), _URL->host, F(","), _URL->port);
 
     if ( ! _client->connect(_URL->host, _URL->port))
     {
@@ -1192,7 +1209,7 @@ bool  AsyncHTTPRequest::_connect()
     }
     else
     {
-      AHTTP_LOGDEBUG3(F("client.connect OK to"), _URL->host, F(","), _URL->port);
+      AHTTP_LOGINFO3(F("client.connect OK to"), _URL->host, F(","), _URL->port);
     }
   }
   else
@@ -1418,7 +1435,7 @@ void  AsyncHTTPRequest::_onConnect(AsyncClient* client)
     _AHTTP_unlock;
     
     // KH, to remove
-    //AHTTP_LOGERROR(F("_onConnect: Can't new _response"));
+    //AHTTP_LOGWARN(F("_onConnect: Can't new _response"));
     ///////
     
     return;
@@ -1482,7 +1499,6 @@ void  AsyncHTTPRequest::_onError(AsyncClient* client, int8_t error)
 {
   (void) client;
   
-  //AHTTP_LOGERROR1(F("_onError handler error ="), error);
   AHTTP_LOGERROR1(F("_onError handler error ="), client->errorToString(error));
 
   _HTTPcode = error;
@@ -1558,7 +1574,7 @@ void  AsyncHTTPRequest::_onData(void* Vbuf, size_t len)
       _AHTTP_unlock;
       
       // KH, to remove
-      //AHTTP_LOGERROR(F("_onData: headers not complete"));
+      //AHTTP_LOGWARN(F("_onData: headers not complete"));
       ///////
       
       return;

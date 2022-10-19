@@ -44,8 +44,8 @@
   #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
 #endif
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.9.1"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1009001
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.9.2"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1009002
 
 // Level from 0-4
 #define ASYNC_HTTP_DEBUG_PORT     Serial
