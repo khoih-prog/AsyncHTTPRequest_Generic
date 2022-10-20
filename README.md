@@ -709,7 +709,7 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
-WebServer_WT32_ETH01 v1.5.0
+WebServer_WT32_ETH01 v1.5.1
 AsyncHTTPRequest_Generic v1.10.0
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
@@ -739,7 +739,7 @@ week_number: 42
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32C3_DEV
-ESPAsync_WiFiManager v1.14.0
+ESPAsync_WiFiManager v1.15.0
 AsyncHTTPRequest_Generic v1.10.0
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
@@ -790,7 +790,7 @@ week_number: 42
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32S3_DEV
-ESPAsync_WiFiManager v1.14.0
+ESPAsync_WiFiManager v1.15.0
 AsyncHTTPRequest_Generic v1.10.0
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
