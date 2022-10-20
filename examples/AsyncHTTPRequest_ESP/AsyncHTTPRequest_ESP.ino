@@ -46,7 +46,7 @@
 
 // Level from 0-4
 #define ASYNC_HTTP_DEBUG_PORT     Serial
-#define _ASYNC_HTTP_LOGLEVEL_     3
+#define _ASYNC_HTTP_LOGLEVEL_     4
 
 // 300s = 5 minutes to not flooding
 #define HTTP_REQUEST_INTERVAL     60  //300
@@ -65,8 +65,8 @@ const char* password    = "your_pass";
   #include <WiFi.h>
 #endif
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.9.2"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1009002
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010000
 
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic

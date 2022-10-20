@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+	* [Releases v1.10.0](#releases-v1100)
 	* [Releases v1.9.2](#releases-v192)
 	* [Releases v1.9.1](#releases-v191)
 	* [Releases v1.9.0](#releases-v190)
@@ -41,6 +42,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.10.0
+
+1. Fix bug.
+2. Clean up
 
 ### Releases v1.9.2
 

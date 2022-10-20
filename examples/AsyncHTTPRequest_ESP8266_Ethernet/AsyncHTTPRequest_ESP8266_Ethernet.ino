@@ -95,8 +95,8 @@ using TCPClient = WiFiClient;
 
 //////////////////////////////////////////////////////////
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.9.2"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1009002
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010000
 
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic

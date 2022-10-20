@@ -18,7 +18,7 @@
   You should have received a copy of the GNU General Public License along with this program.  
   If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.9.2
+  Version: 1.10.0
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -32,6 +32,7 @@
   1.9.0    K Hoang     30/08/2022 Fix bug. Improve debug messages. Optimize code
   1.9.1    K Hoang     09/09/2022 Fix ESP32 chipID for example `AsyncHTTPRequest_ESP_WiFiManager`
   1.9.2    K Hoang     18/10/2022 Not try to reconnect to the same host:port after connected
+  1.10.0   K Hoang     20/10/2022 Fix bug. Clean up
  *****************************************************************************************************************************/
 
 #pragma once
