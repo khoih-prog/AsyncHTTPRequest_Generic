@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+	* [Releases v1.10.1](#releases-v1101)
 	* [Releases v1.10.0](#releases-v1100)
 	* [Releases v1.9.2](#releases-v192)
 	* [Releases v1.9.1](#releases-v191)
@@ -42,6 +43,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.10.1
+
+1. Fix bug of wrong `reqStates`
+2. Optional larger `DEFAULT_RX_TIMEOUT` from default 3s, for slower networks
 
 ### Releases v1.10.0
 

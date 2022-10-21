@@ -42,8 +42,8 @@
 
 #include "defines.h"
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.1"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010001
 
 // 600s = 10 minutes to not flooding, 60s in testing
 #define HTTP_REQUEST_INTERVAL_MS     60000  //600000

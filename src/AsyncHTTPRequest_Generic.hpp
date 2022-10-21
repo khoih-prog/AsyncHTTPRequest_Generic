@@ -18,7 +18,7 @@
   You should have received a copy of the GNU General Public License along with this program.  
   If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.10.0
+  Version: 1.10.1
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -33,6 +33,7 @@
   1.9.1    K Hoang     09/09/2022 Fix ESP32 chipID for example `AsyncHTTPRequest_ESP_WiFiManager`
   1.9.2    K Hoang     18/10/2022 Not try to reconnect to the same host:port after connected
   1.10.0   K Hoang     20/10/2022 Fix bug. Clean up
+  1.10.1   K Hoang     21/10/2022 Fix bug of wrong reqStates
  *****************************************************************************************************************************/
 
 #pragma once
@@ -42,13 +43,13 @@
 
 ////////////////////////////////////////
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION            "AsyncHTTPRequest_Generic v1.10.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION            "AsyncHTTPRequest_Generic v1.10.1"
 
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MAJOR      1
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MINOR      10
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_PATCH      0
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_PATCH      1
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT        1010000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT        1010001
 
 ////////////////////////////////////////
 
@@ -179,8 +180,7 @@ class xbuf: public Print
     
     String      peekString(int);
 
-    /*      In addition to the above functions,
-    the following inherited functions from the Print class are available.
+    /* In addition to the above functions, the following inherited functions from the Print class are available.
     
     size_t printf(const char * format, ...)  __attribute__ ((format (printf, 2, 3)));
     size_t printf_P(PGM_P format, ...) __attribute__((format(printf, 2, 3)));
@@ -230,7 +230,9 @@ class xbuf: public Print
     DEBUG_IOTA_PORT.printf("Debug(%3ld): ", millis()-_requestStartTime);\
     DEBUG_IOTA_PORT.printf_P(PSTR(format),##__VA_ARGS__);}
 
-#define DEFAULT_RX_TIMEOUT 3                    // Seconds for timeout
+#if !defined(DEFAULT_RX_TIMEOUT)
+	#define DEFAULT_RX_TIMEOUT 					3					// Seconds for timeout
+#endif
 
 ////////////////////////////////////////
 
@@ -275,23 +277,20 @@ class AsyncHTTPRequest
       SAFE_DELETE_ARRAY(name)
       SAFE_DELETE_ARRAY(value)
       SAFE_DELETE(next)
-      //delete[] name;
-      //delete[] value;
-      //delete next;
     }
   };
 
   struct  URL 
   {
-    char 		*buffer;
-    char 		*scheme;
-    char 		*host;
-    int 		port;
-    char 		*path;
-    char 		*query;
+    char     *buffer;
+    char    *scheme;
+    char    *host;
+    int     port;
+    char    *path;
+    char    *query;
     
-    URL():	buffer(nullptr), scheme(nullptr), host(nullptr),
-      			port(80), path(nullptr), query(nullptr)
+    URL():  buffer(nullptr), scheme(nullptr), host(nullptr),
+            port(80), path(nullptr), query(nullptr)
     {};
       
     ~URL()
@@ -322,8 +321,7 @@ class AsyncHTTPRequest
     bool        debug();                                                // is debug on or off?
 
     bool        open(const char* /*GET/POST*/, const char* URL);        // Initiate a request
-    void        onReadyStateChange(readyStateChangeCB, void* arg = 0);  // Optional event handler for ready state change
-    // or you can simply poll readyState()
+    void        onReadyStateChange(readyStateChangeCB, void* arg = 0);  // Optional event handler for ready state change or you can simply poll readyState()
     void        setTimeout(int);                                        // overide default timeout (seconds)
 
     void        setReqHeader(const char* name, const char* value);      // add a request header
@@ -337,7 +335,7 @@ class AsyncHTTPRequest
 #endif
 
     bool        send();                                                 // Send the request (GET)
-    bool        send(const String& body);                                      // Send the request (POST)
+    bool        send(const String& body);                               // Send the request (POST)
     bool        send(const char* body);                                 // Send the request (POST)
     bool        send(const uint8_t* buffer, size_t len);                // Send the request (POST) (binary data?)
     bool        send(xbuf* body, size_t len);                           // Send the request (POST) data in an xbuf

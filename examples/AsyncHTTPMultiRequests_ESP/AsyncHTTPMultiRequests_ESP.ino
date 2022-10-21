@@ -44,8 +44,8 @@
   #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
 #endif
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.1"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010001
 
 // Level from 0-4
 #define ASYNC_HTTP_DEBUG_PORT     Serial
@@ -67,6 +67,9 @@ const char* password    = "your_pass";
 #elif (ESP32)
   #include <WiFi.h>
 #endif
+
+// Seconds for timeout, default is 3s
+#define DEFAULT_RX_TIMEOUT           10   
 
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic

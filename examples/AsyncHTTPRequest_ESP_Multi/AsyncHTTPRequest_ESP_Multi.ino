@@ -44,6 +44,9 @@ const char* password    = "your_pass";
   #include <WiFi.h>
 #endif
 
+// Seconds for timeout, default is 3s
+#define DEFAULT_RX_TIMEOUT           10      
+
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <AsyncHTTPRequest_Generic.h>            // http://github.com/khoih-prog/AsyncHTTPRequest_Generic
 

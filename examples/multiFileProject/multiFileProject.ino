@@ -19,8 +19,8 @@
   #error This code is intended to run on the ESP8266, ESP32 or STM32 platform! Please check your Tools->Board setting.
 #endif
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.0"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010000
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.1"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010001
 
 #include "multiFileProject.h"
 
