@@ -478,14 +478,14 @@ Please take a look at other examples, as well.
 
 #### 1. File [AsyncHTTPRequest_STM32.ino](examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino)
 
-https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/89d10346dfc5d96dd51c5348f65b273f24ee3cb0/examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino#L43-L148
+https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/40e15e30f934e4b269b16a8ab8727558f0ab7b03/examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino#L43-L148
 
 
 ---
 
 #### 2. File [defines.h](examples/AsyncHTTPRequest_STM32/defines.h)
 
-https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/89d10346dfc5d96dd51c5348f65b273f24ee3cb0/examples/AsyncHTTPRequest_STM32/defines.h#L22-L134
+https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/40e15e30f934e4b269b16a8ab8727558f0ab7b03/examples/AsyncHTTPRequest_STM32/defines.h#L22-L134
 
 
 ---
@@ -497,7 +497,7 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/89d10346dfc5d96dd51c
 
 ```
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.10.0
+AsyncHTTPRequest_Generic v1.10.1
 AsyncHTTPRequest @ IP : 192.168.2.178
 
 **************************************
@@ -542,7 +542,7 @@ week_number: 42
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.10.0
+AsyncHTTPRequest_Generic v1.10.1
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -574,7 +574,7 @@ HHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
-AsyncHTTPRequest_Generic v1.10.0
+AsyncHTTPRequest_Generic v1.10.1
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -624,7 +624,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 ```
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.10.0
+AsyncHTTPRequest_Generic v1.10.1
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
@@ -656,7 +656,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ```
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.10.0
+AsyncHTTPRequest_Generic v1.10.1
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -710,7 +710,7 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 ```
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.5.1
-AsyncHTTPRequest_Generic v1.10.0
+AsyncHTTPRequest_Generic v1.10.1
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
@@ -740,7 +740,7 @@ week_number: 42
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32C3_DEV
 ESPAsync_WiFiManager v1.15.0
-AsyncHTTPRequest_Generic v1.10.0
+AsyncHTTPRequest_Generic v1.10.1
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -791,7 +791,7 @@ week_number: 42
 ```
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32S3_DEV
 ESPAsync_WiFiManager v1.15.0
-AsyncHTTPRequest_Generic v1.10.0
+AsyncHTTPRequest_Generic v1.10.1
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -843,7 +843,7 @@ The terminal output of [AsyncHTTPRequest_ESP_Multi example](examples/AsyncHTTPRe
 
 ```
 Starting AsyncHTTPRequest_ESP_Multi using ESP32_DEV
-AsyncHTTPRequest_Generic v1.10.0
+AsyncHTTPRequest_Generic v1.10.1
 Connecting to WiFi SSID: HueNet1
 .......
 AsyncHTTPSRequest @ IP : 192.168.2.88
@@ -904,7 +904,7 @@ The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](examples/Asyn
 
 ```
 Starting AsyncHTTPRequest_ESP8266_Ethernet on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet
-AsyncHTTPRequest_Generic v1.10.0
+AsyncHTTPRequest_Generic v1.10.1
 Connecting ethernet..
 Ethernet IP address: 192.168.2.187
 
@@ -954,7 +954,7 @@ The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](examples/Asyn
 
 ```
 Starting AsyncHTTPRequest_ESP8266_Ethernet on ESP8266_NODEMCU_ESP12E using ESP8266_ENC28J60 Ethernet
-AsyncHTTPRequest_Generic v1.10.0
+AsyncHTTPRequest_Generic v1.10.1
 Connecting to network : ..........................................................
 Ethernet IP address: 192.168.2.187
 
@@ -1059,7 +1059,7 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 20. Fix ESP32 chipID for example`AsyncHTTPRequest_ESP_WiFiManager`
 21. Remove dependency on `LittleFS_esp32` library to prevent PIO error when using new ESP32 core v1.0.6+
 22. Not try to reconnect to the same `host:port` after connected
-
+23. Fix bug of wrong `reqStates` introduced from `v1.9.0`
 
 ---
 ---
@@ -1068,15 +1068,17 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 
 This library is based on, modified, bug-fixed and improved from:
 
-1. [Bob Lemaire's **asyncHTTPrequest Library**](https://github.com/boblemaire/asyncHTTPrequest) to use the better **asynchronous** features of these following Async TCP Libraries : ( [`ESPAsyncTCP`](https://github.com/me-no-dev/ESPAsyncTCP), [`AsyncTCP`](https://github.com/me-no-dev/AsyncTCP), and [`STM32AsyncTCP`](https://github.com/philbowles/STM32AsyncTCP) ).
-2. Thanks to [Daniel Brunner](https://github.com/0xFEEDC0DE64) to report and make PR in [Fixed linker errors when included in multiple .cpp files](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/1) leading to v1.0.1. See [**HOWTO Fix `Multiple Definitions` Linker Error**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic#HOWTO-Fix-Multiple-Definitions-Linker-Error)
-3. Thanks to [gleniat](https://github.com/gleniat) to make enhancement request in [Add support for sending PUT, PATCH, DELETE request](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/5) leading to v1.1.0.
-4. Thanks to [BadDwarf](https://github.com/baddwarf) to report [**compatibility with ESPAsyncWebServer #11**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/11) leading to the enhancement in v1.1.2.
-5. Thanks to [spdi](https://github.com/spdi) to report [**'Connection' header expects 'disconnect' instead 'close' ? #13**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/13) leading to new release v1.1.3 to fix bug.
-6. Thanks to [andrewk123](https://github.com/andrewk123) to report [**Http GET polling causes crash when host disconnected #22**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/22) leading to new release v1.4.0 to fix bug.
-7. Thanks to [DavidAntonin](https://github.com/DavidAntonin) to report [Cannot send requests to different addresses #4](https://github.com/khoih-prog/AsyncHTTPSRequest_Generic/issues/4) leading to new release v1.7.1 to demonstrate how to send requests to multiple addresses and receive responses from them.
-8. Thanks to [per1234](https://github.com/per1234) to make PR [Remove unavailable items from depends field of library.properties](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/35) leading to v1.8.2
-9. Thanks to [miwied](https://github.com/miwied) to report [setTimeout() hasn't any effect #38](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/38) leading to new release v1.9.0
+ 1. [Bob Lemaire's **asyncHTTPrequest Library**](https://github.com/boblemaire/asyncHTTPrequest) to use the better **asynchronous** features of these following Async TCP Libraries : ( [`ESPAsyncTCP`](https://github.com/me-no-dev/ESPAsyncTCP), [`AsyncTCP`](https://github.com/me-no-dev/AsyncTCP), and [`STM32AsyncTCP`](https://github.com/philbowles/STM32AsyncTCP) ).
+ 2. Thanks to [Daniel Brunner](https://github.com/0xFEEDC0DE64) to report and make PR in [Fixed linker errors when included in multiple .cpp files](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/1) leading to v1.0.1. See [**HOWTO Fix `Multiple Definitions` Linker Error**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic#HOWTO-Fix-Multiple-Definitions-Linker-Error)
+ 3. Thanks to [gleniat](https://github.com/gleniat) to make enhancement request in [Add support for sending PUT, PATCH, DELETE request](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/5) leading to v1.1.0.
+ 4. Thanks to [BadDwarf](https://github.com/baddwarf) to report [**compatibility with ESPAsyncWebServer #11**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/11) leading to the enhancement in v1.1.2.
+ 5. Thanks to [spdi](https://github.com/spdi) to report [**'Connection' header expects 'disconnect' instead 'close' ? #13**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/13) leading to new release v1.1.3 to fix bug.
+ 6. Thanks to [andrewk123](https://github.com/andrewk123) to report [**Http GET polling causes crash when host disconnected #22**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/22) leading to new release v1.4.0 to fix bug.
+ 7. Thanks to [DavidAntonin](https://github.com/DavidAntonin) to report [Cannot send requests to different addresses #4](https://github.com/khoih-prog/AsyncHTTPSRequest_Generic/issues/4) leading to new release v1.7.1 to demonstrate how to send requests to multiple addresses and receive responses from them.
+ 8. Thanks to [per1234](https://github.com/per1234) to make PR [Remove unavailable items from depends field of library.properties](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/35) leading to v1.8.2
+ 9. Thanks to [miwied](https://github.com/miwied) to report [setTimeout() hasn't any effect #38](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/38) leading to new release v1.9.0
+10. Thanks to [ValentinsStorre](https://github.com/ValentinsStorre) to report [Release 1.9 breakes previously running code #39](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/39) leading to new release v1.10.1
+11. Thanks to [Dirk Vranckaert](https://github.com/dirkvranckaert) to report [Callback behaviour is buggy (ESP8266) #43](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/43) leading to new release v1.10.1
 
 <table>
   <tr>
@@ -1091,6 +1093,8 @@ This library is based on, modified, bug-fixed and improved from:
     <td align="center"><a href="https://github.com/DavidAntonin"><img src="https://github.com/DavidAntonin.png" width="100px;" alt="DavidAntonin"/><br /><sub><b>DavidAntonin</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/per1234"><img src="https://github.com/per1234.png" width="100px;" alt="per1234"/><br /><sub><b>per1234</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/miwied"><img src="https://github.com/miwied.png" width="100px;" alt="miwied"/><br /><sub><b>miwied</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/ValentinsStorre"><img src="https://github.com/ValentinsStorre.png" width="100px;" alt="ValentinsStorre"/><br /><sub><b>ValentinsStorre</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/dirkvranckaert"><img src="https://github.com/dirkvranckaert.png" width="100px;" alt="dirkvranckaert"/><br /><sub><b>Dirk Vranckaert</b></sub></a><br /></td>
   </tr>
 </table>
 
