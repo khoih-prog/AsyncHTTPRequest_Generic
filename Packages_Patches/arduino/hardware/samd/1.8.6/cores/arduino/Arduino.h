@@ -44,7 +44,7 @@ typedef uint16_t word;
 #include "itoa.h"
 
 #ifdef __cplusplus
-  extern "C"{
+extern "C" {
 #endif // __cplusplus
 
 // Include Atmel headers
@@ -70,19 +70,19 @@ void loop( void ) ;
 
 // The following headers are for C++ only compilation
 #ifdef __cplusplus
-  #include "WCharacter.h"
-  #include "WString.h"
-  #include "Tone.h"
-  #include "WMath.h"
-  #include "HardwareSerial.h"
-  #include "pulse.h"
-  #include <bits/stl_algobase.h>
+	#include "WCharacter.h"
+	#include "WString.h"
+	#include "Tone.h"
+	#include "WMath.h"
+	#include "HardwareSerial.h"
+	#include "pulse.h"
+	#include <bits/stl_algobase.h>
 #endif
 
 #include "delay.h"
 
 #ifdef __cplusplus
-  #include "Uart.h"
+	#include "Uart.h"
 #endif
 
 // Include board variant
@@ -94,30 +94,30 @@ void loop( void ) ;
 #include "WInterrupts.h"
 
 #ifndef __cplusplus
-  // undefine stdlib's abs if encountered
-  #ifdef abs
-    #undef abs
-  #endif // abs
-  
-  #define min(a,b) ((a)<(b)?(a):(b))
-  #define max(a,b) ((a)>(b)?(a):(b))
-  #define abs(x) ((x)>0?(x):-(x))
-  #define round(x)     ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
-  
-#else
-  //using std::min;
-  //using std::max;
-  template<class T, class L> 
-  auto min(const T& a, const L& b) -> decltype((b < a) ? b : a)
-  {
-    return (b < a) ? b : a;
-  }
+// undefine stdlib's abs if encountered
+#ifdef abs
+	#undef abs
+#endif // abs
 
-  template<class T, class L> 
-  auto max(const T& a, const L& b) -> decltype((b < a) ? b : a)
-  {
-    return (a < b) ? b : a;
-  }
+#define min(a,b) ((a)<(b)?(a):(b))
+#define max(a,b) ((a)>(b)?(a):(b))
+#define abs(x) ((x)>0?(x):-(x))
+#define round(x)     ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
+
+#else
+//using std::min;
+//using std::max;
+template<class T, class L>
+auto min(const T& a, const L& b) -> decltype((b < a) ? b : a)
+{
+	return (b < a) ? b : a;
+}
+
+template<class T, class L>
+auto max(const T& a, const L& b) -> decltype((b < a) ? b : a)
+{
+	return (a < b) ? b : a;
+}
 #endif
 
 #define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
@@ -138,13 +138,13 @@ void loop( void ) ;
 #define bit(b) (1UL << (b))
 
 #if (ARDUINO_SAMD_VARIANT_COMPLIANCE >= 10606)
-  // Interrupts
-  #define digitalPinToInterrupt(P)   ( P )
+	// Interrupts
+	#define digitalPinToInterrupt(P)   ( P )
 #endif
 
 // Allows publishing the Beta core under samd-beta / arduino organization
 #ifndef ARDUINO_ARCH_SAMD
-#define ARDUINO_ARCH_SAMD
+	#define ARDUINO_ARCH_SAMD
 #endif
 
 // USB Device
@@ -154,7 +154,7 @@ void loop( void ) ;
 #include "USB/USB_host.h"
 
 #ifdef __cplusplus
-  #include "USB/CDC.h"
+	#include "USB/CDC.h"
 #endif
 
 #endif // Arduino_h
