@@ -1,20 +1,20 @@
 /*
  *******************************************************************************
- * Copyright (c) 2020-2021, STMicroelectronics
- * All rights reserved.
- *
- * This software component is licensed by ST under BSD 3-Clause license,
- * the "License"; You may not use this file except in compliance with the
- * License. You may obtain a copy of the License at:
- *                        opensource.org/licenses/BSD-3-Clause
- *
+   Copyright (c) 2020-2021, STMicroelectronics
+   All rights reserved.
+
+   This software component is licensed by ST under BSD 3-Clause license,
+   the "License"; You may not use this file except in compliance with the
+   License. You may obtain a copy of the License at:
+                          opensource.org/licenses/BSD-3-Clause
+
  *******************************************************************************
 */
 #pragma once
 
 /*----------------------------------------------------------------------------
- *        Pins
- *----------------------------------------------------------------------------*/
+          Pins
+  ----------------------------------------------------------------------------*/
 
 #define PG9                     0
 #define PG14                    1
@@ -188,7 +188,7 @@
 
 // On-board LED pin number
 #ifndef LED_BUILTIN
-  #define LED_BUILTIN           PB0
+	#define LED_BUILTIN           PB0
 #endif
 #define LED_GREEN               LED_BUILTIN
 #define LED_BLUE                PB7
@@ -196,29 +196,29 @@
 
 // On-board user button
 #ifndef USER_BTN
-  #define USER_BTN              PC13
+	#define USER_BTN              PC13
 #endif
 
 // Timer Definitions
 // Use TIM6/TIM7 when possible as servo and tone don't need GPIO output pin
 #ifndef TIMER_TONE
-  #define TIMER_TONE            TIM6
+	#define TIMER_TONE            TIM6
 #endif
 #ifndef TIMER_SERVO
-  #define TIMER_SERVO           TIM7
+	#define TIMER_SERVO           TIM7
 #endif
 
 // UART Definitions
 #ifndef SERIAL_UART_INSTANCE
-  #define SERIAL_UART_INSTANCE  3 //Connected to ST-Link
+	#define SERIAL_UART_INSTANCE  3 //Connected to ST-Link
 #endif
 // Serial pin used for console (ex: stlink)
 // Rerquired by Firmata
 #ifndef PIN_SERIAL_RX
-  #define PIN_SERIAL_RX         PD9
+	#define PIN_SERIAL_RX         PD9
 #endif
 #ifndef PIN_SERIAL_TX
-  #define PIN_SERIAL_TX         PD8
+	#define PIN_SERIAL_TX         PD8
 #endif
 
 // Value of the External oscillator in Hz
@@ -226,16 +226,16 @@
 
 /* Extra HAL modules */
 #if !defined(HAL_DAC_MODULE_DISABLED)
-  #define HAL_DAC_MODULE_ENABLED
+	#define HAL_DAC_MODULE_ENABLED
 #endif
 #if !defined(HAL_ETH_MODULE_DISABLED)
-  #define HAL_ETH_MODULE_ENABLED
+	#define HAL_ETH_MODULE_ENABLED
 #endif
 #if !defined(HAL_QSPI_MODULE_DISABLED)
-  #define HAL_QSPI_MODULE_ENABLED
+	#define HAL_QSPI_MODULE_ENABLED
 #endif
 #if !defined(HAL_SD_MODULE_DISABLED)
-  #define HAL_SD_MODULE_ENABLED
+	#define HAL_SD_MODULE_ENABLED
 #endif
 
 // Last Flash sector used for EEPROM emulation, address/sector depends on single/dual bank configuration.
@@ -244,31 +244,31 @@
 #define FLASH_DATA_SECTOR       11
 
 /*----------------------------------------------------------------------------
- *        Arduino objects - C++ only
- *----------------------------------------------------------------------------*/
+          Arduino objects - C++ only
+  ----------------------------------------------------------------------------*/
 
 #ifdef __cplusplus
-  // These serial port names are intended to allow libraries and architecture-neutral
-  // sketches to automatically default to the correct port name for a particular type
-  // of use.  For example, a GPS module would normally connect to SERIAL_PORT_HARDWARE_OPEN,
-  // the first hardware serial port whose RX/TX pins are not dedicated to another use.
-  //
-  // SERIAL_PORT_MONITOR        Port which normally prints to the Arduino Serial Monitor
-  //
-  // SERIAL_PORT_USBVIRTUAL     Port which is USB virtual serial
-  //
-  // SERIAL_PORT_LINUXBRIDGE    Port which connects to a Linux system via Bridge library
-  //
-  // SERIAL_PORT_HARDWARE       Hardware serial port, physical RX & TX pins.
-  //
-  // SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.  Their RX & TX
-  //                            pins are NOT connected to anything by default.
-  #ifndef SERIAL_PORT_MONITOR
-    #define SERIAL_PORT_MONITOR     Serial
-  #endif
-  #ifndef SERIAL_PORT_HARDWARE
-    // KH mod to add Serial1, for ESP-AT
-    //#define SERIAL_PORT_HARDWARE    Serial
-    #define SERIAL_PORT_HARDWARE    Serial1
-  #endif
+	// These serial port names are intended to allow libraries and architecture-neutral
+	// sketches to automatically default to the correct port name for a particular type
+	// of use.  For example, a GPS module would normally connect to SERIAL_PORT_HARDWARE_OPEN,
+	// the first hardware serial port whose RX/TX pins are not dedicated to another use.
+	//
+	// SERIAL_PORT_MONITOR        Port which normally prints to the Arduino Serial Monitor
+	//
+	// SERIAL_PORT_USBVIRTUAL     Port which is USB virtual serial
+	//
+	// SERIAL_PORT_LINUXBRIDGE    Port which connects to a Linux system via Bridge library
+	//
+	// SERIAL_PORT_HARDWARE       Hardware serial port, physical RX & TX pins.
+	//
+	// SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.  Their RX & TX
+	//                            pins are NOT connected to anything by default.
+	#ifndef SERIAL_PORT_MONITOR
+		#define SERIAL_PORT_MONITOR     Serial
+	#endif
+	#ifndef SERIAL_PORT_HARDWARE
+		// KH mod to add Serial1, for ESP-AT
+		//#define SERIAL_PORT_HARDWARE    Serial
+		#define SERIAL_PORT_HARDWARE    Serial1
+	#endif
 #endif
