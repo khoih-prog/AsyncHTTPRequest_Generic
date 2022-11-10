@@ -18,7 +18,7 @@
   You should have received a copy of the GNU General Public License along with this program.  
   If not, see <https://www.gnu.org/licenses/>.  
  
-  Version: 1.10.1
+  Version: 1.10.2
   
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -34,6 +34,7 @@
   1.9.2    K Hoang     18/10/2022 Not try to reconnect to the same host:port after connected
   1.10.0   K Hoang     20/10/2022 Fix bug. Clean up
   1.10.1   K Hoang     21/10/2022 Fix bug of wrong reqStates
+  1.10.2   K Hoang     09/11/2022 Default to reconnect to the same host:port after connected for new HTTP sites
  *****************************************************************************************************************************/
 
 #pragma once
@@ -43,19 +44,27 @@
 
 ////////////////////////////////////////
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION            "AsyncHTTPRequest_Generic v1.10.1"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION            "AsyncHTTPRequest_Generic v1.10.2"
 
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MAJOR      1
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MINOR      10
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_PATCH      1
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_PATCH      2
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT        1010001
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT        1010002
 
 ////////////////////////////////////////
 
 #include <Arduino.h>
 
 #include "AsyncHTTPRequest_Debug_Generic.h"
+
+
+////////////////////////////////////////
+
+#if !defined(NOT_SEND_HEADER_AFTER_CONNECTED)
+	// Default is false
+	#define NOT_SEND_HEADER_AFTER_CONNECTED				false
+#endif
 
 ////////////////////////////////////////
 

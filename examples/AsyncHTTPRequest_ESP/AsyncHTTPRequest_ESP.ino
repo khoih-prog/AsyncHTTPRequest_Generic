@@ -1,21 +1,21 @@
 /****************************************************************************************************************************
   AsyncHTTPRequest_ESP.ino - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
-  
+
   For ESP8266, ESP32 and STM32 with built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
-  
+
   AsyncHTTPRequest_Generic is a library for the ESP8266, ESP32 and currently STM32 run built-in Ethernet WebServer
-  
+
   Based on and modified from asyncHTTPrequest Library (https://github.com/boblemaire/asyncHTTPrequest)
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/AsyncHTTPRequest_Generic
   Licensed under MIT license
-  
+
   Copyright (C) <2018>  <Bob Lemaire, IoTaWatt, Inc.>
-  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
   as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-  You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
+  You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *****************************************************************************************************************************/
 //************************************************************************************************************
 //
@@ -41,7 +41,7 @@
 //*************************************************************************************************************
 
 #if !( defined(ESP8266) ||  defined(ESP32) )
-  #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
+	#error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
 #endif
 
 // Level from 0-4
@@ -60,16 +60,19 @@ const char* ssid        = "your_ssid";
 const char* password    = "your_pass";
 
 #if (ESP8266)
-  #include <ESP8266WiFi.h>
+	#include <ESP8266WiFi.h>
 #elif (ESP32)
-  #include <WiFi.h>
+	#include <WiFi.h>
 #endif
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.1"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010001
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.2"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010002
 
 // Seconds for timeout, default is 3s
-#define DEFAULT_RX_TIMEOUT           10   
+#define DEFAULT_RX_TIMEOUT           10
+
+// Uncomment for certain HTTP site to optimize
+//#define NOT_SEND_HEADER_AFTER_CONNECTED        true
 
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
@@ -82,102 +85,105 @@ Ticker ticker1;
 
 void heartBeatPrint()
 {
-  static int num = 1;
+	static int num = 1;
 
-  if (WiFi.status() == WL_CONNECTED)
-    Serial.print(F("H"));        // H means connected to WiFi
-  else
-    Serial.print(F("F"));        // F means not connected to WiFi
+	if (WiFi.status() == WL_CONNECTED)
+		Serial.print(F("H"));        // H means connected to WiFi
+	else
+		Serial.print(F("F"));        // F means not connected to WiFi
 
-  if (num == 80)
-  {
-    Serial.println();
-    num = 1;
-  }
-  else if (num++ % 10 == 0)
-  {
-    Serial.print(F(" "));
-  }
+	if (num == 80)
+	{
+		Serial.println();
+		num = 1;
+	}
+	else if (num++ % 10 == 0)
+	{
+		Serial.print(F(" "));
+	}
 }
 
-void sendRequest() 
+void sendRequest()
 {
-  static bool requestOpenResult;
-  
-  if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
-  {
-    //requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/London.txt");
-    requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
-    
-    if (requestOpenResult)
-    {
-      // Only send() if open() returns true, or crash
-      request.send();
-    }
-    else
-    {
-      Serial.println(F("Can't send bad request"));
-    }
-  }
-  else
-  {
-    Serial.println(F("Can't send request"));
-  }
+	static bool requestOpenResult;
+
+	if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
+	{
+		//requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/London.txt");
+		requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
+
+		if (requestOpenResult)
+		{
+			// Only send() if open() returns true, or crash
+			request.send();
+		}
+		else
+		{
+			Serial.println(F("Can't send bad request"));
+		}
+	}
+	else
+	{
+		Serial.println(F("Can't send request"));
+	}
 }
 
 void requestCB(void *optParm, AsyncHTTPRequest *request, int readyState)
 {
-  (void) optParm;
+	(void) optParm;
 
-  if (readyState == readyStateDone)
-  {
-    AHTTP_LOGDEBUG(F("\n**************************************"));
-    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
+	if (readyState == readyStateDone)
+	{
+		AHTTP_LOGDEBUG(F("\n**************************************"));
+		AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
 
-    if (request->responseHTTPcode() == 200)
-    {
-      Serial.println(F("\n**************************************"));
-      Serial.println(request->responseText());
-      Serial.println(F("**************************************"));
-    }
-  }
+		if (request->responseHTTPcode() == 200)
+		{
+			Serial.println(F("\n**************************************"));
+			Serial.println(request->responseText());
+			Serial.println(F("**************************************"));
+		}
+	}
 }
 
 void setup()
 {
-  // put your setup code here, to run once:
-  Serial.begin(115200);
-  while (!Serial && millis() < 5000);
-  
-  Serial.print(F("\nStarting AsyncHTTPRequest_ESP using ")); Serial.println(ARDUINO_BOARD);
-  Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
+	// put your setup code here, to run once:
+	Serial.begin(115200);
 
-  WiFi.mode(WIFI_STA);
+	while (!Serial && millis() < 5000);
 
-  WiFi.begin(ssid, password);
-  
-  Serial.print(F("Connecting to WiFi SSID: ")); Serial.println(ssid);
+	Serial.print(F("\nStarting AsyncHTTPRequest_ESP using "));
+	Serial.println(ARDUINO_BOARD);
+	Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(F("."));
-  }
+	WiFi.mode(WIFI_STA);
 
-  Serial.print(F("\nAsyncHTTPRequest @ IP : "));
-  Serial.println(WiFi.localIP());
- 
-  request.setDebug(false);
-  
-  request.onReadyStateChange(requestCB);
-  ticker.attach(HTTP_REQUEST_INTERVAL, sendRequest);
+	WiFi.begin(ssid, password);
 
-  ticker1.attach(HEARTBEAT_INTERVAL, heartBeatPrint);
-  
-  // Send first request now
-  sendRequest();  
+	Serial.print(F("Connecting to WiFi SSID: "));
+	Serial.println(ssid);
+
+	while (WiFi.status() != WL_CONNECTED)
+	{
+		delay(500);
+		Serial.print(F("."));
+	}
+
+	Serial.print(F("\nAsyncHTTPRequest @ IP : "));
+	Serial.println(WiFi.localIP());
+
+	request.setDebug(false);
+
+	request.onReadyStateChange(requestCB);
+	ticker.attach(HTTP_REQUEST_INTERVAL, sendRequest);
+
+	ticker1.attach(HEARTBEAT_INTERVAL, heartBeatPrint);
+
+	// Send first request now
+	sendRequest();
 }
 
 void loop()
-{ 
+{
 }

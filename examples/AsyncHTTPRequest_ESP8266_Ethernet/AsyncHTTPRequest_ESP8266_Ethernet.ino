@@ -1,21 +1,21 @@
 /****************************************************************************************************************************
   AsyncHTTPRequest_ESP.ino - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
-  
+
   For ESP8266, ESP32 and STM32 with built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
-  
+
   AsyncHTTPRequest_Generic is a library for the ESP8266, ESP32 and currently STM32 run built-in Ethernet WebServer
-  
+
   Based on and modified from asyncHTTPrequest Library (https://github.com/boblemaire/asyncHTTPrequest)
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/AsyncHTTPRequest_Generic
   Licensed under MIT license
-  
+
   Copyright (C) <2018>  <Bob Lemaire, IoTaWatt, Inc.>
-  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
   as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-  You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.  
+  You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *****************************************************************************************************************************/
 //************************************************************************************************************
 //
@@ -41,12 +41,12 @@
 //*************************************************************************************************************
 
 #if !( defined(ESP8266) )
-  #error This code is intended to run on the ESP8266 platform! Please check your Tools->Board setting.
+	#error This code is intended to run on the ESP8266 platform! Please check your Tools->Board setting.
 #endif
 
 // Level from 0-4
 #define ASYNC_HTTP_DEBUG_PORT     Serial
-#define _ASYNC_HTTP_LOGLEVEL_     1    
+#define _ASYNC_HTTP_LOGLEVEL_     1
 
 // 300s = 5 minutes to not flooding
 #define HTTP_REQUEST_INTERVAL     60  //300
@@ -65,27 +65,27 @@
 #define CSPIN       16      // 5
 
 #if USING_W5500
-  #include "W5500lwIP.h"
-  #define SHIELD_TYPE       "ESP8266_W5500 Ethernet"
-  
-  Wiznet5500lwIP eth(CSPIN); 
-   
+	#include "W5500lwIP.h"
+	#define SHIELD_TYPE       "ESP8266_W5500 Ethernet"
+
+	Wiznet5500lwIP eth(CSPIN);
+
 #elif USING_W5100
-  #include <W5100lwIP.h>
-  #define SHIELD_TYPE       "ESP8266_W5100 Ethernet"
-  
-  Wiznet5100lwIP eth(CSPIN);
+	#include <W5100lwIP.h>
+	#define SHIELD_TYPE       "ESP8266_W5100 Ethernet"
+
+	Wiznet5100lwIP eth(CSPIN);
 
 #elif USING_ENC28J60
-  #include <ENC28J60lwIP.h>
-  #define SHIELD_TYPE       "ESP8266_ENC28J60 Ethernet"
-  
-  ENC28J60lwIP eth(CSPIN);
-#else
-  // default if none selected
-  #include "W5500lwIP.h"
+	#include <ENC28J60lwIP.h>
+	#define SHIELD_TYPE       "ESP8266_ENC28J60 Ethernet"
 
-  Wiznet5500lwIP eth(CSPIN);
+	ENC28J60lwIP eth(CSPIN);
+#else
+	// default if none selected
+	#include "W5500lwIP.h"
+
+	Wiznet5500lwIP eth(CSPIN);
 #endif
 
 
@@ -95,11 +95,14 @@ using TCPClient = WiFiClient;
 
 //////////////////////////////////////////////////////////
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.1"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010001
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.2"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010002
 
 // Seconds for timeout, default is 3s
-#define DEFAULT_RX_TIMEOUT           10   
+#define DEFAULT_RX_TIMEOUT           10
+
+// Uncomment for certain HTTP site to optimize
+//#define NOT_SEND_HEADER_AFTER_CONNECTED        true
 
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
@@ -112,125 +115,128 @@ Ticker ticker1;
 
 void heartBeatPrint()
 {
-  static int num = 1;
+	static int num = 1;
 
-  if (eth.connected())
-    Serial.print(F("H"));        // H means connected to Ethernet
-  else
-    Serial.print(F("F"));        // F means not connected to Ethernet
+	if (eth.connected())
+		Serial.print(F("H"));        // H means connected to Ethernet
+	else
+		Serial.print(F("F"));        // F means not connected to Ethernet
 
-  if (num == 80)
-  {
-    Serial.println();
-    num = 1;
-  }
-  else if (num++ % 10 == 0)
-  {
-    Serial.print(F(" "));
-  }
+	if (num == 80)
+	{
+		Serial.println();
+		num = 1;
+	}
+	else if (num++ % 10 == 0)
+	{
+		Serial.print(F(" "));
+	}
 }
 
-void sendRequest() 
+void sendRequest()
 {
-  static bool requestOpenResult;
-  
-  if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
-  {
-    //requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/London.txt");
-    requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
-    
-    if (requestOpenResult)
-    {
-      // Only send() if open() returns true, or crash
-      request.send();
-    }
-    else
-    {
-      Serial.println(F("Can't send bad request"));
-    }
-  }
-  else
-  {
-    Serial.println(F("Can't send request"));
-  }
+	static bool requestOpenResult;
+
+	if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
+	{
+		//requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/London.txt");
+		requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
+
+		if (requestOpenResult)
+		{
+			// Only send() if open() returns true, or crash
+			request.send();
+		}
+		else
+		{
+			Serial.println(F("Can't send bad request"));
+		}
+	}
+	else
+	{
+		Serial.println(F("Can't send request"));
+	}
 }
 
 void requestCB(void *optParm, AsyncHTTPRequest *request, int readyState)
 {
-  (void) optParm;
+	(void) optParm;
 
-  if (readyState == readyStateDone)
-  {
-    AHTTP_LOGDEBUG(F("\n**************************************"));
-    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
+	if (readyState == readyStateDone)
+	{
+		AHTTP_LOGDEBUG(F("\n**************************************"));
+		AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
 
-    if (request->responseHTTPcode() == 200)
-    {
-      Serial.println(F("\n**************************************"));
-      Serial.println(request->responseText());
-      Serial.println(F("**************************************"));
-    }
-  }
+		if (request->responseHTTPcode() == 200)
+		{
+			Serial.println(F("\n**************************************"));
+			Serial.println(request->responseText());
+			Serial.println(F("**************************************"));
+		}
+	}
 }
 
 void initEthernet()
 {
-  SPI.begin();
-  SPI.setClockDivider(SPI_CLOCK_DIV4);
-  SPI.setBitOrder(MSBFIRST);
-  SPI.setDataMode(SPI_MODE0);
-  eth.setDefault();
-  
-  if (!eth.begin()) 
-  {
-    Serial.println("No Ethernet hardware ... Stop here");
-    
-    while (true) 
-    {
-      delay(1000);
-    }
-  } 
-  else 
-  {
-    Serial.print("Connecting to network : ");
-    
-    while (!eth.connected()) 
-    {
-      Serial.print(".");
-      delay(1000);
-    }
-  }
-  
-  Serial.println();
-  Serial.print("Ethernet IP address: ");
-  Serial.println(eth.localIP());
+	SPI.begin();
+	SPI.setClockDivider(SPI_CLOCK_DIV4);
+	SPI.setBitOrder(MSBFIRST);
+	SPI.setDataMode(SPI_MODE0);
+	eth.setDefault();
+
+	if (!eth.begin())
+	{
+		Serial.println("No Ethernet hardware ... Stop here");
+
+		while (true)
+		{
+			delay(1000);
+		}
+	}
+	else
+	{
+		Serial.print("Connecting to network : ");
+
+		while (!eth.connected())
+		{
+			Serial.print(".");
+			delay(1000);
+		}
+	}
+
+	Serial.println();
+	Serial.print("Ethernet IP address: ");
+	Serial.println(eth.localIP());
 }
 
 void setup()
 {
-  // put your setup code here, to run once:
-  Serial.begin(115200);
-  while (!Serial && millis() < 5000);
+	// put your setup code here, to run once:
+	Serial.begin(115200);
 
-  delay(200);
-  
-  Serial.print("\nStart AsyncHTTPRequest_ESP8266_Ethernet on "); Serial.print(ARDUINO_BOARD);
-  Serial.print(" using ");  Serial.println(SHIELD_TYPE);
-  Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
+	while (!Serial && millis() < 5000);
 
-  initEthernet();
+	delay(200);
 
-  request.setDebug(false);
-  
-  request.onReadyStateChange(requestCB);
-  ticker.attach(HTTP_REQUEST_INTERVAL, sendRequest);
+	Serial.print("\nStart AsyncHTTPRequest_ESP8266_Ethernet on ");
+	Serial.print(ARDUINO_BOARD);
+	Serial.print(" using ");
+	Serial.println(SHIELD_TYPE);
+	Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
-  ticker1.attach(HEARTBEAT_INTERVAL, heartBeatPrint);
-  
-  // Send first request now
-  sendRequest();  
+	initEthernet();
+
+	request.setDebug(false);
+
+	request.onReadyStateChange(requestCB);
+	ticker.attach(HTTP_REQUEST_INTERVAL, sendRequest);
+
+	ticker1.attach(HEARTBEAT_INTERVAL, heartBeatPrint);
+
+	// Send first request now
+	sendRequest();
 }
 
 void loop()
-{ 
+{
 }
