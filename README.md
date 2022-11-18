@@ -64,7 +64,7 @@
 * [Example AsyncHTTPRequest_STM32](#example-asynchttprequest_stm32)
   * [1. File AsyncHTTPRequest_STM32.ino](#1-file-asynchttprequest_stm32ino)
   * [2. File defines.h](#2-file-definesh) 
-* [Debug Terminal Output Samples](#debug-termimal-output-samples)
+* [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. AsyncHTTPRequest_STM32 running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A ](#1-asynchttprequest_stm32-running-on-stm32f7-nucleo-144-nucleo_f767zi-using-built-in-lan8742a)
   * [2. AsyncHTTPRequest_ESP_WiFiManager running on ESP8266_NODEMCU](#2-asynchttprequest_esp_wifimanager-running-on-esp8266_nodemcu)
   * [3. AsyncHTTPRequest_ESP_WiFiManager running on ESP32_DEV](#3-asynchttprequest_esp_wifimanager-running-on-esp32_dev)
@@ -226,7 +226,7 @@ Supposing the STM32 stm32 core version is 2.3.0. These files must be copied into
 - `~/.arduino15/packages/STM32/hardware/stm32/2.3.0/system/STM32F7xx/stm32f7xx_hal_conf_default.h` for Nucleo-144 STM32F7.
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz,
-theses files must be copied into the corresponding directory:
+these files must be copied into the corresponding directory:
 
 - `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/system/STM32F4xx/stm32f4xx_hal_conf_default.h`
 - `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/system/STM32F7xx/stm32f7xx_hal_conf_default.h
@@ -242,7 +242,7 @@ Supposing the STM32 stm32 core version is 2.3.0. These files must be copied into
 - `~/.arduino15/packages/STM32/hardware/stm32/2.3.0/variants/STM32L0xx/L052R(6-8)T_L053R(6-8)T_L063R8T/NUCLEO_L053R8/variant.h` for Nucleo-64 NUCLEO_L053R8.
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz,
-theses files must be copied into the corresponding directory:
+these files must be copied into the corresponding directory:
 
 - `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/variants/STM32F7xx/F765Z(G-I)T_F767Z(G-I)T_F777ZIT/NUCLEO_F767ZI/variant.h`
 - `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/variants/STM32L0xx/L052R(6-8)T_L053R(6-8)T_L063R8T/NUCLEO_L053R8/variant.h`
@@ -491,7 +491,7 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/639ce917e54c296f15fd
 ---
 ---
 
-### Debug Terminal Ouput Samples
+### Debug Terminal Output Samples
 
 #### 1. [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A 
 
@@ -1078,7 +1078,7 @@ This library is based on, modified, bug-fixed and improved from:
  7. Thanks to [DavidAntonin](https://github.com/DavidAntonin) to report [Cannot send requests to different addresses #4](https://github.com/khoih-prog/AsyncHTTPSRequest_Generic/issues/4) leading to new release v1.7.1 to demonstrate how to send requests to multiple addresses and receive responses from them.
  8. Thanks to [per1234](https://github.com/per1234) to make PR [Remove unavailable items from depends field of library.properties](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/35) leading to v1.8.2
  9. Thanks to [miwied](https://github.com/miwied) to report [setTimeout() hasn't any effect #38](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/38) leading to new release v1.9.0
-10. Thanks to [ValentinsStorre](https://github.com/ValentinsStorre) to report [Release 1.9 breakes previously running code #39](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/39) leading to new release v1.10.1
+10. Thanks to [ValentinsStorre](https://github.com/ValentinsStorre) to report [Release 1.9 breaks previously running code #39](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/39) leading to new release v1.10.1
 11. Thanks to [Dirk Vranckaert](https://github.com/dirkvranckaert) to report [Callback behaviour is buggy (ESP8266) #43](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/43) leading to new release v1.10.1
 12. Thanks to [SeeliSoft](https://github.com/SeeliSoft-CH) to report [Host/Headers not always sent with 1.10.1 #44](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/44) leading to new release v1.10.2
 
