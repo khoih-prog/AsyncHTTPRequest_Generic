@@ -47,102 +47,102 @@ Ticker sendHTTPRequest(sendRequest, HTTP_REQUEST_INTERVAL_MS, 0, MILLIS);
 
 void sendRequest(void)
 {
-	static bool requestOpenResult;
+  static bool requestOpenResult;
 
-	if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
-	{
-		Serial.println("\nSending GET Request to " + String(GET_ServerAddress));
+  if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
+  {
+    Serial.println("\nSending GET Request to " + String(GET_ServerAddress));
 
-		requestOpenResult = request.open("GET", GET_ServerAddress);
+    requestOpenResult = request.open("GET", GET_ServerAddress);
 
-		//request.setReqHeader("X-CUSTOM-HEADER", "custom_value");
-		if (requestOpenResult)
-		{
-			// Only send() if open() returns true, or crash
-			request.send();
-		}
-		else
-		{
-			Serial.println("Can't send bad request");
-		}
-	}
-	else
-	{
-		Serial.println("Can't send request");
-	}
+    //request.setReqHeader("X-CUSTOM-HEADER", "custom_value");
+    if (requestOpenResult)
+    {
+      // Only send() if open() returns true, or crash
+      request.send();
+    }
+    else
+    {
+      Serial.println("Can't send bad request");
+    }
+  }
+  else
+  {
+    Serial.println("Can't send request");
+  }
 }
 
 void requestCB(void *optParm, AsyncHTTPRequest *request, int readyState)
 {
-	(void) optParm;
+  (void) optParm;
 
-	if (readyState == readyStateDone)
-	{
-		Serial.println();
-		AHTTP_LOGDEBUG(F("**************************************"));
-		AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
+  if (readyState == readyStateDone)
+  {
+    Serial.println();
+    AHTTP_LOGDEBUG(F("**************************************"));
+    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
 
-		if (request->responseHTTPcode() == 200)
-		{
-			Serial.println(F("**************************************"));
-			Serial.println(request->responseText());
-			Serial.println(F("**************************************"));
-		}
-		else
-		{
-			AHTTP_LOGERROR(F("Response error"));
-		}
-	}
+    if (request->responseHTTPcode() == 200)
+    {
+      Serial.println(F("**************************************"));
+      Serial.println(request->responseText());
+      Serial.println(F("**************************************"));
+    }
+    else
+    {
+      AHTTP_LOGERROR(F("Response error"));
+    }
+  }
 }
 
 void setup(void)
 {
-	Serial.begin(115200);
+  Serial.begin(115200);
 
-	while (!Serial && millis() < 5000);
+  while (!Serial && millis() < 5000);
 
-	Serial.print("\nStart AsyncCustomHeader_STM32 on ");
-	Serial.println(BOARD_NAME);
-	Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
+  Serial.print("\nStart AsyncCustomHeader_STM32 on ");
+  Serial.println(BOARD_NAME);
+  Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
 #if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
 
-	if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
-	{
-		Serial.print("Warning. Must use this example on Version equal or later than : ");
-		Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
-	}
+  if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  {
+    Serial.print("Warning. Must use this example on Version equal or later than : ");
+    Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
+  }
 
 #endif
 
-	// start the ethernet connection and the server
-	// Use random mac
-	uint16_t index = millis() % NUMBER_OF_MAC;
+  // start the ethernet connection and the server
+  // Use random mac
+  uint16_t index = millis() % NUMBER_OF_MAC;
 
-	// Use Static IP
-	//Ethernet.begin(mac[index], ip);
-	// Use DHCP dynamic IP and random mac
-	Ethernet.begin(mac[index]);
+  // Use Static IP
+  //Ethernet.begin(mac[index], ip);
+  // Use DHCP dynamic IP and random mac
+  Ethernet.begin(mac[index]);
 
-	Serial.print(F("AsyncHTTPRequest @ IP : "));
-	Serial.println(Ethernet.localIP());
-	Serial.println();
+  Serial.print(F("AsyncHTTPRequest @ IP : "));
+  Serial.println(Ethernet.localIP());
+  Serial.println();
 
-	request.setDebug(false);
+  request.setDebug(false);
 
-	// 5s timeout
-	request.setTimeout(5);
+  // 5s timeout
+  request.setTimeout(5);
 
-	request.onReadyStateChange(requestCB);
+  request.onReadyStateChange(requestCB);
 
-	sendHTTPRequest.start(); //start the ticker.
+  sendHTTPRequest.start(); //start the ticker.
 
-	// Send first request now
-	delay(10000);
-	sendRequest();
+  // Send first request now
+  delay(10000);
+  sendRequest();
 }
 
 void loop(void)
 {
-	sendHTTPRequest.update();
+  sendHTTPRequest.update();
 }

@@ -1,4 +1,4 @@
-# AsyncHTTPRequest_Generic
+# AsyncHTTPRequest_Generic Library
 
 [![arduino-library-badge](https://www.ardu-badge.com/badge/AsyncHTTPRequest_Generic.svg?)](https://www.ardu-badge.com/AsyncHTTPRequest_Generic)
 [![GitHub release](https://img.shields.io/github/release/khoih-prog/AsyncHTTPRequest_Generic.svg)](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/releases)
@@ -6,8 +6,11 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/AsyncHTTPRequest_Generic.svg)](http://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues)
 
+
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
+<a href="https://profile-counter.glitch.me/khoih-prog/count.svg" title="Total khoih-prog Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog/count.svg" style="height: 30px;width: 200px;"></a>
+<a href="https://profile-counter.glitch.me/khoih-prog-AsyncHTTPRequest_Generic/count.svg" title="AsyncHTTPRequest_Generic Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog-AsyncHTTPRequest_Generic/count.svg" style="height: 30px;width: 200px;"></a>
 
 ---
 ---
@@ -212,18 +215,22 @@ The best and easiest way is to use `Arduino Library Manager`. Search for `AsyncH
 
 #### 1. For STM32 boards to use LAN8720
 
+For `Generic STM32F4 series` boards, such as `STM32F407VE`, using `LAN8720`, please use STM32 core `v2.2.0` as breaking core `v2.3.0` creates the compile error.
+
+---
+
 To use LAN8720 on some STM32 boards 
 
 - **Nucleo-144 (F429ZI, NUCLEO_F746NG, NUCLEO_F746ZG, NUCLEO_F756ZG)**
 - **Discovery (DISCO_F746NG)**
 - **STM32F4 boards (BLACK_F407VE, BLACK_F407VG, BLACK_F407ZE, BLACK_F407ZG, BLACK_F407VE_Mini, DIYMORE_F407VGT, FK407M1)**
 
-you have to copy the files [stm32f4xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/2.3.0/system/STM32F4xx) and [stm32f7xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/2.3.0/system/STM32F7xx) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/2.3.0/system) to overwrite the old files.
+you have to copy the files [stm32f4xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/2.2.0/system/STM32F4xx) and [stm32f7xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/2.2.0/system/STM32F7xx) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/2.2.0/system) to overwrite the old files.
 
-Supposing the STM32 stm32 core version is 2.3.0. These files must be copied into the directory:
+Supposing the STM32 stm32 core version is 2.2.0. These files must be copied into the directory:
 
-- `~/.arduino15/packages/STM32/hardware/stm32/2.3.0/system/STM32F4xx/stm32f4xx_hal_conf_default.h` for STM32F4.
-- `~/.arduino15/packages/STM32/hardware/stm32/2.3.0/system/STM32F7xx/stm32f7xx_hal_conf_default.h` for Nucleo-144 STM32F7.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.2.0/system/STM32F4xx/stm32f4xx_hal_conf_default.h` for STM32F4.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.2.0/system/STM32F7xx/stm32f7xx_hal_conf_default.h` for Nucleo-144 STM32F7.
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz,
 these files must be copied into the corresponding directory:
@@ -238,14 +245,14 @@ these files must be copied into the corresponding directory:
 
 Supposing the STM32 stm32 core version is 2.3.0. These files must be copied into the directory:
 
-- `~/.arduino15/packages/STM32/hardware/stm32/2.3.0/variants/STM32F7xx/F765Z(G-I)T_F767Z(G-I)T_F777ZIT/NUCLEO_F767ZI/variant.h` for Nucleo-144 NUCLEO_F767ZI.
-- `~/.arduino15/packages/STM32/hardware/stm32/2.3.0/variants/STM32L0xx/L052R(6-8)T_L053R(6-8)T_L063R8T/NUCLEO_L053R8/variant.h` for Nucleo-64 NUCLEO_L053R8.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.3.0/variants/NUCLEO_F767ZI/variant.h` for Nucleo-144 NUCLEO_F767ZI.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.3.0/variants/NUCLEO_L053R8/variant.h` for Nucleo-64 NUCLEO_L053R8.
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz,
 these files must be copied into the corresponding directory:
 
-- `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/variants/STM32F7xx/F765Z(G-I)T_F767Z(G-I)T_F777ZIT/NUCLEO_F767ZI/variant.h`
-- `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/variants/STM32L0xx/L052R(6-8)T_L053R(6-8)T_L063R8T/NUCLEO_L053R8/variant.h`
+- `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/variants/NUCLEO_F767ZI/variant.h`
+- `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/variants/NUCLEO_L053R8/variant.h`
 
 ---
 ---
@@ -402,7 +409,7 @@ Connect as follows. To program, use **STM32CubeProgrammer** or Arduino IDE with
 
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/master/Images/STM32F407VET6.png">
+    <img src="https://github.com/khoih-prog/AsyncHTTPRequest_Generic/raw/master/Images/STM32F407VET6.png">
 </p>
 
 ---
@@ -495,7 +502,7 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/639ce917e54c296f15fd
 
 #### 1. [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A 
 
-```
+```cpp
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
 AsyncHTTPRequest_Generic v1.10.2
 AsyncHTTPRequest @ IP : 192.168.2.178
@@ -540,7 +547,7 @@ week_number: 42
 
 #### 2. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP8266_NODEMCU
 
-```
+```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
 AsyncHTTPRequest_Generic v1.10.2
 Stored: SSID = HueNet1, Pass = 12345678
@@ -572,7 +579,7 @@ HHHHHH
 
 #### 3. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP32_DEV
 
-```
+```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
 AsyncHTTPRequest_Generic v1.10.2
 Stored: SSID = HueNet1, Pass = 12345678
@@ -622,7 +629,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 #### 4. [AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP) running on ESP8266_NODEMCU
 
-```
+```cpp
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
 AsyncHTTPRequest_Generic v1.10.2
 Connecting to WiFi SSID: HueNet1
@@ -654,7 +661,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 #### 5. [AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A
 
 
-```
+```cpp
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
 AsyncHTTPRequest_Generic v1.10.2
 AsyncHTTPRequest @ IP : 192.168.2.72
@@ -707,7 +714,7 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 
 #### 6. [AsyncHTTPRequest_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01) on ESP32_DEV with ETH_PHY_LAN8720
 
-```
+```cpp
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.5.1
 AsyncHTTPRequest_Generic v1.10.2
@@ -737,7 +744,7 @@ week_number: 45
 
 #### 7. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP32C3_DEV
 
-```
+```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32C3_DEV
 ESPAsync_WiFiManager v1.15.0
 AsyncHTTPRequest_Generic v1.10.2
@@ -788,7 +795,7 @@ week_number: 45
 #### 8. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP32S3_DEV
 
 
-```
+```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32S3_DEV
 ESPAsync_WiFiManager v1.15.0
 AsyncHTTPRequest_Generic v1.10.2
@@ -841,7 +848,7 @@ week_number: 45
 
 The terminal output of [AsyncHTTPRequest_ESP_Multi example](examples/AsyncHTTPRequest_ESP_Multi) running on `ESP32_DEV` to demonstrate how to send requests to multiple addresses and receive responses from them. 
 
-```
+```cpp
 Starting AsyncHTTPRequest_ESP_Multi using ESP32_DEV
 AsyncHTTPRequest_Generic v1.10.2
 Connecting to WiFi SSID: HueNet1
@@ -902,7 +909,7 @@ HHH
 
 The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](examples/AsyncHTTPRequest_ESP8266_Ethernet) running on `ESP8266_NODEMCU_ESP12E` to demonstrate how to use ESP8266_W5500 Ethernet Async feature.
 
-```
+```cpp
 Starting AsyncHTTPRequest_ESP8266_Ethernet on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet
 AsyncHTTPRequest_Generic v1.10.2
 Connecting ethernet..
@@ -952,7 +959,7 @@ HH
 
 The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](examples/AsyncHTTPRequest_ESP8266_Ethernet) running on `ESP8266_NODEMCU_ESP12E` to demonstrate how to use ESP8266_ENC28J60 Ethernet Async feature.
 
-```
+```cpp
 Starting AsyncHTTPRequest_ESP8266_Ethernet on ESP8266_NODEMCU_ESP12E using ESP8266_ENC28J60 Ethernet
 AsyncHTTPRequest_Generic v1.10.2
 Connecting to network : ..........................................................
@@ -1124,7 +1131,7 @@ If you want to contribute to this project:
 
 Copyright (C) <2018>  <Bob Lemaire, IoTaWatt, Inc.>
 
-Copyright 2020- Khoi Hoang
+Copyright (C) 2020- Khoi Hoang
 
 
 

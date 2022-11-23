@@ -41,7 +41,7 @@
 //*************************************************************************************************************
 
 #if !( defined(ESP8266) ||  defined(ESP32) )
-	#error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
+  #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
 #endif
 
 #define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.2"
@@ -63,9 +63,9 @@ const char* ssid        = "your_ssid";
 const char* password    = "your_pass";
 
 #if (ESP8266)
-	#include <ESP8266WiFi.h>
+  #include <ESP8266WiFi.h>
 #elif (ESP32)
-	#include <WiFi.h>
+  #include <WiFi.h>
 #endif
 
 // Seconds for timeout, default is 3s
@@ -85,22 +85,22 @@ Ticker ticker1;
 
 void heartBeatPrint(void)
 {
-	static int num = 1;
+  static int num = 1;
 
-	if (WiFi.status() == WL_CONNECTED)
-		Serial.print(F("H"));        // H means connected to WiFi
-	else
-		Serial.print(F("F"));        // F means not connected to WiFi
+  if (WiFi.status() == WL_CONNECTED)
+    Serial.print(F("H"));        // H means connected to WiFi
+  else
+    Serial.print(F("F"));        // F means not connected to WiFi
 
-	if (num == 80)
-	{
-		Serial.println();
-		num = 1;
-	}
-	else if (num++ % 10 == 0)
-	{
-		Serial.print(F(" "));
-	}
+  if (num == 80)
+  {
+    Serial.println();
+    num = 1;
+  }
+  else if (num++ % 10 == 0)
+  {
+    Serial.print(F(" "));
+  }
 }
 
 // To replace with your real APP_API
@@ -126,111 +126,111 @@ uint8_t requestIndex = 0;
 
 void sendRequest()
 {
-	static bool requestOpenResult;
+  static bool requestOpenResult;
 
-	if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
-	{
-		requestOpenResult = request.open("GET", requestAll[requestIndex] );
+  if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
+  {
+    requestOpenResult = request.open("GET", requestAll[requestIndex] );
 
-		if (requestOpenResult)
-		{
-			// Only send() if open() returns true, or crash
-			request.send();
-		}
-		else
-		{
-			Serial.println(F("Can't send bad request"));
-		}
-	}
-	else
-	{
-		Serial.println(F("Can't send request"));
-	}
+    if (requestOpenResult)
+    {
+      // Only send() if open() returns true, or crash
+      request.send();
+    }
+    else
+    {
+      Serial.println(F("Can't send bad request"));
+    }
+  }
+  else
+  {
+    Serial.println(F("Can't send request"));
+  }
 }
 
 void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState)
 {
-	(void) optParm;
+  (void) optParm;
 
-	if (readyState == readyStateDone)
-	{
-		AHTTP_LOGDEBUG(F("\n**************************************"));
-		AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
+  if (readyState == readyStateDone)
+  {
+    AHTTP_LOGDEBUG(F("\n**************************************"));
+    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
 
-		if (request->responseHTTPcode() == 200)
-		{
-			Serial.print(F("\n***************"));
-			Serial.print(requestName[ requestIndex ]);
-			Serial.println(F("***************"));
-			Serial.println(request->responseText());
-			Serial.println(F("**************************************"));
-		}
+    if (request->responseHTTPcode() == 200)
+    {
+      Serial.print(F("\n***************"));
+      Serial.print(requestName[ requestIndex ]);
+      Serial.println(F("***************"));
+      Serial.println(request->responseText());
+      Serial.println(F("**************************************"));
+    }
 
 #if 1
 
-		// Bypass hourly
-		if (requestIndex == 1)
-			requestIndex = 3;
-		else
-			requestIndex = (requestIndex + 1) % NUM_REQUESTS;
+    // Bypass hourly
+    if (requestIndex == 1)
+      requestIndex = 3;
+    else
+      requestIndex = (requestIndex + 1) % NUM_REQUESTS;
 
 #else
-		// hourly too long, not display anyway. Not enough heap.
-		requestIndex = (requestIndex + 1) % NUM_REQUESTS;
+    // hourly too long, not display anyway. Not enough heap.
+    requestIndex = (requestIndex + 1) % NUM_REQUESTS;
 #endif
 
-		request->setDebug(false);
-	}
+    request->setDebug(false);
+  }
 }
 
 void setup()
 {
-	// put your setup code here, to run once:
-	Serial.begin(115200);
+  // put your setup code here, to run once:
+  Serial.begin(115200);
 
-	while (!Serial && millis() < 5000);
+  while (!Serial && millis() < 5000);
 
-	delay(200);
+  delay(200);
 
-	Serial.print(F("\nStarting AsyncHTTPMultiRequests using "));
-	Serial.println(ARDUINO_BOARD);
-	Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
+  Serial.print(F("\nStarting AsyncHTTPMultiRequests using "));
+  Serial.println(ARDUINO_BOARD);
+  Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
 #if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
 
-	if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
-	{
-		Serial.print(F("Warning. Must use this example on Version equal or later than : "));
-		Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
-	}
+  if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  {
+    Serial.print(F("Warning. Must use this example on Version equal or later than : "));
+    Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
+  }
 
 #endif
 
-	WiFi.mode(WIFI_STA);
+  WiFi.mode(WIFI_STA);
 
-	WiFi.begin(ssid, password);
+  WiFi.begin(ssid, password);
 
-	Serial.print(F("Connecting to WiFi SSID: "));
-	Serial.println(ssid);
+  Serial.print(F("Connecting to WiFi SSID: "));
+  Serial.println(ssid);
 
-	while (WiFi.status() != WL_CONNECTED)
-	{
-		delay(500);
-		Serial.print(F("."));
-	}
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(F("."));
+  }
 
-	Serial.print(F("AsyncHTTPRequest @ IP : "));
-	Serial.println(WiFi.localIP());
+  Serial.print(F("AsyncHTTPRequest @ IP : "));
+  Serial.println(WiFi.localIP());
 
-	request.setDebug(false);
+  request.setDebug(false);
 
-	request.onReadyStateChange(requestCB);
-	ticker.attach(HTTP_REQUEST_INTERVAL, sendRequest);
+  request.onReadyStateChange(requestCB);
+  ticker.attach(HTTP_REQUEST_INTERVAL, sendRequest);
 
-	ticker1.attach(HEARTBEAT_INTERVAL, heartBeatPrint);
+  ticker1.attach(HEARTBEAT_INTERVAL, heartBeatPrint);
 
-	// Send first request now
-	sendRequest();
+  // Send first request now
+  sendRequest();
 }
 
 void loop()

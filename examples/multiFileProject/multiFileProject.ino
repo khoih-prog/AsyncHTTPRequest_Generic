@@ -29,25 +29,25 @@
 
 void setup()
 {
-	Serial.begin(115200);
+  Serial.begin(115200);
 
-	while (!Serial);
+  while (!Serial);
 
-	Serial.println("\nStart multiFileProject");
-	Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
+  Serial.println("\nStart multiFileProject");
+  Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
 #if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
 
-	if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
-	{
-		Serial.print("Warning. Must use this example on Version equal or later than : ");
-		Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
-	}
+  if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  {
+    Serial.print("Warning. Must use this example on Version equal or later than : ");
+    Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
+  }
 
 #endif
 }
 
 void loop()
 {
-	// put your main code here, to run repeatedly:
+  // put your main code here, to run repeatedly:
 }

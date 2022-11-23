@@ -49,88 +49,88 @@ Ticker sendHTTPRequest(sendRequest, HTTP_REQUEST_INTERVAL_MS, 0, MILLIS);
 
 void sendRequest()
 {
-	static bool requestOpenResult;
+  static bool requestOpenResult;
 
-	if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
-	{
-		requestOpenResult = request.open("GET", (GET_ServerAddress + GET_Location).c_str());
+  if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
+  {
+    requestOpenResult = request.open("GET", (GET_ServerAddress + GET_Location).c_str());
 
-		if (requestOpenResult)
-		{
-			// Only send() if open() returns true, or crash
-			request.send();
-		}
-		else
-		{
-			Serial.println("Can't send bad request");
-		}
-	}
-	else
-	{
-		Serial.println("Can't send request");
-	}
+    if (requestOpenResult)
+    {
+      // Only send() if open() returns true, or crash
+      request.send();
+    }
+    else
+    {
+      Serial.println("Can't send bad request");
+    }
+  }
+  else
+  {
+    Serial.println("Can't send request");
+  }
 }
 
 void requestCB(void *optParm, AsyncHTTPRequest *request, int readyState)
 {
-	(void) optParm;
+  (void) optParm;
 
-	if (readyState == readyStateDone)
-	{
-		AHTTP_LOGDEBUG(F("\n**************************************"));
-		AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
+  if (readyState == readyStateDone)
+  {
+    AHTTP_LOGDEBUG(F("\n**************************************"));
+    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
 
-		if (request->responseHTTPcode() == 200)
-		{
-			Serial.println(F("\n**************************************"));
-			Serial.println(request->responseText());
-			Serial.println(F("**************************************"));
-		}
-	}
+    if (request->responseHTTPcode() == 200)
+    {
+      Serial.println(F("\n**************************************"));
+      Serial.println(request->responseText());
+      Serial.println(F("**************************************"));
+    }
+  }
 }
 
 void setup()
 {
-	Serial.begin(115200);
+  Serial.begin(115200);
 
-	while (!Serial && millis() < 5000);
+  while (!Serial && millis() < 5000);
 
-	Serial.print("\nStart AsyncWebClientRepeating_STM32 on ");
-	Serial.println(BOARD_NAME);
-	Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
+  Serial.print("\nStart AsyncWebClientRepeating_STM32 on ");
+  Serial.println(BOARD_NAME);
+  Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
 #if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
 
-	if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
-	{
-		Serial.print("Warning. Must use this example on Version equal or later than : ");
-		Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
-	}
+  if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  {
+    Serial.print("Warning. Must use this example on Version equal or later than : ");
+    Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
+  }
 
 #endif
-	// start the ethernet connection and the server
-	// Use random mac
-	uint16_t index = millis() % NUMBER_OF_MAC;
+  // start the ethernet connection and the server
+  // Use random mac
+  uint16_t index = millis() % NUMBER_OF_MAC;
 
-	// Use Static IP
-	//Ethernet.begin(mac[index], ip);
-	// Use DHCP dynamic IP and random mac
-	Ethernet.begin(mac[index]);
+  // Use Static IP
+  //Ethernet.begin(mac[index], ip);
+  // Use DHCP dynamic IP and random mac
+  Ethernet.begin(mac[index]);
 
-	Serial.print(F("AsyncHTTPRequest @ IP : "));
-	Serial.println(Ethernet.localIP());
-	Serial.println();
+  Serial.print(F("AsyncHTTPRequest @ IP : "));
+  Serial.println(Ethernet.localIP());
+  Serial.println();
 
-	request.setDebug(false);
+  request.setDebug(false);
 
-	request.onReadyStateChange(requestCB);
-	sendHTTPRequest.start(); //start the ticker
+  request.onReadyStateChange(requestCB);
+  sendHTTPRequest.start(); //start the ticker
 
-	// Send first request now
-	sendRequest();
+  // Send first request now
+  sendRequest();
 }
 
 void loop()
 {
-	sendHTTPRequest.update();
+  sendHTTPRequest.update();
 }

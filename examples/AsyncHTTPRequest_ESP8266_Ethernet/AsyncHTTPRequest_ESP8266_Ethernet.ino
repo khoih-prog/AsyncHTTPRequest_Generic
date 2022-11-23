@@ -41,7 +41,7 @@
 //*************************************************************************************************************
 
 #if !( defined(ESP8266) )
-	#error This code is intended to run on the ESP8266 platform! Please check your Tools->Board setting.
+  #error This code is intended to run on the ESP8266 platform! Please check your Tools->Board setting.
 #endif
 
 // Level from 0-4
@@ -65,27 +65,27 @@
 #define CSPIN       16      // 5
 
 #if USING_W5500
-	#include "W5500lwIP.h"
-	#define SHIELD_TYPE       "ESP8266_W5500 Ethernet"
+  #include "W5500lwIP.h"
+  #define SHIELD_TYPE       "ESP8266_W5500 Ethernet"
 
-	Wiznet5500lwIP eth(CSPIN);
+  Wiznet5500lwIP eth(CSPIN);
 
 #elif USING_W5100
-	#include <W5100lwIP.h>
-	#define SHIELD_TYPE       "ESP8266_W5100 Ethernet"
+  #include <W5100lwIP.h>
+  #define SHIELD_TYPE       "ESP8266_W5100 Ethernet"
 
-	Wiznet5100lwIP eth(CSPIN);
+  Wiznet5100lwIP eth(CSPIN);
 
 #elif USING_ENC28J60
-	#include <ENC28J60lwIP.h>
-	#define SHIELD_TYPE       "ESP8266_ENC28J60 Ethernet"
+  #include <ENC28J60lwIP.h>
+  #define SHIELD_TYPE       "ESP8266_ENC28J60 Ethernet"
 
-	ENC28J60lwIP eth(CSPIN);
+  ENC28J60lwIP eth(CSPIN);
 #else
-	// default if none selected
-	#include "W5500lwIP.h"
+  // default if none selected
+  #include "W5500lwIP.h"
 
-	Wiznet5500lwIP eth(CSPIN);
+  Wiznet5500lwIP eth(CSPIN);
 #endif
 
 
@@ -115,126 +115,126 @@ Ticker ticker1;
 
 void heartBeatPrint()
 {
-	static int num = 1;
+  static int num = 1;
 
-	if (eth.connected())
-		Serial.print(F("H"));        // H means connected to Ethernet
-	else
-		Serial.print(F("F"));        // F means not connected to Ethernet
+  if (eth.connected())
+    Serial.print(F("H"));        // H means connected to Ethernet
+  else
+    Serial.print(F("F"));        // F means not connected to Ethernet
 
-	if (num == 80)
-	{
-		Serial.println();
-		num = 1;
-	}
-	else if (num++ % 10 == 0)
-	{
-		Serial.print(F(" "));
-	}
+  if (num == 80)
+  {
+    Serial.println();
+    num = 1;
+  }
+  else if (num++ % 10 == 0)
+  {
+    Serial.print(F(" "));
+  }
 }
 
 void sendRequest()
 {
-	static bool requestOpenResult;
+  static bool requestOpenResult;
 
-	if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
-	{
-		//requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/London.txt");
-		requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
+  if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
+  {
+    //requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/London.txt");
+    requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
 
-		if (requestOpenResult)
-		{
-			// Only send() if open() returns true, or crash
-			request.send();
-		}
-		else
-		{
-			Serial.println(F("Can't send bad request"));
-		}
-	}
-	else
-	{
-		Serial.println(F("Can't send request"));
-	}
+    if (requestOpenResult)
+    {
+      // Only send() if open() returns true, or crash
+      request.send();
+    }
+    else
+    {
+      Serial.println(F("Can't send bad request"));
+    }
+  }
+  else
+  {
+    Serial.println(F("Can't send request"));
+  }
 }
 
 void requestCB(void *optParm, AsyncHTTPRequest *request, int readyState)
 {
-	(void) optParm;
+  (void) optParm;
 
-	if (readyState == readyStateDone)
-	{
-		AHTTP_LOGDEBUG(F("\n**************************************"));
-		AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
+  if (readyState == readyStateDone)
+  {
+    AHTTP_LOGDEBUG(F("\n**************************************"));
+    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
 
-		if (request->responseHTTPcode() == 200)
-		{
-			Serial.println(F("\n**************************************"));
-			Serial.println(request->responseText());
-			Serial.println(F("**************************************"));
-		}
-	}
+    if (request->responseHTTPcode() == 200)
+    {
+      Serial.println(F("\n**************************************"));
+      Serial.println(request->responseText());
+      Serial.println(F("**************************************"));
+    }
+  }
 }
 
 void initEthernet()
 {
-	SPI.begin();
-	SPI.setClockDivider(SPI_CLOCK_DIV4);
-	SPI.setBitOrder(MSBFIRST);
-	SPI.setDataMode(SPI_MODE0);
-	eth.setDefault();
+  SPI.begin();
+  SPI.setClockDivider(SPI_CLOCK_DIV4);
+  SPI.setBitOrder(MSBFIRST);
+  SPI.setDataMode(SPI_MODE0);
+  eth.setDefault();
 
-	if (!eth.begin())
-	{
-		Serial.println("No Ethernet hardware ... Stop here");
+  if (!eth.begin())
+  {
+    Serial.println("No Ethernet hardware ... Stop here");
 
-		while (true)
-		{
-			delay(1000);
-		}
-	}
-	else
-	{
-		Serial.print("Connecting to network : ");
+    while (true)
+    {
+      delay(1000);
+    }
+  }
+  else
+  {
+    Serial.print("Connecting to network : ");
 
-		while (!eth.connected())
-		{
-			Serial.print(".");
-			delay(1000);
-		}
-	}
+    while (!eth.connected())
+    {
+      Serial.print(".");
+      delay(1000);
+    }
+  }
 
-	Serial.println();
-	Serial.print("Ethernet IP address: ");
-	Serial.println(eth.localIP());
+  Serial.println();
+  Serial.print("Ethernet IP address: ");
+  Serial.println(eth.localIP());
 }
 
 void setup()
 {
-	// put your setup code here, to run once:
-	Serial.begin(115200);
+  // put your setup code here, to run once:
+  Serial.begin(115200);
 
-	while (!Serial && millis() < 5000);
+  while (!Serial && millis() < 5000);
 
-	delay(200);
+  delay(200);
 
-	Serial.print("\nStart AsyncHTTPRequest_ESP8266_Ethernet on ");
-	Serial.print(ARDUINO_BOARD);
-	Serial.print(" using ");
-	Serial.println(SHIELD_TYPE);
-	Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
+  Serial.print("\nStart AsyncHTTPRequest_ESP8266_Ethernet on ");
+  Serial.print(ARDUINO_BOARD);
+  Serial.print(" using ");
+  Serial.println(SHIELD_TYPE);
+  Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
 
-	initEthernet();
+  initEthernet();
 
-	request.setDebug(false);
+  request.setDebug(false);
 
-	request.onReadyStateChange(requestCB);
-	ticker.attach(HTTP_REQUEST_INTERVAL, sendRequest);
+  request.onReadyStateChange(requestCB);
+  ticker.attach(HTTP_REQUEST_INTERVAL, sendRequest);
 
-	ticker1.attach(HEARTBEAT_INTERVAL, heartBeatPrint);
+  ticker1.attach(HEARTBEAT_INTERVAL, heartBeatPrint);
 
-	// Send first request now
-	sendRequest();
+  // Send first request now
+  sendRequest();
 }
 
 void loop()
