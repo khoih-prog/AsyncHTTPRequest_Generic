@@ -21,8 +21,8 @@
 
 // Workaround for Linux timeval
 #if defined (TOOLCHAIN_GCC)
-	#define LWIP_TIMEVAL_PRIVATE 0
-	#include <sys/time.h>
+  #define LWIP_TIMEVAL_PRIVATE 0
+  #include <sys/time.h>
 #endif
 #include "nsapi_types.h"
 #include "mbed_retarget.h"
@@ -35,7 +35,7 @@
 #define NO_SYS                      0
 
 #if !MBED_CONF_LWIP_IPV4_ENABLED && !MBED_CONF_LWIP_IPV6_ENABLED
-	#error "Either IPv4 or IPv6 must be enabled."
+  #error "Either IPv4 or IPv6 must be enabled."
 #endif
 
 #define LWIP_IPV4                   MBED_CONF_LWIP_IPV4_ENABLED
@@ -47,16 +47,16 @@
 // On dual stack configuration how long to wait for both or preferred stack
 // addresses before completing bring up.
 #if LWIP_IPV4 && LWIP_IPV6
-	#if MBED_CONF_LWIP_ADDR_TIMEOUT_MODE
-		#define BOTH_ADDR_TIMEOUT           MBED_CONF_LWIP_ADDR_TIMEOUT
-		#define PREF_ADDR_TIMEOUT           0
-	#else
-		#define PREF_ADDR_TIMEOUT           MBED_CONF_LWIP_ADDR_TIMEOUT
-		#define BOTH_ADDR_TIMEOUT           0
-	#endif
+  #if MBED_CONF_LWIP_ADDR_TIMEOUT_MODE
+    #define BOTH_ADDR_TIMEOUT           MBED_CONF_LWIP_ADDR_TIMEOUT
+    #define PREF_ADDR_TIMEOUT           0
+  #else
+    #define PREF_ADDR_TIMEOUT           MBED_CONF_LWIP_ADDR_TIMEOUT
+    #define BOTH_ADDR_TIMEOUT           0
+  #endif
 #else
-	#define PREF_ADDR_TIMEOUT           0
-	#define BOTH_ADDR_TIMEOUT           0
+  #define PREF_ADDR_TIMEOUT           0
+  #define BOTH_ADDR_TIMEOUT           0
 #endif
 
 
@@ -68,52 +68,52 @@
 #define PREF_IPV6                   2
 
 #if MBED_CONF_LWIP_IP_VER_PREF == 6
-	#define IP_VERSION_PREF             PREF_IPV6
+  #define IP_VERSION_PREF             PREF_IPV6
 #elif MBED_CONF_LWIP_IP_VER_PREF == 4
-	#define IP_VERSION_PREF             PREF_IPV4
+  #define IP_VERSION_PREF             PREF_IPV4
 #else
-	#error "Either IPv4 or IPv6 must be preferred."
+  #error "Either IPv4 or IPv6 must be preferred."
 #endif
 
 #undef  LWIP_DEBUG
 #if MBED_CONF_LWIP_DEBUG_ENABLED
-	#define LWIP_DEBUG                  1
+  #define LWIP_DEBUG                  1
 #endif
 
 #if NO_SYS == 0
-	#include "cmsis_os2.h"
+  #include "cmsis_os2.h"
 
-	#define SYS_LIGHTWEIGHT_PROT        1
+  #define SYS_LIGHTWEIGHT_PROT        1
 
-	#define LWIP_RAW                    MBED_CONF_LWIP_RAW_SOCKET_ENABLED
+  #define LWIP_RAW                    MBED_CONF_LWIP_RAW_SOCKET_ENABLED
 
-	#define MEMP_NUM_TCPIP_MSG_INPKT    MBED_CONF_LWIP_MEMP_NUM_TCPIP_MSG_INPKT
+  #define MEMP_NUM_TCPIP_MSG_INPKT    MBED_CONF_LWIP_MEMP_NUM_TCPIP_MSG_INPKT
 
-	// Thread stacks use 8-byte alignment
-	#define LWIP_ALIGN_UP(pos, align) ((pos) % (align) ? (pos) +  ((align) - (pos) % (align)) : (pos))
+  // Thread stacks use 8-byte alignment
+  #define LWIP_ALIGN_UP(pos, align) ((pos) % (align) ? (pos) +  ((align) - (pos) % (align)) : (pos))
 
-	#ifdef LWIP_DEBUG
-		// For LWIP debug, double the stack
-		#define TCPIP_THREAD_STACKSIZE      LWIP_ALIGN_UP(MBED_CONF_LWIP_TCPIP_THREAD_STACKSIZE*2, 8)
-	#elif MBED_DEBUG
-		// When debug is enabled on the build increase stack 25 percent
-		#define TCPIP_THREAD_STACKSIZE      LWIP_ALIGN_UP(MBED_CONF_LWIP_TCPIP_THREAD_STACKSIZE + MBED_CONF_LWIP_TCPIP_THREAD_STACKSIZE / 4, 8)
-	#else
-		#define TCPIP_THREAD_STACKSIZE      LWIP_ALIGN_UP(MBED_CONF_LWIP_TCPIP_THREAD_STACKSIZE, 8)
-	#endif
+  #ifdef LWIP_DEBUG
+    // For LWIP debug, double the stack
+    #define TCPIP_THREAD_STACKSIZE      LWIP_ALIGN_UP(MBED_CONF_LWIP_TCPIP_THREAD_STACKSIZE*2, 8)
+  #elif MBED_DEBUG
+    // When debug is enabled on the build increase stack 25 percent
+    #define TCPIP_THREAD_STACKSIZE      LWIP_ALIGN_UP(MBED_CONF_LWIP_TCPIP_THREAD_STACKSIZE + MBED_CONF_LWIP_TCPIP_THREAD_STACKSIZE / 4, 8)
+  #else
+    #define TCPIP_THREAD_STACKSIZE      LWIP_ALIGN_UP(MBED_CONF_LWIP_TCPIP_THREAD_STACKSIZE, 8)
+  #endif
 
-	// Thread priority (osPriorityNormal by default)
-	#define TCPIP_THREAD_PRIO           (MBED_CONF_LWIP_TCPIP_THREAD_PRIORITY)
+  // Thread priority (osPriorityNormal by default)
+  #define TCPIP_THREAD_PRIO           (MBED_CONF_LWIP_TCPIP_THREAD_PRIORITY)
 
-	#ifdef LWIP_DEBUG
-		#define DEFAULT_THREAD_STACKSIZE    LWIP_ALIGN_UP(MBED_CONF_LWIP_DEFAULT_THREAD_STACKSIZE*2, 8)
-	#else
-		#define DEFAULT_THREAD_STACKSIZE    LWIP_ALIGN_UP(MBED_CONF_LWIP_DEFAULT_THREAD_STACKSIZE, 8)
-	#endif
+  #ifdef LWIP_DEBUG
+    #define DEFAULT_THREAD_STACKSIZE    LWIP_ALIGN_UP(MBED_CONF_LWIP_DEFAULT_THREAD_STACKSIZE*2, 8)
+  #else
+    #define DEFAULT_THREAD_STACKSIZE    LWIP_ALIGN_UP(MBED_CONF_LWIP_DEFAULT_THREAD_STACKSIZE, 8)
+  #endif
 
-	#define MEMP_NUM_SYS_TIMEOUT        16
+  #define MEMP_NUM_SYS_TIMEOUT        16
 
-	#define sys_msleep(ms) sys_msleep(ms)
+  #define sys_msleep(ms) sys_msleep(ms)
 
 #endif
 
@@ -143,16 +143,16 @@
 #define PBUF_POOL_SIZE              MBED_CONF_LWIP_PBUF_POOL_SIZE
 
 #ifdef MBED_CONF_LWIP_PBUF_POOL_BUFSIZE
-	#undef PBUF_POOL_BUFSIZE
-	#define PBUF_POOL_BUFSIZE           LWIP_MEM_ALIGN_SIZE(MBED_CONF_LWIP_PBUF_POOL_BUFSIZE)
+  #undef PBUF_POOL_BUFSIZE
+  #define PBUF_POOL_BUFSIZE           LWIP_MEM_ALIGN_SIZE(MBED_CONF_LWIP_PBUF_POOL_BUFSIZE)
 #else
-	#ifndef PBUF_POOL_BUFSIZE
-		#if LWIP_IPV6
-			#define PBUF_POOL_BUFSIZE               LWIP_MEM_ALIGN_SIZE(TCP_MSS+20+40+PBUF_LINK_ENCAPSULATION_HLEN+PBUF_LINK_HLEN)
-		#elif LWIP_IPV4
-			#define PBUF_POOL_BUFSIZE               LWIP_MEM_ALIGN_SIZE(TCP_MSS+20+20+PBUF_LINK_ENCAPSULATION_HLEN+PBUF_LINK_HLEN)
-		#endif
-	#endif
+  #ifndef PBUF_POOL_BUFSIZE
+    #if LWIP_IPV6
+      #define PBUF_POOL_BUFSIZE               LWIP_MEM_ALIGN_SIZE(TCP_MSS+20+40+PBUF_LINK_ENCAPSULATION_HLEN+PBUF_LINK_HLEN)
+    #elif LWIP_IPV4
+      #define PBUF_POOL_BUFSIZE               LWIP_MEM_ALIGN_SIZE(TCP_MSS+20+20+PBUF_LINK_ENCAPSULATION_HLEN+PBUF_LINK_HLEN)
+    #endif
+  #endif
 #endif
 
 #define MEM_SIZE                    MBED_CONF_LWIP_MEM_SIZE
@@ -181,14 +181,14 @@
 #define MEMP_NUM_NETCONN            MBED_CONF_LWIP_SOCKET_MAX
 
 #if MBED_CONF_LWIP_TCP_ENABLED
-	#define LWIP_TCP                    1
-	#define TCP_OVERSIZE                0
-	#define LWIP_TCP_KEEPALIVE          1
+  #define LWIP_TCP                    1
+  #define TCP_OVERSIZE                0
+  #define LWIP_TCP_KEEPALIVE          1
 
-	#define TCP_CLOSE_TIMEOUT            MBED_CONF_LWIP_TCP_CLOSE_TIMEOUT
+  #define TCP_CLOSE_TIMEOUT            MBED_CONF_LWIP_TCP_CLOSE_TIMEOUT
 
 #else
-	#define LWIP_TCP                    0
+  #define LWIP_TCP                    0
 #endif
 
 #define LWIP_DNS                    1
@@ -251,13 +251,13 @@
 #define UDP_LPC_EMAC                LWIP_DBG_OFF
 
 #ifdef LWIP_DEBUG
-	#define MEMP_OVERFLOW_CHECK         1
-	#define MEMP_SANITY_CHECK           1
-	#define LWIP_DBG_TYPES_ON           LWIP_DBG_ON
-	#define LWIP_DBG_MIN_LEVEL          LWIP_DBG_LEVEL_ALL
+  #define MEMP_OVERFLOW_CHECK         1
+  #define MEMP_SANITY_CHECK           1
+  #define LWIP_DBG_TYPES_ON           LWIP_DBG_ON
+  #define LWIP_DBG_MIN_LEVEL          LWIP_DBG_LEVEL_ALL
 #else
-	#define LWIP_NOASSERT               1
-	#define LWIP_STATS                  0
+  #define LWIP_NOASSERT               1
+  #define LWIP_STATS                  0
 #endif
 
 #define TRACE_TO_ASCII_HEX_DUMP     0
@@ -269,18 +269,18 @@
 // Interface type configuration
 
 #if MBED_CONF_LWIP_ETHERNET_ENABLED
-	#define LWIP_ARP                    1
-	#define LWIP_ETHERNET               1
-	#define LWIP_DHCP                   LWIP_IPV4
+  #define LWIP_ARP                    1
+  #define LWIP_ETHERNET               1
+  #define LWIP_DHCP                   LWIP_IPV4
 #else
-	#define LWIP_ARP                    0
-	#define LWIP_ETHERNET               0
+  #define LWIP_ARP                    0
+  #define LWIP_ETHERNET               0
 #endif // MBED_CONF_LWIP_ETHERNET_ENABLED
 
 #if MBED_CONF_LWIP_L3IP_ENABLED
-	#define LWIP_L3IP                   1
+  #define LWIP_L3IP                   1
 #else
-	#define LWIP_L3IP                   0
+  #define LWIP_L3IP                   0
 #endif
 
 //Maximum size of network interface name
@@ -291,27 +291,27 @@
 // Enable PPP for now either from lwIP PPP configuration (obsolete) or from PPP service configuration
 #if MBED_CONF_PPP_ENABLED || MBED_CONF_LWIP_PPP_ENABLED
 
-	#define PPP_SUPPORT                      1
+  #define PPP_SUPPORT                      1
 
-	#if MBED_CONF_PPP_IPV4_ENABLED || MBED_CONF_LWIP_IPV4_ENABLED
-		#define LWIP 0x11991199
-		#if (MBED_CONF_NSAPI_DEFAULT_STACK == LWIP) && !MBED_CONF_LWIP_IPV4_ENABLED
-			#error LWIP: IPv4 PPP enabled but not IPv4
-		#endif
-		#undef LWIP
-		#define PPP_IPV4_SUPPORT                 1
-	#endif
+  #if MBED_CONF_PPP_IPV4_ENABLED || MBED_CONF_LWIP_IPV4_ENABLED
+    #define LWIP 0x11991199
+    #if (MBED_CONF_NSAPI_DEFAULT_STACK == LWIP) && !MBED_CONF_LWIP_IPV4_ENABLED
+      #error LWIP: IPv4 PPP enabled but not IPv4
+    #endif
+    #undef LWIP
+    #define PPP_IPV4_SUPPORT                 1
+  #endif
 
-	#if MBED_CONF_PPP_IPV6_ENABLED || MBED_CONF_LWIP_IPV6_ENABLED
-		#define LWIP 0x11991199
-		#if (MBED_CONF_NSAPI_DEFAULT_STACK == LWIP) && !MBED_CONF_LWIP_IPV6_ENABLED
-			#error LWIP: IPv6 PPP enabled but not IPv6
-		#endif
-		#undef LWIP
-		#define PPP_IPV6_SUPPORT                 1
-		// Later to be dynamic for use for multiple interfaces
-		#define LWIP_IPV6_DUP_DETECT_ATTEMPTS    0
-	#endif
+  #if MBED_CONF_PPP_IPV6_ENABLED || MBED_CONF_LWIP_IPV6_ENABLED
+    #define LWIP 0x11991199
+    #if (MBED_CONF_NSAPI_DEFAULT_STACK == LWIP) && !MBED_CONF_LWIP_IPV6_ENABLED
+      #error LWIP: IPv6 PPP enabled but not IPv6
+    #endif
+    #undef LWIP
+    #define PPP_IPV6_SUPPORT                 1
+    // Later to be dynamic for use for multiple interfaces
+    #define LWIP_IPV6_DUP_DETECT_ATTEMPTS    0
+  #endif
 
 #endif
 
@@ -320,7 +320,7 @@
 // Make sure we default these to off, so
 // LWIP doesn't default to on
 #ifndef LWIP_ARP
-	#define LWIP_ARP                    0
+  #define LWIP_ARP                    0
 #endif
 
 // Checksum-on-copy disabled due to https://savannah.nongnu.org/bugs/?50914
@@ -337,9 +337,9 @@
 #include "lwip_tcp_isn.h"
 #define LWIP_HOOK_TCP_ISN lwip_hook_tcp_isn
 #ifdef MBEDTLS_MD5_C
-	#define LWIP_USE_EXTERNAL_MBEDTLS       1
+  #define LWIP_USE_EXTERNAL_MBEDTLS       1
 #else
-	#define LWIP_USE_EXTERNAL_MBEDTLS       0
+  #define LWIP_USE_EXTERNAL_MBEDTLS       0
 #endif
 
 #define LWIP_ND6_RDNSS_MAX_DNS_SERVERS  MBED_CONF_LWIP_ND6_RDNSS_MAX_DNS_SERVERS
