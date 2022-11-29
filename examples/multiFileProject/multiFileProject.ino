@@ -12,15 +12,15 @@
 
 // To demo how to include files in multi-file Projects
 
-#if !( defined(ESP8266) ||  defined(ESP32) || \
+#if !( defined(ESP8266) || defined(ESP32) || \
      ( defined(STM32F0) || defined(STM32F1) || defined(STM32F2) || defined(STM32F3)  ||defined(STM32F4) || defined(STM32F7) || \
        defined(STM32L0) || defined(STM32L1) || defined(STM32L4) || defined(STM32H7)  ||defined(STM32G0) || defined(STM32G4) || \
        defined(STM32WB) || defined(STM32MP1) ) )
 #error This code is intended to run on the ESP8266, ESP32 or STM32 platform! Please check your Tools->Board setting.
 #endif
 
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.10.2"
-#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1010002
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.11.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1011000
 
 #include "multiFileProject.h"
 
