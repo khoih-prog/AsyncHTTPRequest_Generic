@@ -82,7 +82,7 @@
   * [9. AsyncHTTPRequest_ESP_Multi running on ESP32_DEV](#9-AsyncHTTPRequest_ESP_Multi-running-on-ESP32_DEV)
   * [10. AsyncHTTPRequest_ESP8266_Ethernet running on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet](#10-AsyncHTTPRequest_ESP8266_Ethernet-running-on-ESP8266_NODEMCU_ESP12E-using-ESP8266_W5500-Ethernet) **New**
   * [11. AsyncHTTPRequest_ESP8266_Ethernet running on ESP8266_NODEMCU_ESP12E using ESP8266_ENC28J60 Ethernet](#11-AsyncHTTPRequest_ESP8266_Ethernet-running-on-ESP8266_NODEMCU_ESP12E-using-ESP8266_ENC28J60-Ethernet) **New**
-  * [12. AsyncHTTPRequest_ESP32_ENC on ESP32_DEV with ESP32_ENC28J60](#12-AsyncHTTPRequest_ESP8266_Ethernet-on-ESP32_DEV-with-ESP32_ENC28J60) **New**
+  * [12. AsyncHTTPRequest_ESP32_ENC on ESP32_DEV with ESP32_ENC28J60](#12-AsyncHTTPRequest_ESP32_ENC-on-ESP32_DEV-with-ESP32_ENC28J60) **New**
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
