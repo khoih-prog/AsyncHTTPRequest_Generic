@@ -18,7 +18,7 @@
   You should have received a copy of the GNU General Public License along with this program.
   If not, see <https://www.gnu.org/licenses/>.
 
-  Version: 1.11.0
+  Version: 1.12.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -36,6 +36,7 @@
   1.10.1   K Hoang     21/10/2022 Fix bug of wrong reqStates
   1.10.2   K Hoang     09/11/2022 Default to reconnect to the same host:port after connected for new HTTP sites
   1.11.0   K Hoang     28/11/2022 Add support to ESP32 boards using LwIP ENC28J60 Ethernet
+  1.12.0   K Hoang     30/11/2022 Add support to ESP32 boards using LwIP W5500 Ethernet. Fix bug
  *****************************************************************************************************************************/
 
 #pragma once

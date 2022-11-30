@@ -45,6 +45,8 @@
   * [3. HOWTO use Serial Port for Debugging](#3-howto-use-serial-port-for-debugging)
 * [HOWTO use ESP8266 with W5x00 Ethernet](#HOWTO-use-ESP8266-with-W5x00-Ethernet)
 	* [1. ESP8266 Wiring](#1-ESP8266-wiring)
+* [HOWTO use ESP32 with LwIP W5500 or ENC28J60 Ethernet](#HOWTO-use-ESP32-with-LwIP-W5500-or-ENC28J60-Ethernet)
+	* [1. ESP32 Wiring](#1-ESP32-wiring)	
 * [Examples](#examples)
   * [For ESP32 and ESP8266](#for-esp32-and-esp8266)
     * [1. AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP)
@@ -65,6 +67,9 @@
   * [For ESP32_ENC](#for-ESP32_ENC) **New**
     * [1. AsyncHTTPRequest_ESP32_ENC](examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC)
     * [2. AsyncHTTPMultiRequests_ESP32_ENC](examples/ESP32_ENC/AsyncHTTPMultiRequests_ESP32_ENC)
+  * [For ESP32_W5500](#For-ESP32_W5500) **New**
+    * [1. AsyncHTTPRequest_ESP32_W5500](examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W5500)
+    * [2. AsyncHTTPMultiRequests_ESP32_W5500](examples/ESP32_W5500/AsyncHTTPMultiRequests_ESP32_W5500)
   * [For ESP or STM32](#For-ESP-or-STM32)
     * [1. **multiFileProject**](examples/multiFileProject) **New** 
 * [Example AsyncHTTPRequest_STM32](#example-asynchttprequest_stm32)
@@ -83,6 +88,7 @@
   * [10. AsyncHTTPRequest_ESP8266_Ethernet running on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet](#10-AsyncHTTPRequest_ESP8266_Ethernet-running-on-ESP8266_NODEMCU_ESP12E-using-ESP8266_W5500-Ethernet) **New**
   * [11. AsyncHTTPRequest_ESP8266_Ethernet running on ESP8266_NODEMCU_ESP12E using ESP8266_ENC28J60 Ethernet](#11-AsyncHTTPRequest_ESP8266_Ethernet-running-on-ESP8266_NODEMCU_ESP12E-using-ESP8266_ENC28J60-Ethernet) **New**
   * [12. AsyncHTTPRequest_ESP32_ENC on ESP32_DEV with ESP32_ENC28J60](#12-AsyncHTTPRequest_ESP32_ENC-on-ESP32_DEV-with-ESP32_ENC28J60) **New**
+  * [13. AsyncHTTPRequest_ESP32_W5500 on ESP32_DEV with ESP32_W5500](#12-AsyncHTTPRequest_ESP32_W5500-on-ESP32_DEV-with-ESP32_W5500) **New**
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -175,6 +181,8 @@ Support for LAN8720 has been **removed** from STM32 core v2.3.0
 
 #### 6. **ESP32 boards using LwIP ENC28J60 Ethernet**
 
+#### 7. **ESP32 boards using LwIP W5500 Ethernet**
+
 ---
 ---
 
@@ -193,6 +201,7 @@ Support for LAN8720 has been **removed** from STM32 core v2.3.0
 12. [`LittleFS_esp32 v1.0.6+`](https://github.com/lorol/LITTLEFS) for ESP32-based boards using LittleFS with ESP32 core **v1.0.5-**. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/LittleFS_esp32.svg?)](https://www.ardu-badge.com/LittleFS_esp32). **Notice**: This [`LittleFS_esp32 library`](https://github.com/lorol/LITTLEFS) has been integrated to Arduino [ESP32 core v1.0.6+](https://github.com/espressif/arduino-esp32/tree/master/libraries/LITTLEFS) and **you don't need to install it if using ESP32 core v1.0.6+**
 13. [`WebServer_WT32_ETH01 library v1.5.1+`](https://github.com/khoih-prog/WebServer_WT32_ETH01) if necessary to use WT32_ETH01 boards. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_WT32_ETH01.svg?)](https://www.ardu-badge.com/WebServer_WT32_ETH01)
 14. [`WebServer_ESP32_ENC library v1.5.1+`](https://github.com/khoih-prog/WebServer_ESP32_ENC) if necessary to use ESP32 boards using LwIP ENC28J60 Ethernet. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_ESP32_ENC.svg?)](https://www.ardu-badge.com/WebServer_ESP32_ENC)
+15. [`WebServer_ESP32_W5500 library v1.5.1+`](https://github.com/khoih-prog/WebServer_ESP32_W5500) if necessary to use ESP32 boards using LwIP W5500 Ethernet. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_ESP32_W5500.svg?)](https://www.ardu-badge.com/WebServer_ESP32_W5500)
 
 ---
 
@@ -344,22 +353,22 @@ Please have a look at [**ESP_WiFiManager Issue 39: Not able to read analog port 
 
 #### 2. ESP32 ADCs functions
 
-- ADC1 controls ADC function for pins **GPIO32-GPIO39**
-- ADC2 controls ADC function for pins **GPIO0, 2, 4, 12-15, 25-27**
+- `ADC1` controls `ADC` function for pins **GPIO32-GPIO39**
+- `ADC2` controls `ADC` function for pins **GPIO0, 2, 4, 12-15, 25-27**
 
 #### 3.. ESP32 WiFi uses ADC2 for WiFi functions
 
 Look in file [**adc_common.c**](https://github.com/espressif/esp-idf/blob/master/components/driver/adc_common.c#L61)
 
-> In ADC2, there're two locks used for different cases:
+> In `ADC2`, there're two locks used for different cases:
 > 1. lock shared with app and Wi-Fi:
 >    ESP32:
->         When Wi-Fi using the ADC2, we assume it will never stop, so app checks the lock and returns immediately if failed.
+>         When Wi-Fi using the `ADC2`, we assume it will never stop, so app checks the lock and returns immediately if failed.
 >    ESP32S2:
 >         The controller's control over the ADC is determined by the arbiter. There is no need to control by lock.
 > 
 > 2. lock shared between tasks:
->    when several tasks sharing the ADC2, we want to guarantee
+>    when several tasks sharing the `ADC2`, we want to guarantee
 >    all the requests will be handled.
 >    Since conversions are short (about 31us), app returns the lock very soon,
 >    we use a spinlock to stand there waiting to do conversions one by one.
@@ -367,10 +376,10 @@ Look in file [**adc_common.c**](https://github.com/espressif/esp-idf/blob/master
 > adc2_spinlock should be acquired first, then adc2_wifi_lock or rtc_spinlock.
 
 
-- In order to use ADC2 for other functions, we have to **acquire complicated firmware locks and very difficult to do**
-- So, it's not advisable to use ADC2 with WiFi/BlueTooth (BT/BLE).
-- Use ADC1, and pins GPIO32-GPIO39
-- If somehow it's a must to use those pins serviced by ADC2 (**GPIO0, 2, 4, 12, 13, 14, 15, 25, 26 and 27**), use the **fix mentioned at the end** of [**ESP_WiFiManager Issue 39: Not able to read analog port when using the autoconnect example**](https://github.com/khoih-prog/ESP_WiFiManager/issues/39) to work with ESP32 WiFi/BlueTooth (BT/BLE).
+- In order to use `ADC2` for other functions, we have to **acquire complicated firmware locks and very difficult to do**
+- So, it's not advisable to use `ADC2` with WiFi/BlueTooth (BT/BLE).
+- Use `ADC1`, and pins **GPIO32-GPIO39**
+- If somehow it's a must to use those pins serviced by `ADC2` (**GPIO0, 2, 4, 12, 13, 14, 15, 25, 26 and 27**), use the **fix mentioned at the end** of [**ESP_WiFiManager Issue 39: Not able to read analog port when using the autoconnect example**](https://github.com/khoih-prog/ESP_WiFiManager/issues/39) to work with ESP32 WiFi/BlueTooth (BT/BLE).
 
 ---
 ---
@@ -437,7 +446,7 @@ Connect FDTI (USB to Serial) as follows:
 
 #### 1. ESP8266 Wiring
 
-This is the wiring for EP8266 `W5x00` or `ENC28J60` Ethernet when using `SS = GPIO16`
+This is the wiring for ESP8266 `W5x00` or `ENC28J60` Ethernet when using `SS = GPIO16`
 
 https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/e3dd512e7aa9e60c85043893d4527d3b052077c0/examples/AsyncHTTPRequest_ESP8266_Ethernet/AsyncHTTPRequest_ESP8266_Ethernet.ino#L65
 
@@ -448,6 +457,27 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/e3dd512e7aa9e60c8504
 |MISO|<--->|MISO = GPIO12|
 |SCK|<--->|SCK = GPIO14|
 |SS|<--->|GPIO16|
+|GND|<--->|GND|
+|VCC|<--->|+3.3V|
+
+---
+
+### HOWTO use ESP32 with LwIP W5500 or ENC28J60 Ethernet
+
+#### 1. ESP32 Wiring
+
+This is the wiring for ESP8266 `W5500` or `ENC28J60` Ethernet when using `SS = GPIO5`
+
+https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/ce452fb60f63c14b1deb12ca63524f3a74976194/examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC/AsyncHTTPRequest_ESP32_ENC.ino#L60-L70
+
+
+|W5x00/ENC28J60 Ethernet|<--->|ESP32|
+|:-:|:-:|:-:|
+|MOSI|<--->|MOSI = GPIO23|
+|MISO|<--->|MISO = GPIO19|
+|SCK|<--->|SCK = GPIO18|
+|SS|<--->|GPIO5|
+|INT|<--->|GPIO4|
 |GND|<--->|GND|
 |VCC|<--->|+3.3V|
 
@@ -481,9 +511,14 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/e3dd512e7aa9e60c8504
  
 #### For ESP32_ENC
 
- 1. [AsyncHTTPRequest_ESP32_ENC](examples/WT32_ETH01/AsyncHTTPRequest_ESP32_ENC) **New**
- 2. [AsyncHTTPMultiRequests_ESP32_ENC](examples/WT32_ETH01/AsyncHTTPMultiRequests_ESP32_ENC) **New**
+ 1. [AsyncHTTPRequest_ESP32_ENC](examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC) **New**
+ 2. [AsyncHTTPMultiRequests_ESP32_ENC](examples/ESP32_ENC/AsyncHTTPMultiRequests_ESP32_ENC) **New**
  
+#### For ESP32_W5500
+
+ 1. [AsyncHTTPRequest_ESP32_W5500](examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W5500) **New**
+ 2. [AsyncHTTPMultiRequests_ESP32_W5500](examples/ESP32_W5500/AsyncHTTPMultiRequests_ESP32_W5500) **New**
+  
 #### For ESP or STM32
 
  1. [**multiFileProject**](examples/multiFileProject) **New** 
@@ -516,7 +551,7 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/639ce917e54c296f15fd
 
 ```cpp
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 AsyncHTTPRequest @ IP : 192.168.2.178
 
 **************************************
@@ -562,7 +597,7 @@ week_number: 48
 
 ```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -594,7 +629,7 @@ HHHHHH
 
 ```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -644,7 +679,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH
 
 ```cpp
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
@@ -676,7 +711,7 @@ HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 
 ```cpp
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -730,7 +765,7 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 ```cpp
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.5.1
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
@@ -760,7 +795,7 @@ week_number: 48
 ```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32C3_DEV
 ESPAsync_WiFiManager v1.15.0
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -811,7 +846,7 @@ week_number: 48
 ```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32S3_DEV
 ESPAsync_WiFiManager v1.15.0
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -862,7 +897,7 @@ The terminal output of [AsyncHTTPRequest_ESP_Multi example](examples/AsyncHTTPRe
 
 ```cpp
 Starting AsyncHTTPRequest_ESP_Multi using ESP32_DEV
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 Connecting to WiFi SSID: HueNet1
 .......
 AsyncHTTPSRequest @ IP : 192.168.2.88
@@ -923,7 +958,7 @@ The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](examples/Asyn
 
 ```cpp
 Starting AsyncHTTPRequest_ESP8266_Ethernet on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 Connecting ethernet..
 Ethernet IP address: 192.168.2.187
 
@@ -973,7 +1008,7 @@ The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](examples/Asyn
 
 ```cpp
 Starting AsyncHTTPRequest_ESP8266_Ethernet on ESP8266_NODEMCU_ESP12E using ESP8266_ENC28J60 Ethernet
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 Connecting to network : ..........................................................
 Ethernet IP address: 192.168.2.187
 
@@ -1017,14 +1052,14 @@ week_number: 48
 ---
 
 
-#### 12. [AsyncHTTPRequest_ESP32_ENC](examples/AsyncHTTPRequest_ESP32_ENC) on ESP32_DEV with ESP32_ENC28J60
+#### 12. [AsyncHTTPRequest_ESP32_ENC](examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC) on ESP32_DEV with ESP32_ENC28J60
 
-The terminal output of [AsyncHTTPRequest_ESP32_ENC example](examples/AsyncHTTPRequest_ESP32_ENC) running on `ESP32_DEV with ESP32_ENC28J60` to demonstrate how to use ESP32 LwIP ENC28J60 Ethernet Async feature.
+The terminal output of [AsyncHTTPRequest_ESP32_ENC example](examples/AsyncHTTPRequest_ESP32_ENC) running on `ESP32_DEV with ESP32_ENC28J60` to demonstrate how to use ESP32 `LwIP ENC28J60 Ethernet Async` feature.
 
 ```cpp
 Start AsyncHTTPRequest_ESP32_ENC on ESP32_DEV with ESP32_ENC28J60
 WebServer_ESP32_ENC v1.5.1 for core v2.0.0+
-AsyncHTTPRequest_Generic v1.11.0
+AsyncHTTPRequest_Generic v1.12.0
 
 ETH Started
 ETH Connected
@@ -1068,6 +1103,61 @@ utc_datetime: 2022-11-29T03:33:17.848250+00:00
 utc_offset: -05:00
 week_number: 48
 **************************************
+```
+
+
+#### 13. [AsyncHTTPRequest_ESP32_W5500](examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W5500) on ESP32_DEV with ESP32_W5500
+
+The terminal output of [AsyncHTTPRequest_ESP32_W5500 example](examples/AsyncHTTPRequest_ESP32_W5500) running on `ESP32_DEV with ESP32_W5500` to demonstrate how to use ESP32 `LwIP W5500 Ethernet Async` feature.
+
+```cpp
+Start AsyncHTTPRequest_ESP32_W5500 on ESP32_DEV with ESP32_W5500
+WebServer_ESP32_W5500 v1.5.1 for core v2.0.0+
+AsyncHTTPRequest_Generic v1.12.0
+
+ETH Started
+ETH Connected
+ETH MAC: DE:AD:BE:EF:FE:11, IPv4: 192.168.2.101
+FULL_DUPLEX, 100Mbps
+
+HTTP WebClient is @ IP : 192.168.2.101
+
+**************************************
+abbreviation: EST
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2022-11-30T16:37:13.534844-05:00
+day_of_week: 3
+day_of_year: 334
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
+raw_offset: -18000
+timezone: America/Toronto
+unixtime: 1669844233
+utc_datetime: 2022-11-30T21:37:13.534844+00:00
+utc_offset: -05:00
+week_number: 48
+**************************************
+HHHHHH
+**************************************
+abbreviation: EST
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2022-11-30T16:38:13.531153-05:00
+day_of_week: 3
+day_of_year: 334
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
+raw_offset: -18000
+timezone: America/Toronto
+unixtime: 1669844293
+utc_datetime: 2022-11-30T21:38:13.531153+00:00
+utc_offset: -05:00
+week_number: 48
+**************************************
+HHHH 
 ```
 
 
@@ -1137,9 +1227,10 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 22. Not try to reconnect to the same `host:port` after connected
 23. Fix bug of wrong `reqStates` introduced from `v1.9.0`
 24. Default to reconnect to the same `host:port` after connected for new HTTP sites.
-25. Add support to ESP32 boards using LwIP ENC28J60 Ethernet
+25. Add support to ESP32 boards using `LwIP ENC28J60 Ethernet`
 26. Use `allman astyle` and add `utils`. Restyle the library
-
+27. Add support to ESP32 boards using `LwIP W5500 Ethernet`
+28. [Fix "blank new line in chunk" bug #50](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/50)
 
 ---
 ---
@@ -1160,6 +1251,7 @@ This library is based on, modified, bug-fixed and improved from:
 10. Thanks to [ValentinsStorre](https://github.com/ValentinsStorre) to report [Release 1.9 breaks previously running code #39](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/39) leading to new release v1.10.1
 11. Thanks to [Dirk Vranckaert](https://github.com/dirkvranckaert) to report [Callback behaviour is buggy (ESP8266) #43](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/43) leading to new release v1.10.1
 12. Thanks to [SeeliSoft](https://github.com/SeeliSoft-CH) to report [Host/Headers not always sent with 1.10.1 #44](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/44) leading to new release v1.10.2
+13. Thanks to [1618033](https://github.com/1618033) to make PR [Fix "blank new line in chunk" bug #50](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/50) leading to new release v1.12.0
 
 <table>
   <tr>
@@ -1177,6 +1269,9 @@ This library is based on, modified, bug-fixed and improved from:
     <td align="center"><a href="https://github.com/ValentinsStorre"><img src="https://github.com/ValentinsStorre.png" width="100px;" alt="ValentinsStorre"/><br /><sub><b>ValentinsStorre</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/dirkvranckaert"><img src="https://github.com/dirkvranckaert.png" width="100px;" alt="dirkvranckaert"/><br /><sub><b>Dirk Vranckaert</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/SeeliSoft-CH"><img src="https://github.com/SeeliSoft-CH.png" width="100px;" alt="SeeliSoft-CH"/><br /><sub><b>SeeliSoft</b></sub></a><br /></td>
+	</tr>
+  <tr>    
+    <td align="center"><a href="https://github.com/1618033"><img src="https://github.com/1618033.png" width="100px;" alt="1618033"/><br /><sub><b>1618033</b></sub></a><br /></td>
   </tr>
 </table>
 
