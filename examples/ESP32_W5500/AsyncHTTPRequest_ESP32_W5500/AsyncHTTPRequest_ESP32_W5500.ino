@@ -1,0 +1,270 @@
+/****************************************************************************************************************************
+  AsyncHTTPRequest_ESP32_W5500.ino - Dead simple AsyncHTTPRequest for ESP8266, ESP32 and currently STM32 with built-in LAN8742A Ethernet
+
+  For ESP8266, ESP32 and STM32 with built-in LAN8742A Ethernet (Nucleo-144, DISCOVERY, etc)
+
+  AsyncHTTPRequest_Generic is a library for the ESP8266, ESP32 and currently STM32 run built-in Ethernet WebServer
+
+  Based on and modified from asyncHTTPrequest Library (https://github.com/boblemaire/asyncHTTPrequest)
+
+  Built by Khoi Hoang https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+  Licensed under MIT license
+
+  Copyright (C) <2018>  <Bob Lemaire, IoTaWatt, Inc.>
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
+  as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *****************************************************************************************************************************/
+//************************************************************************************************************
+//
+// There are scores of ways to use AsyncHTTPRequest.  The important thing to keep in mind is that
+// it is asynchronous and just like in JavaScript, everything is event driven.  You will have some
+// reason to initiate an asynchronous HTTP request in your program, but then sending the request
+// headers and payload, gathering the response headers and any payload, and processing
+// of that response, can (and probably should) all be done asynchronously.
+//
+// In this example, a Ticker function is setup to fire every 300 seconds to initiate a request.
+// Everything is handled in AsyncHTTPRequest without blocking.
+// The callback onReadyStateChange is made progressively and like most JS scripts, we look for
+// readyState == 4 (complete) here.  At that time the response is retrieved and printed.
+//
+// Note that there is no code in loop().  A code entered into loop would run oblivious to
+// the ongoing HTTP requests.  The Ticker could be removed and periodic calls to sendRequest()
+// could be made in loop(), resulting in the same asynchronous handling.
+//
+// For demo purposes, debug is turned on for handling of the first request.  These are the
+// events that are being handled in AsyncHTTPRequest.  They all begin with Debug(nnn) where
+// nnn is the elapsed time in milliseconds since the transaction was started.
+//
+//*************************************************************************************************************
+
+#if !( defined(ESP32) )
+  #error This code is intended to run on the ESP32 platform! Please check your Tools->Board setting.
+#endif
+
+// Level from 0-4
+#define ASYNC_HTTP_DEBUG_PORT           Serial
+#define _ASYNC_HTTP_LOGLEVEL_           1
+#define _ETHERNET_WEBSERVER_LOGLEVEL_   1
+
+// 300s = 5 minutes to not flooding
+#define HTTP_REQUEST_INTERVAL     60  //300
+
+// 10s
+#define HEARTBEAT_INTERVAL        10
+
+//////////////////////////////////////////////////////////
+
+// Optional values to override default settings
+// Don't change unless you know what you're doing
+//#define ETH_SPI_HOST        SPI3_HOST
+//#define SPI_CLOCK_MHZ       25
+
+// Must connect INT to GPIOxx or not working
+//#define INT_GPIO            4
+
+//#define MISO_GPIO           19
+//#define MOSI_GPIO           23
+//#define SCK_GPIO            18
+//#define CS_GPIO             5
+
+//////////////////////////////////////////////////////////
+
+#include <WebServer_ESP32_W5500.h>               // https://github.com/khoih-prog/WebServer_ESP32_W5500
+
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET      "AsyncHTTPRequest_Generic v1.12.0"
+#define ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN             1012000
+
+// Uncomment for certain HTTP site to optimize
+//#define NOT_SEND_HEADER_AFTER_CONNECTED        true
+
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
+#include <AsyncHTTPRequest_Generic.h>             // https://github.com/khoih-prog/AsyncHTTPRequest_Generic
+
+#include <Ticker.h>
+
+AsyncHTTPRequest request;
+Ticker ticker;
+Ticker ticker1;
+
+/////////////////////////////////////////////
+
+// Enter a MAC address and IP address for your controller below.
+#define NUMBER_OF_MAC      20
+
+byte mac[][NUMBER_OF_MAC] =
+{
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x01 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0x02 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x03 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0x04 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x05 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0x06 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x07 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0x08 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x09 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0x0A },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x0B },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0x0C },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x0D },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0x0E },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x0F },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0x10 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x11 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0x12 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x13 },
+  { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0x14 },
+};
+
+// Select the IP address according to your local network
+IPAddress myIP(192, 168, 2, 232);
+IPAddress myGW(192, 168, 2, 1);
+IPAddress mySN(255, 255, 255, 0);
+
+// Google DNS Server IP
+IPAddress myDNS(8, 8, 8, 8);
+
+/////////////////////////////////////////////
+
+void heartBeatPrint(void)
+{
+  static int num = 1;
+
+  if (ESP32_W5500_isConnected())
+    Serial.print(F("H"));        // H means connected
+  else
+    Serial.print(F("F"));        // F means not connected
+
+  if (num == 80)
+  {
+    Serial.println();
+    num = 1;
+  }
+  else if (num++ % 10 == 0)
+  {
+    Serial.print(F(" "));
+  }
+}
+
+void sendRequest()
+{
+  static bool requestOpenResult;
+
+  if (request.readyState() == readyStateUnsent || request.readyState() == readyStateDone)
+  {
+    //requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/London.txt");
+    requestOpenResult = request.open("GET", "http://worldtimeapi.org/api/timezone/America/Toronto.txt");
+
+    if (requestOpenResult)
+    {
+      // Only send() if open() returns true, or crash
+      request.send();
+    }
+    else
+    {
+      Serial.println("Can't send bad request");
+    }
+  }
+  else
+  {
+    Serial.println("Can't send request");
+  }
+}
+
+void requestCB(void *optParm, AsyncHTTPRequest *request, int readyState)
+{
+  (void) optParm;
+
+  if (readyState == readyStateDone)
+  {
+    AHTTP_LOGDEBUG(F("\n**************************************"));
+    AHTTP_LOGDEBUG1(F("Response Code = "), request->responseHTTPString());
+
+    if (request->responseHTTPcode() == 200)
+    {
+      Serial.println(F("\n**************************************"));
+      Serial.println(request->responseText());
+      Serial.println(F("**************************************"));
+    }
+  }
+}
+
+void setup()
+{
+  // put your setup code here, to run once:
+  Serial.begin(115200);
+
+  while (!Serial && millis() < 5000);
+
+  delay(200);
+
+  Serial.print("\nStart AsyncHTTPRequest_ESP32_W5500 on ");
+  Serial.print(ARDUINO_BOARD);
+  Serial.print(" with ");
+  Serial.println(SHIELD_TYPE);
+  Serial.println(WEBSERVER_ESP32_W5500_VERSION);
+  Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION);
+
+  Serial.setDebugOutput(true);
+
+#if defined(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+
+  if (ASYNC_HTTP_REQUEST_GENERIC_VERSION_INT < ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN)
+  {
+    Serial.print("Warning. Must use this example on Version equal or later than : ");
+    Serial.println(ASYNC_HTTP_REQUEST_GENERIC_VERSION_MIN_TARGET);
+  }
+
+#endif
+
+  AHTTP_LOGWARN(F("Default SPI pinout:"));
+  AHTTP_LOGWARN1(F("SPI_HOST:"), ETH_SPI_HOST);
+  AHTTP_LOGWARN1(F("MOSI:"), MOSI_GPIO);
+  AHTTP_LOGWARN1(F("MISO:"), MISO_GPIO);
+  AHTTP_LOGWARN1(F("SCK:"),  SCK_GPIO);
+  AHTTP_LOGWARN1(F("CS:"),   CS_GPIO);
+  AHTTP_LOGWARN1(F("INT:"),  INT_GPIO);
+  AHTTP_LOGWARN1(F("SPI Clock (MHz):"), SPI_CLOCK_MHZ);
+  AHTTP_LOGWARN(F("========================="));
+
+  ///////////////////////////////////
+
+  // To be called before ETH.begin()
+  ESP32_W5500_onEvent();
+
+  // start the ethernet connection and the server:
+  // Use DHCP dynamic IP and random mac
+  uint16_t index = millis() % NUMBER_OF_MAC;
+
+  //bool begin(int MISO_GPIO, int MOSI_GPIO, int SCLK_GPIO, int CS_GPIO, int INT_GPIO, int SPI_CLOCK_MHZ,
+  //           int SPI_HOST, uint8_t *W5500_Mac = W5500_Default_Mac);
+  //ETH.begin( MISO_GPIO, MOSI_GPIO, SCK_GPIO, CS_GPIO, INT_GPIO, SPI_CLOCK_MHZ, ETH_SPI_HOST );
+  ETH.begin( MISO_GPIO, MOSI_GPIO, SCK_GPIO, CS_GPIO, INT_GPIO, SPI_CLOCK_MHZ, ETH_SPI_HOST, mac[index] );
+
+  // Static IP, leave without this line to get IP via DHCP
+  //bool config(IPAddress local_ip, IPAddress gateway, IPAddress subnet, IPAddress dns1 = 0, IPAddress dns2 = 0);
+  //ETH.config(myIP, myGW, mySN, myDNS);
+
+  ESP32_W5500_waitForConnect();
+
+  ///////////////////////////////////
+
+  Serial.print(F("\nHTTP WebClient is @ IP : "));
+  Serial.println(ETH.localIP());
+
+  request.setDebug(false);
+
+  request.onReadyStateChange(requestCB);
+  ticker.attach(HTTP_REQUEST_INTERVAL, sendRequest);
+
+  ticker1.attach(HEARTBEAT_INTERVAL, heartBeatPrint);
+
+  // Send first request now
+  sendRequest();
+}
+
+void loop()
+{
+}
