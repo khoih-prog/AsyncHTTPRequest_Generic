@@ -1448,7 +1448,7 @@ void  AsyncHTTPRequest::_processChunks()
     size_t chunkLength = strtol(chunkHeader.c_str(), nullptr, 16);
     _contentLength += chunkLength;
 
-    if (chunkLength == 0)
+    if (chunkHeader == "0\r\n")
     {
       char* connectionHdr = respHeaderValue("connection");
 
