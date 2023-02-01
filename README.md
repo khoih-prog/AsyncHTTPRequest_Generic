@@ -70,8 +70,8 @@
     * [1. AsyncHTTPRequest_ESP32_W5500](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W5500)
     * [2. AsyncHTTPMultiRequests_ESP32_W5500](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPMultiRequests_ESP32_W5500)
   * [For ESP32_W6100](#For-ESP32_W6100) **New**
-    * [1. AsyncHTTPRequest_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPRequest_EESP32_W6100)
-    * [2. AsyncHTTPMultiRequests_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPMultiRequests_ESP32_W6100)
+    * [1. AsyncHTTPRequest_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W6100/AsyncHTTPRequest_EESP32_W6100)
+    * [2. AsyncHTTPMultiRequests_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W6100/AsyncHTTPMultiRequests_ESP32_W6100)
   * [For ESP or STM32](#For-ESP-or-STM32)
     * [1. **multiFileProject**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/multiFileProject)
 * [Example AsyncHTTPRequest_STM32](#example-asynchttprequest_stm32)
@@ -527,8 +527,8 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/ce452fb60f63c14b1deb
 
 #### For ESP32_W6100
 
- 1. [AsyncHTTPRequest_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W6100) **New**
- 2. [AsyncHTTPMultiRequests_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPMultiRequests_ESP32_W6100) **New**
+ 1. [AsyncHTTPRequest_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W6100/AsyncHTTPRequest_ESP32_W6100) **New**
+ 2. [AsyncHTTPMultiRequests_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W6100/AsyncHTTPMultiRequests_ESP32_W6100) **New**
    
 #### For ESP or STM32
 
