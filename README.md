@@ -10,6 +10,7 @@
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
 
+
 ---
 ---
 
@@ -47,29 +48,32 @@
 	* [1. ESP32 Wiring](#1-ESP32-wiring)	
 * [Examples](#examples)
   * [For ESP32 and ESP8266](#for-esp32-and-esp8266)
-    * [1. AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP)
-    * [2. AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager)
-    * [3. AsyncHTTPMultiRequests_ESP](examples/AsyncHTTPMultiRequests_ESP)
-    * [4. AsyncHTTPRequest_ESP_Multi](examples/AsyncHTTPRequest_ESP_Multi) **New**
-    * [5. AsyncHTTPRequest_ESP8266_Ethernet](examples/AsyncHTTPRequest_ESP8266_Ethernet) **New**
+    * [1. AsyncHTTPRequest_ESP](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP)
+    * [2. AsyncHTTPRequest_ESP_WiFiManager](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_WiFiManager)
+    * [3. AsyncHTTPMultiRequests_ESP](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPMultiRequests_ESP)
+    * [4. AsyncHTTPRequest_ESP_Multi](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_Multi)
+    * [5. AsyncHTTPRequest_ESP8266_Ethernet](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP8266_Ethernet)
   * [For STM32 using LAN8742A](#for-stm32-using-lan8742a)
-    * [1. AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
-    * [2. AsyncCustomHeader_STM32](examples/AsyncCustomHeader_STM32)
-    * [3. AsyncDweetGet_STM32](examples/AsyncDweetGet_STM32)
-    * [4. AsyncDweetPost_STM32](examples/AsyncDweetPost_STM32)
-    * [5. AsyncSimpleGET_STM32](examples/AsyncSimpleGET_STM32)
-    * [6. AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32)
+    * [1. AsyncHTTPRequest_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_STM32)
+    * [2. AsyncCustomHeader_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncCustomHeader_STM32)
+    * [3. AsyncDweetGet_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncDweetGet_STM32)
+    * [4. AsyncDweetPost_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncDweetPost_STM32)
+    * [5. AsyncSimpleGET_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncSimpleGET_STM32)
+    * [6. AsyncWebClientRepeating_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncWebClientRepeating_STM32)
   * [For WT32_ETH01](#for-wt32_eth01)
-    * [1. AsyncHTTPRequest_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01)
-    * [2. AsyncHTTPMultiRequests_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPMultiRequests_WT32_ETH01)
+    * [1. AsyncHTTPRequest_WT32_ETH01](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01)
+    * [2. AsyncHTTPMultiRequests_WT32_ETH01](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/WT32_ETH01/AsyncHTTPMultiRequests_WT32_ETH01)
   * [For ESP32_ENC](#for-ESP32_ENC) **New**
-    * [1. AsyncHTTPRequest_ESP32_ENC](examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC)
-    * [2. AsyncHTTPMultiRequests_ESP32_ENC](examples/ESP32_ENC/AsyncHTTPMultiRequests_ESP32_ENC)
+    * [1. AsyncHTTPRequest_ESP32_ENC](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC)
+    * [2. AsyncHTTPMultiRequests_ESP32_ENC](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_ENC/AsyncHTTPMultiRequests_ESP32_ENC)
   * [For ESP32_W5500](#For-ESP32_W5500) **New**
-    * [1. AsyncHTTPRequest_ESP32_W5500](examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W5500)
-    * [2. AsyncHTTPMultiRequests_ESP32_W5500](examples/ESP32_W5500/AsyncHTTPMultiRequests_ESP32_W5500)
+    * [1. AsyncHTTPRequest_ESP32_W5500](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W5500)
+    * [2. AsyncHTTPMultiRequests_ESP32_W5500](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPMultiRequests_ESP32_W5500)
+  * [For ESP32_W6100](#For-ESP32_W6100) **New**
+    * [1. AsyncHTTPRequest_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPRequest_EESP32_W6100)
+    * [2. AsyncHTTPMultiRequests_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPMultiRequests_ESP32_W6100)
   * [For ESP or STM32](#For-ESP-or-STM32)
-    * [1. **multiFileProject**](examples/multiFileProject) **New** 
+    * [1. **multiFileProject**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/multiFileProject)
 * [Example AsyncHTTPRequest_STM32](#example-asynchttprequest_stm32)
   * [1. File AsyncHTTPRequest_STM32.ino](#1-file-asynchttprequest_stm32ino)
   * [2. File defines.h](#2-file-definesh) 
@@ -83,10 +87,11 @@
   * [7. AsyncHTTPRequest_ESP_WiFiManager running on ESP32C3_DEV](#7-asynchttprequest_esp_wifimanager-running-on-ESP32C3_DEV)
   * [8. AsyncHTTPRequest_ESP_WiFiManager running on ESP32S3_DEV](#8-asynchttprequest_esp_wifimanager-running-on-ESP32S3_DEV)
   * [9. AsyncHTTPRequest_ESP_Multi running on ESP32_DEV](#9-AsyncHTTPRequest_ESP_Multi-running-on-ESP32_DEV)
-  * [10. AsyncHTTPRequest_ESP8266_Ethernet running on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet](#10-AsyncHTTPRequest_ESP8266_Ethernet-running-on-ESP8266_NODEMCU_ESP12E-using-ESP8266_W5500-Ethernet) **New**
-  * [11. AsyncHTTPRequest_ESP8266_Ethernet running on ESP8266_NODEMCU_ESP12E using ESP8266_ENC28J60 Ethernet](#11-AsyncHTTPRequest_ESP8266_Ethernet-running-on-ESP8266_NODEMCU_ESP12E-using-ESP8266_ENC28J60-Ethernet) **New**
+  * [10. AsyncHTTPRequest_ESP8266_Ethernet running on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet](#10-AsyncHTTPRequest_ESP8266_Ethernet-running-on-ESP8266_NODEMCU_ESP12E-using-ESP8266_W5500-Ethernet)
+  * [11. AsyncHTTPRequest_ESP8266_Ethernet running on ESP8266_NODEMCU_ESP12E using ESP8266_ENC28J60 Ethernet](#11-AsyncHTTPRequest_ESP8266_Ethernet-running-on-ESP8266_NODEMCU_ESP12E-using-ESP8266_ENC28J60-Ethernet)
   * [12. AsyncHTTPRequest_ESP32_ENC on ESP32_DEV with ESP32_ENC28J60](#12-AsyncHTTPRequest_ESP32_ENC-on-ESP32_DEV-with-ESP32_ENC28J60) **New**
   * [13. AsyncHTTPRequest_ESP32_W5500 on ESP32_DEV with ESP32_W5500](#13-AsyncHTTPRequest_ESP32_W5500-on-ESP32_DEV-with-ESP32_W5500) **New**
+  * [14. AsyncHTTPRequest_ESP32_W6100 on ESP32_DEV with ESP32_W6100](#14-AsyncHTTPRequest_ESP32_W6100-on-ESP32_DEV-with-ESP32_W6100) **New**
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -181,15 +186,17 @@ Support for LAN8720 has been **removed** from STM32 core v2.3.0
 
 #### 7. **ESP32 boards using LwIP W5500 Ethernet**
 
+#### 8. **ESP32 boards using LwIP W6100 Ethernet**
+
 ---
 ---
 
 ## Prerequisites
 
  1. [`Arduino IDE 1.8.19+` for Arduino](https://github.com/arduino/Arduino). [![GitHub release](https://img.shields.io/github/release/arduino/Arduino.svg)](https://github.com/arduino/Arduino/releases/latest)
- 2. [`ESP8266 Core 3.0.2+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/)
- 3. [`ESP32 Core 2.0.5+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [Latest stable release ![Release Version](https://img.shields.io/github/release/espressif/arduino-esp32.svg?style=plastic)
- 5. [`Arduino Core for STM32 2.3.0+`](https://github.com/stm32duino/Arduino_Core_STM32) for for STM32 using built-in Ethernet LAN8742A. [![GitHub release](https://img.shields.io/github/release/stm32duino/Arduino_Core_STM32.svg)](https://github.com/stm32duino/Arduino_Core_STM32/releases/latest)
+ 2. [`ESP8266 Core 3.1.1+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/)
+ 3. [`ESP32 Core 2.0.6+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [Latest stable release ![Release Version](https://img.shields.io/github/release/espressif/arduino-esp32.svg?style=plastic)
+ 5. [`Arduino Core for STM32 2.4.0+`](https://github.com/stm32duino/Arduino_Core_STM32) for for STM32 using built-in Ethernet LAN8742A. [![GitHub release](https://img.shields.io/github/release/stm32duino/Arduino_Core_STM32.svg)](https://github.com/stm32duino/Arduino_Core_STM32/releases/latest)
  6. [`ESPAsyncTCP v1.2.2+`](https://github.com/me-no-dev/ESPAsyncTCP) for ESP8266.
  7. [`AsyncTCP v1.1.1+`](https://github.com/me-no-dev/AsyncTCP) for ESP32.
  8. [`STM32Ethernet library v1.3.0+`](https://github.com/stm32duino/STM32Ethernet) for STM32 using built-in Ethernet LAN8742A on (Nucleo-144, Discovery). [![GitHub release](https://img.shields.io/github/release/stm32duino/STM32Ethernet.svg)](https://github.com/stm32duino/STM32Ethernet/releases/latest)
@@ -198,8 +205,9 @@ Support for LAN8720 has been **removed** from STM32 core v2.3.0
 11. [`ESPAsync_WiFiManager library v1.15.1+`](https://github.com/khoih-prog/ESPAsync_WiFiManager) for ESP32/ESP8266 using some examples. [![GitHub release](https://img.shields.io/github/release/khoih-prog/ESPAsync_WiFiManager.svg)](https://github.com/khoih-prog/ESPAsync_WiFiManager/releases)
 12. [`LittleFS_esp32 v1.0.6+`](https://github.com/lorol/LITTLEFS) for ESP32-based boards using LittleFS with ESP32 core **v1.0.5-**. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/LittleFS_esp32.svg?)](https://www.ardu-badge.com/LittleFS_esp32). **Notice**: This [`LittleFS_esp32 library`](https://github.com/lorol/LITTLEFS) has been integrated to Arduino [ESP32 core v1.0.6+](https://github.com/espressif/arduino-esp32/tree/master/libraries/LITTLEFS) and **you don't need to install it if using ESP32 core v1.0.6+**
 13. [`WebServer_WT32_ETH01 library v1.5.1+`](https://github.com/khoih-prog/WebServer_WT32_ETH01) if necessary to use WT32_ETH01 boards. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_WT32_ETH01.svg?)](https://www.ardu-badge.com/WebServer_WT32_ETH01)
-14. [`WebServer_ESP32_ENC library v1.5.1+`](https://github.com/khoih-prog/WebServer_ESP32_ENC) if necessary to use ESP32 boards using LwIP ENC28J60 Ethernet. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_ESP32_ENC.svg?)](https://www.ardu-badge.com/WebServer_ESP32_ENC)
-15. [`WebServer_ESP32_W5500 library v1.5.1+`](https://github.com/khoih-prog/WebServer_ESP32_W5500) if necessary to use ESP32 boards using LwIP W5500 Ethernet. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_ESP32_W5500.svg?)](https://www.ardu-badge.com/WebServer_ESP32_W5500)
+14. [`WebServer_ESP32_ENC library v1.5.3+`](https://github.com/khoih-prog/WebServer_ESP32_ENC) if necessary to use ESP32 boards using LwIP ENC28J60 Ethernet. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_ESP32_ENC.svg?)](https://www.ardu-badge.com/WebServer_ESP32_ENC)
+15. [`WebServer_ESP32_W5500 library v1.5.3+`](https://github.com/khoih-prog/WebServer_ESP32_W5500) if necessary to use ESP32 boards using LwIP W5500 Ethernet. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_ESP32_W5500.svg?)](https://www.ardu-badge.com/WebServer_ESP32_W5500)
+16. [`WebServer_ESP32_W6100 library v1.5.3+`](https://github.com/khoih-prog/WebServer_ESP32_W6100) if necessary to use ESP32 boards using LwIP W6100 Ethernet. To install, check [![arduino-library-badge](https://www.ardu-badge.com/badge/WebServer_ESP32_W6100.svg?)](https://www.ardu-badge.com/WebServer_ESP32_W6100)
 
 ---
 
@@ -313,7 +321,7 @@ in many files. But be sure to use the following `.h` file **in just 1 `.h`, `.cp
 #include "AsyncHTTPRequest_Generic.h"           //https://github.com/khoih-prog/AsyncHTTPRequest_Generic
 ```
 
-Check the new [**multiFileProject** example](examples/multiFileProject) for a `HOWTO` demo.
+Check the new [**multiFileProject** example](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/multiFileProject) for a `HOWTO` demo.
 
 Have a look at the discussion in [Different behaviour using the src_cpp or src_h lib #80](https://github.com/khoih-prog/ESPAsync_WiFiManager/discussions/80)
 
@@ -464,12 +472,12 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/e3dd512e7aa9e60c8504
 
 #### 1. ESP32 Wiring
 
-This is the wiring for ESP8266 `W5500` or `ENC28J60` Ethernet when using `SS = GPIO5`
+This is the wiring for ESP32 `W5500`, `W6100` or `ENC28J60` Ethernet when using `SS = GPIO5`
 
 https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/ce452fb60f63c14b1deb12ca63524f3a74976194/examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC/AsyncHTTPRequest_ESP32_ENC.ino#L60-L70
 
 
-|W5x00/ENC28J60 Ethernet|<--->|ESP32|
+|W5x00/W6100/ENC28J60 Ethernet|<--->|ESP32|
 |:-:|:-:|:-:|
 |MOSI|<--->|MOSI = GPIO23|
 |MISO|<--->|MISO = GPIO19|
@@ -487,55 +495,60 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/ce452fb60f63c14b1deb
 
 #### For ESP32 and ESP8266
 
- 1. [AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP)
- 2. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager)
- 3. [AsyncHTTPMultiRequests_ESP](examples/AsyncHTTPMultiRequests_ESP)
- 4. [AsyncHTTPRequest_ESP_Multi](examples/AsyncHTTPRequest_ESP_Multi) **New**
- 5. [AsyncHTTPRequest_ESP8266_Ethernet](examples/AsyncHTTPRequest_ESP8266_Ethernet) **New**
+ 1. [AsyncHTTPRequest_ESP](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP)
+ 2. [AsyncHTTPRequest_ESP_WiFiManager](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_WiFiManager)
+ 3. [AsyncHTTPMultiRequests_ESP](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPMultiRequests_ESP)
+ 4. [AsyncHTTPRequest_ESP_Multi](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_Multi)
+ 5. [AsyncHTTPRequest_ESP8266_Ethernet](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP8266_Ethernet)
 
 #### For STM32 using LAN8742A
 
- 1. [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
- 2. [AsyncCustomHeader_STM32](examples/AsyncCustomHeader_STM32)
- 3. [AsyncDweetGet_STM32](examples/AsyncDweetGet_STM32)
- 4. [AsyncDweetPost_STM32](examples/AsyncDweetPost_STM32)
- 5. [AsyncSimpleGET_STM32](examples/AsyncSimpleGET_STM32)
- 6. [AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32)
+ 1. [AsyncHTTPRequest_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_STM32)
+ 2. [AsyncCustomHeader_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncCustomHeader_STM32)
+ 3. [AsyncDweetGet_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncDweetGet_STM32)
+ 4. [AsyncDweetPost_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncDweetPost_STM32)
+ 5. [AsyncSimpleGET_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncSimpleGET_STM32)
+ 6. [AsyncWebClientRepeating_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncWebClientRepeating_STM32)
 
 #### For WT32_ETH01
 
- 1. [AsyncHTTPRequest_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01)
- 2. [AsyncHTTPMultiRequests_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPMultiRequests_WT32_ETH01)
+ 1. [AsyncHTTPRequest_WT32_ETH01](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01)
+ 2. [AsyncHTTPMultiRequests_WT32_ETH01](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/WT32_ETH01/AsyncHTTPMultiRequests_WT32_ETH01)
  
 #### For ESP32_ENC
 
- 1. [AsyncHTTPRequest_ESP32_ENC](examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC) **New**
- 2. [AsyncHTTPMultiRequests_ESP32_ENC](examples/ESP32_ENC/AsyncHTTPMultiRequests_ESP32_ENC) **New**
+ 1. [AsyncHTTPRequest_ESP32_ENC](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC) **New**
+ 2. [AsyncHTTPMultiRequests_ESP32_ENC](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_ENC/AsyncHTTPMultiRequests_ESP32_ENC) **New**
  
 #### For ESP32_W5500
 
- 1. [AsyncHTTPRequest_ESP32_W5500](examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W5500) **New**
- 2. [AsyncHTTPMultiRequests_ESP32_W5500](examples/ESP32_W5500/AsyncHTTPMultiRequests_ESP32_W5500) **New**
-  
+ 1. [AsyncHTTPRequest_ESP32_W5500](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W5500) **New**
+ 2. [AsyncHTTPMultiRequests_ESP32_W5500](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPMultiRequests_ESP32_W5500) **New**
+
+#### For ESP32_W6100
+
+ 1. [AsyncHTTPRequest_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W6100) **New**
+ 2. [AsyncHTTPMultiRequests_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPMultiRequests_ESP32_W6100) **New**
+   
 #### For ESP or STM32
 
- 1. [**multiFileProject**](examples/multiFileProject) **New** 
+ 1. [**multiFileProject**](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/multiFileProject)
 
 
 ---
 
-### Example [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32)
+### Example [AsyncHTTPRequest_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_STM32)
 
 Please take a look at other examples, as well.
 
-#### 1. File [AsyncHTTPRequest_STM32.ino](examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino)
+#### 1. File [AsyncHTTPRequest_STM32.ino](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino)
 
 https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/639ce917e54c296f15fdb8bbad2c34efcc6a0f61/examples/AsyncHTTPRequest_STM32/AsyncHTTPRequest_STM32.ino#L43-L155
 
 
 ---
 
-#### 2. File [defines.h](examples/AsyncHTTPRequest_STM32/defines.h)
+#### 2. File [defines.h](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_STM32/defines.h)
 
 https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/639ce917e54c296f15fdb8bbad2c34efcc6a0f61/examples/AsyncHTTPRequest_STM32/defines.h#L22-L134
 
@@ -545,57 +558,57 @@ https://github.com/khoih-prog/AsyncHTTPRequest_Generic/blob/639ce917e54c296f15fd
 
 ### Debug Terminal Output Samples
 
-#### 1. [AsyncHTTPRequest_STM32](examples/AsyncHTTPRequest_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A 
+#### 1. [AsyncHTTPRequest_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A 
 
 ```cpp
 Start AsyncHTTPRequest_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.12.0
+AsyncHTTPRequest_Generic v1.13.0
 AsyncHTTPRequest @ IP : 192.168.2.178
 
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:51:17.751072-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:54:16.675525-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693877
-utc_datetime: 2022-11-29T03:51:17.751072+00:00
+unixtime: 1675227256
+utc_datetime: 2023-02-01T04:54:16.675525+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 HHHHHH 
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:52:17.762039-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:55:16.675337-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693937
-utc_datetime: 2022-11-29T03:52:17.762039+00:00
+unixtime: 1675227316
+utc_datetime: 2023-02-01T04:55:16.675337+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 ```
 
 ---
 
-#### 2. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP8266_NODEMCU
+#### 2. [AsyncHTTPRequest_ESP_WiFiManager](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP8266_NODEMCU
 
 ```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.12.0
+AsyncHTTPRequest_Generic v1.13.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -604,30 +617,30 @@ H
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:49:17.758292-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:56:16.674942-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693757
-utc_datetime: 2022-11-29T03:49:17.758292+00:00
+unixtime: 1675227376
+utc_datetime: 2023-02-01T04:56:16.674942+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 HHHHHH
 ```
 
 ---
 
-#### 3. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP32_DEV
+#### 3. [AsyncHTTPRequest_ESP_WiFiManager](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP32_DEV
 
 ```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using SPIFFS on ESP32_DEV
-AsyncHTTPRequest_Generic v1.12.0
+AsyncHTTPRequest_Generic v1.13.0
 Stored: SSID = HueNet1, Pass = 12345678
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -636,48 +649,48 @@ H
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:47:17.764158-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:56:16.674942-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693637
-utc_datetime: 2022-11-29T03:47:17.764158+00:00
+unixtime: 1675227376
+utc_datetime: 2023-02-01T04:56:16.674942+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 HHHHHH
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:48:17.761808-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:57:16.675848-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693697
-utc_datetime: 2022-11-29T03:48:17.761808+00:00
+unixtime: 1675227436
+utc_datetime: 2023-02-01T04:57:16.675848+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH 
 ```
 
 ---
 
-#### 4. [AsyncHTTPRequest_ESP](examples/AsyncHTTPRequest_ESP) running on ESP8266_NODEMCU
+#### 4. [AsyncHTTPRequest_ESP](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP) running on ESP8266_NODEMCU
 
 ```cpp
 Starting AsyncHTTPRequest_ESP using ESP8266_NODEMCU
-AsyncHTTPRequest_Generic v1.12.0
+AsyncHTTPRequest_Generic v1.13.0
 Connecting to WiFi SSID: HueNet1
 ...........
 HTTP WebServer is @ IP : 192.168.2.81
@@ -685,31 +698,31 @@ HTTP WebServer is @ IP : 192.168.2.81
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:46:17.770039-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:58:16.676610-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693577
-utc_datetime: 2022-11-29T03:46:17.770039+00:00
+unixtime: 1675227496
+utc_datetime: 2023-02-01T04:58:16.676610+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 HHHHHHHHH HHHHHHHHHH HHHHHHHHHH H
 ```
 
 ---
 
-#### 5. [AsyncWebClientRepeating_STM32](examples/AsyncWebClientRepeating_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A
+#### 5. [AsyncWebClientRepeating_STM32](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncWebClientRepeating_STM32) running on STM32F7 Nucleo-144 NUCLEO_F767ZI using built-in LAN8742A
 
 
 ```cpp
 Start AsyncWebClientRepeating_STM32 on NUCLEO_F767ZI
-AsyncHTTPRequest_Generic v1.12.0
+AsyncHTTPRequest_Generic v1.13.0
 AsyncHTTPRequest @ IP : 192.168.2.72
 
 **************************************
@@ -758,42 +771,42 @@ AsyncHTTPRequest @ IP : 192.168.2.72
 
 ---
 
-#### 6. [AsyncHTTPRequest_WT32_ETH01](examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01) on ESP32_DEV with ETH_PHY_LAN8720
+#### 6. [AsyncHTTPRequest_WT32_ETH01](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/WT32_ETH01/AsyncHTTPRequest_WT32_ETH01) on ESP32_DEV with ETH_PHY_LAN8720
 
 ```cpp
 Starting AsyncHTTPRequest_WT32_ETH01 on ESP32_DEV with ETH_PHY_LAN8720
 WebServer_WT32_ETH01 v1.5.1
-AsyncHTTPRequest_Generic v1.12.0
+AsyncHTTPRequest_Generic v1.13.0
 ETH MAC: A8:03:2A:A1:61:73, IPv4: 192.168.2.232, FULL_DUPLEX, 100Mbps
 AsyncHTTPRequest @ IP : 192.168.2.232
 
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:45:17.777749-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:59:16.675139-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693517
-utc_datetime: 2022-11-29T03:45:17.777749+00:00
+unixtime: 1675227556
+utc_datetime: 2023-02-01T04:59:16.675139+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 ```
 
 ---
 
-#### 7. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP32C3_DEV
+#### 7. [AsyncHTTPRequest_ESP_WiFiManager](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP32C3_DEV
 
 ```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32C3_DEV
 ESPAsync_WiFiManager v1.15.0
-AsyncHTTPRequest_Generic v1.12.0
+AsyncHTTPRequest_Generic v1.13.0
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -802,49 +815,49 @@ H
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:42:17.777886-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:59:16.675139-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693337
-utc_datetime: 2022-11-29T03:42:17.777886+00:00
+unixtime: 1675227556
+utc_datetime: 2023-02-01T04:59:16.675139+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
-HHHHHH
+HHHH
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:43:17.774836-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-02-01T00:00:16.675788-05:00
+day_of_week: 3
+day_of_year: 32
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693397
-utc_datetime: 2022-11-29T03:43:17.774836+00:00
+unixtime: 1675227616
+utc_datetime: 2023-02-01T05:00:16.675788+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 ```
 
 ---
 
-#### 8. [AsyncHTTPRequest_ESP_WiFiManager](examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP32S3_DEV
+#### 8. [AsyncHTTPRequest_ESP_WiFiManager](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_WiFiManager) running on ESP32S3_DEV
 
 
 ```cpp
 Starting AsyncHTTPRequest_ESP_WiFiManager using LittleFS on ESP32S3_DEV
 ESPAsync_WiFiManager v1.15.0
-AsyncHTTPRequest_Generic v1.12.0
+AsyncHTTPRequest_Generic v1.13.0
 Stored: SSID = HueNet1, Pass = password
 Got stored Credentials. Timeout 120s
 ConnectMultiWiFi in setup
@@ -853,49 +866,49 @@ H
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:39:17.786244-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-02-01T00:01:16.675231-05:00
+day_of_week: 3
+day_of_year: 32
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693157
-utc_datetime: 2022-11-29T03:39:17.786244+00:00
+unixtime: 1675227676
+utc_datetime: 2023-02-01T05:01:16.675231+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 HHHHHH
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:40:17.786885-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-02-01T00:02:16.675810-05:00
+day_of_week: 3
+day_of_year: 32
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693217
-utc_datetime: 2022-11-29T03:40:17.786885+00:00
+unixtime: 1675227736
+utc_datetime: 2023-02-01T05:02:16.675810+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 ```
 
 ---
 
-#### 9. [AsyncHTTPRequest_ESP_Multi](examples/AsyncHTTPRequest_ESP_Multi) running on ESP32_DEV
+#### 9. [AsyncHTTPRequest_ESP_Multi](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_Multi) running on ESP32_DEV
 
-The terminal output of [AsyncHTTPRequest_ESP_Multi example](examples/AsyncHTTPRequest_ESP_Multi) running on `ESP32_DEV` to demonstrate how to send requests to multiple addresses and receive responses from them. 
+The terminal output of [AsyncHTTPRequest_ESP_Multi example](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP_Multi) running on `ESP32_DEV` to demonstrate how to send requests to multiple addresses and receive responses from them. 
 
 ```cpp
 Starting AsyncHTTPRequest_ESP_Multi using ESP32_DEV
-AsyncHTTPRequest_Generic v1.12.0
+AsyncHTTPRequest_Generic v1.13.0
 Connecting to WiFi SSID: HueNet1
 .......
 AsyncHTTPSRequest @ IP : 192.168.2.88
@@ -905,21 +918,21 @@ Sending request: http://worldtimeapi.org/api/timezone/Europe/Prague.txt
 Sending request: http://www.myexternalip.com/raw
 
 **************************************
-abbreviation: CEST
+abbreviation: CET
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-10-19T04:06:40.111091+02:00
+datetime: 2023-02-01T03:46:24.358630+01:00
 day_of_week: 3
-day_of_year: 292
-dst: true
-dst_from: 2022-03-27T01:00:00+00:00
-dst_offset: 3600
-dst_until: 2022-10-30T01:00:00+00:00
+day_of_year: 32
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
 raw_offset: 3600
 timezone: Europe/Prague
-unixtime: 1666145200
-utc_datetime: 2022-10-19T02:06:40.111091+00:00
-utc_offset: +02:00
-week_number: 42
+unixtime: 1675219584
+utc_datetime: 2023-02-01T02:46:24.358630+00:00
+utc_offset: +01:00
+week_number: 5
 **************************************
 
 **************************************
@@ -929,135 +942,135 @@ aaa.bbb.ccc.ddd
 Sending request: http://worldtimeapi.org/api/timezone/America/Toronto.txt
 
 **************************************
-abbreviation: EDT
+abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-10-18T22:06:42.109821-04:00
+datetime: 2023-01-31T21:46:24.411920-05:00
 day_of_week: 2
-day_of_year: 291
-dst: true
-dst_from: 2022-03-13T07:00:00+00:00
-dst_offset: 3600
-dst_until: 2022-11-06T06:00:00+00:00
+day_of_year: 31
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1666145202
-utc_datetime: 2022-10-19T02:06:42.109821+00:00
-utc_offset: -04:00
-week_number: 42
+unixtime: 1675219584
+utc_datetime: 2023-02-01T02:46:24.411920+00:00
+utc_offset: -05:00
+week_number: 5
 **************************************
 HHH
 ```
 
 ---
 
-#### 10. [AsyncHTTPRequest_ESP8266_Ethernet](examples/AsyncHTTPRequest_ESP8266_Ethernet) running on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet
+#### 10. [AsyncHTTPRequest_ESP8266_Ethernet](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP8266_Ethernet) running on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet
 
-The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](examples/AsyncHTTPRequest_ESP8266_Ethernet) running on `ESP8266_NODEMCU_ESP12E` to demonstrate how to use ESP8266_W5500 Ethernet Async feature.
+The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP8266_Ethernet) running on `ESP8266_NODEMCU_ESP12E` to demonstrate how to use ESP8266_W5500 Ethernet Async feature.
 
 ```cpp
 Starting AsyncHTTPRequest_ESP8266_Ethernet on ESP8266_NODEMCU_ESP12E using ESP8266_W5500 Ethernet
-AsyncHTTPRequest_Generic v1.12.0
+AsyncHTTPRequest_Generic v1.13.0
 Connecting ethernet..
 Ethernet IP address: 192.168.2.187
 
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:36:17.839711-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:13:24.464322-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669692977
-utc_datetime: 2022-11-29T03:36:17.839711+00:00
+unixtime: 1675224804
+utc_datetime: 2023-02-01T04:13:24.464322+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
-HHHHHH 
+HHHHHH
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:37:17.836815-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:14:24.465232-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669693037
-utc_datetime: 2022-11-29T03:37:17.836815+00:00
+unixtime: 1675224864
+utc_datetime: 2023-02-01T04:14:24.465232+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 HH
 ```
 
 ---
 
-#### 11. [AsyncHTTPRequest_ESP8266_Ethernet](examples/AsyncHTTPRequest_ESP8266_Ethernet) running on ESP8266_NODEMCU_ESP12E using ESP8266_ENC28J60 Ethernet
+#### 11. [AsyncHTTPRequest_ESP8266_Ethernet](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP8266_Ethernet) running on ESP8266_NODEMCU_ESP12E using ESP8266_ENC28J60 Ethernet
 
-The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](examples/AsyncHTTPRequest_ESP8266_Ethernet) running on `ESP8266_NODEMCU_ESP12E` to demonstrate how to use ESP8266_ENC28J60 Ethernet Async feature.
+The terminal output of [AsyncHTTPRequest_ESP8266_Ethernet example](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/AsyncHTTPRequest_ESP8266_Ethernet) running on `ESP8266_NODEMCU_ESP12E` to demonstrate how to use ESP8266_ENC28J60 Ethernet Async feature.
 
 ```cpp
 Starting AsyncHTTPRequest_ESP8266_Ethernet on ESP8266_NODEMCU_ESP12E using ESP8266_ENC28J60 Ethernet
-AsyncHTTPRequest_Generic v1.12.0
+AsyncHTTPRequest_Generic v1.13.0
 Connecting to network : ..........................................................
 Ethernet IP address: 192.168.2.187
 
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:34:17.845633-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:11:24.464025-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669692857
-utc_datetime: 2022-11-29T03:34:17.845633+00:00
+unixtime: 1675224684
+utc_datetime: 2023-02-01T04:11:24.464025+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 HHHHHH
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:35:17.840985-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:12:24.463868-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669692917
-utc_datetime: 2022-11-29T03:35:17.840985+00:00
+unixtime: 1675224744
+utc_datetime: 2023-02-01T04:12:24.463868+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 ```
 
 ---
 
 
-#### 12. [AsyncHTTPRequest_ESP32_ENC](examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC) on ESP32_DEV with ESP32_ENC28J60
+#### 12. [AsyncHTTPRequest_ESP32_ENC](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC) on ESP32_DEV with ESP32_ENC28J60
 
-The terminal output of [AsyncHTTPRequest_ESP32_ENC example](examples/AsyncHTTPRequest_ESP32_ENC) running on `ESP32_DEV with ESP32_ENC28J60` to demonstrate how to use ESP32 `LwIP ENC28J60 Ethernet Async` feature.
+The terminal output of [AsyncHTTPRequest_ESP32_ENC example](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_ENC/AsyncHTTPRequest_ESP32_ENC) running on `ESP32_DEV with ESP32_ENC28J60` to demonstrate how to use ESP32 `LwIP ENC28J60 Ethernet Async` feature.
 
 ```cpp
 Start AsyncHTTPRequest_ESP32_ENC on ESP32_DEV with ESP32_ENC28J60
-WebServer_ESP32_ENC v1.5.1 for core v2.0.0+
-AsyncHTTPRequest_Generic v1.12.0
+WebServer_ESP32_ENC v1.5.3 for core v2.0.0+
+AsyncHTTPRequest_Generic v1.13.0
 
 ETH Started
 ETH Connected
@@ -1069,49 +1082,51 @@ HTTP WebClient is @ IP : 192.168.2.98
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:32:17.850186-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:09:24.464676-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669692737
-utc_datetime: 2022-11-29T03:32:17.850186+00:00
+unixtime: 1675224564
+utc_datetime: 2023-02-01T04:09:24.464676+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
-HHHHHH
+HH HHHH
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-28T22:33:17.848250-05:00
-day_of_week: 1
-day_of_year: 332
+datetime: 2023-01-31T23:10:24.464712-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669692797
-utc_datetime: 2022-11-29T03:33:17.848250+00:00
+unixtime: 1675224624
+utc_datetime: 2023-02-01T04:10:24.464712+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 ```
 
+---
 
-#### 13. [AsyncHTTPRequest_ESP32_W5500](examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W5500) on ESP32_DEV with ESP32_W5500
 
-The terminal output of [AsyncHTTPRequest_ESP32_W5500 example](examples/AsyncHTTPRequest_ESP32_W5500) running on `ESP32_DEV with ESP32_W5500` to demonstrate how to use ESP32 `LwIP W5500 Ethernet Async` feature.
+#### 13. [AsyncHTTPRequest_ESP32_W5500](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W5500) on ESP32_DEV with ESP32_W5500
+
+The terminal output of [AsyncHTTPRequest_ESP32_W5500 example](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W5500/AsyncHTTPRequest_ESP32_W5500) running on `ESP32_DEV with ESP32_W5500` to demonstrate how to use ESP32 `LwIP W5500 Ethernet Async` feature.
 
 ```cpp
 Start AsyncHTTPRequest_ESP32_W5500 on ESP32_DEV with ESP32_W5500
-WebServer_ESP32_W5500 v1.5.1 for core v2.0.0+
-AsyncHTTPRequest_Generic v1.12.0
+WebServer_ESP32_W5500 v1.5.3 for core v2.0.0+
+AsyncHTTPRequest_Generic v1.13.0
 
 ETH Started
 ETH Connected
@@ -1123,39 +1138,79 @@ HTTP WebClient is @ IP : 192.168.2.101
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-30T16:37:13.534844-05:00
-day_of_week: 3
-day_of_year: 334
+datetime: 2023-01-31T23:07:24.465199-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669844233
-utc_datetime: 2022-11-30T21:37:13.534844+00:00
+unixtime: 1675224444
+utc_datetime: 2023-02-01T04:07:24.465199+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
-HHHHHH
+HHHH HH
 **************************************
 abbreviation: EST
 client_ip: aaa.bbb.ccc.ddd
-datetime: 2022-11-30T16:38:13.531153-05:00
-day_of_week: 3
-day_of_year: 334
+datetime: 2023-01-31T23:08:24.467686-05:00
+day_of_week: 2
+day_of_year: 31
 dst: false
 dst_from: 
 dst_offset: 0
 dst_until: 
 raw_offset: -18000
 timezone: America/Toronto
-unixtime: 1669844293
-utc_datetime: 2022-11-30T21:38:13.531153+00:00
+unixtime: 1675224504
+utc_datetime: 2023-02-01T04:08:24.467686+00:00
 utc_offset: -05:00
-week_number: 48
+week_number: 5
 **************************************
 HHHH 
+```
+
+---
+
+
+#### 14. [AsyncHTTPRequest_ESP32_W6100](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W6100/AsyncHTTPRequest_ESP32_W6100) on ESP32_DEV with ESP32_W6100
+
+The terminal output of [AsyncHTTPRequest_ESP32_W6100 example](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/tree/master/examples/ESP32_W6100/AsyncHTTPRequest_ESP32_W6100) running on `ESP32_DEV with ESP32_W5500` to demonstrate how to use ESP32 `LwIP W5500 Ethernet Async` feature.
+
+```cpp
+Start AsyncHTTPRequest_ESP32_W6100 on ESP32_DEV with ESP32_W6100
+WebServer_ESP32_W6100 v1.5.3 for core v2.0.0+
+AsyncHTTPRequest_Generic v1.13.0
+
+ETH Started
+ETH Connected
+ETH MAC: 98:F4:AB:09:13:EB, IPv4: 192.168.2.154
+FULL_DUPLEX, 100Mbps
+
+HTTP WebClient is @ IP : 192.168.2.154
+
+**************************************
+
+abbreviation: EST
+client_ip: aaa.bbb.ccc.ddd
+datetime: 2023-01-31T23:54:16.675525-05:00
+day_of_week: 2
+day_of_year: 31
+dst: false
+dst_from: 
+dst_offset: 0
+dst_until: 
+raw_offset: -18000
+timezone: America/Toronto
+unixtime: 1675227256
+utc_datetime: 2023-02-01T04:54:16.675525+00:00
+utc_offset: -05:00
+week_number: 5
+**************************************
+HH HHHH
 ```
 
 
@@ -1229,6 +1284,10 @@ Submit issues to: [AsyncHTTPRequest_Generic issues](https://github.com/khoih-pro
 26. Use `allman astyle` and add `utils`. Restyle the library
 27. Add support to ESP32 boards using `LwIP W5500 Ethernet`
 28. [Fix "blank new line in chunk" bug #50](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/50)
+29. Add support to ESP32 boards using `LwIP W6100 Ethernet`
+30. Fix bug of `_parseURL()`. Check [Bug with _parseURL() #21](https://github.com/khoih-prog/AsyncHTTPSRequest_Generic/issues/21)
+31. Improve `README.md` so that links can be used in other sites, such as `PIO`
+
 
 ---
 ---
@@ -1250,6 +1309,8 @@ This library is based on, modified, bug-fixed and improved from:
 11. Thanks to [Dirk Vranckaert](https://github.com/dirkvranckaert) to report [Callback behaviour is buggy (ESP8266) #43](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/43) leading to new release v1.10.1
 12. Thanks to [SeeliSoft](https://github.com/SeeliSoft-CH) to report [Host/Headers not always sent with 1.10.1 #44](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/issues/44) leading to new release v1.10.2
 13. Thanks to [1618033](https://github.com/1618033) to make PR [Fix "blank new line in chunk" bug #50](https://github.com/khoih-prog/AsyncHTTPRequest_Generic/pull/50) leading to new release v1.12.0
+14. Thanks to [redphx](https://github.com/redphx) to report [Bug with _parseURL() #21](https://github.com/khoih-prog/AsyncHTTPSRequest_Generic/issues/21) leading to new release v1.13.0
+
 
 <table>
   <tr>
@@ -1268,8 +1329,9 @@ This library is based on, modified, bug-fixed and improved from:
     <td align="center"><a href="https://github.com/dirkvranckaert"><img src="https://github.com/dirkvranckaert.png" width="100px;" alt="dirkvranckaert"/><br /><sub><b>Dirk Vranckaert</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/SeeliSoft-CH"><img src="https://github.com/SeeliSoft-CH.png" width="100px;" alt="SeeliSoft-CH"/><br /><sub><b>SeeliSoft</b></sub></a><br /></td>
 	</tr>
-  <tr>    
+  <tr>
     <td align="center"><a href="https://github.com/1618033"><img src="https://github.com/1618033.png" width="100px;" alt="1618033"/><br /><sub><b>1618033</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/redphx"><img src="https://github.com/redphx.png" width="100px;" alt="redphx"/><br /><sub><b>redphx</b></sub></a><br /></td>
   </tr>
 </table>
 

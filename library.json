@@ -1,8 +1,8 @@
 {
   "name":"AsyncHTTPRequest_Generic",
-  "version": "1.12.0",
-  "description":"Simple Async HTTP Request library, supporting GET, POST, PUT, PATCH, DELETE and HEAD, on top of AsyncTCP libraries, such as AsyncTCP, ESPAsyncTCP, AsyncTCP_STM32, etc.. for ESP32 (including ESP32_S2, ESP32_S3 and ESP32_C3), WT32_ETH01 (ESP32 + LAN8720), ESP32 with LwIP ENC28J60, ESP8266 (WiFi, W5x00 or ENC28J60) and currently STM32 with LAN8720 or built-in LAN8742A Ethernet.",
-  "keywords":"communication, async, tcp, http, ESP8266, ESP32, ESP32-S2, ESP32-S3, ESP32-C3, wt32-eth01, stm32, ethernet, wifi, lan8742a, nucleo-144, stm32f7, W5x00, ENC28J60",
+  "version": "1.13.0",
+  "description":"Simple Async HTTP Request library, supporting GET, POST, PUT, PATCH, DELETE and HEAD, on top of AsyncTCP libraries, such as AsyncTCP, ESPAsyncTCP, AsyncTCP_STM32, etc.. for ESP32 (including ESP32_S2, ESP32_S3 and ESP32_C3), WT32_ETH01 (ESP32 + LAN8720), ESP32 with LwIP ENC28J60, W5500 or W6100, ESP8266 (WiFi, W5x00 or ENC28J60) and currently STM32 with LAN8720 or built-in LAN8742A Ethernet.",
+  "keywords":"communication, async, tcp, http, ESP8266, ESP32, ESP32-S2, ESP32-S3, ESP32-C3, wt32-eth01, stm32, ethernet, wifi, lan8742a, nucleo-144, stm32f7, W5x00, ENC28J60, w6100, lwip, lwip-ethernet",
   "authors": [
     {
       "name": "Bob Lemaire",
@@ -69,13 +69,19 @@
     {
       "owner": "khoih-prog",
       "name": "WebServer_ESP32_ENC",
-      "version": ">=1.5.1",
+      "version": ">=1.5.3",
       "platforms": ["espressif32"]
     },
     {
       "owner": "khoih-prog",
       "name": "WebServer_ESP32_W5500",
-      "version": ">=1.5.1",
+      "version": ">=1.5.3",
+      "platforms": ["espressif32"]
+    },
+    {
+      "owner": "khoih-prog",
+      "name": "WebServer_ESP32_W6100",
+      "version": ">=1.5.3",
       "platforms": ["espressif32"]
     },
     {
